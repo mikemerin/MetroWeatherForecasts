@@ -3,7 +3,10 @@ import { Menu, Button } from 'semantic-ui-react'
 
 export const Header = (props) => {
 
-  const data = props.data
+  const { data, current } = props
+
+  const location = {0: "LIFT - NYC", 1: "LILIFT - Islip NY",
+        2: "MNR2 - White Plains NY", 3: "MNR3 - Beacon NY", 4: "MNR4 - Chester NY", 5: "MNR5 - Easton CT", }
 
   var lat = 0
   var long = 0
@@ -15,6 +18,7 @@ export const Header = (props) => {
 
   lat = lat > 0 ? `${lat}ºN` : `${Math.abs(lat)}ºS`
   long = long > 0 ? `${long}ºE` : `${Math.abs(long)}ºW`
+
   const latlong = `Lat: ${ lat } Long: ${ long }`
 
   return (
@@ -22,7 +26,7 @@ export const Header = (props) => {
 
       <Menu.Item name='Metro Weather Forecasts' position='left' fitted='vertically' ></Menu.Item>
 
-      <Menu.Item name='type' fitted='vertically' >NYC Forecast - {latlong}</Menu.Item>
+      <Menu.Item name='type' fitted='vertically' >{ location[current] } - { latlong }</Menu.Item>
 
       <Menu.Item name='links' position='right' fitted='vertically'>
 

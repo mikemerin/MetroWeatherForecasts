@@ -38,16 +38,16 @@ export default class App extends Component {
 
   render() {
 
-    console.log(this.state)
+    const { data, current } = this.state
 
     return (
       <div>
-        <Header data={ this.state.data[this.state.current] } handlePageChange={ this.handlePageChange } />
+        <Header data={ data[current] } current={ current } handlePageChange={ this.handlePageChange } />
         <Grid>
           <Grid.Column width={1}>
           </Grid.Column>
           <Grid.Column width={14}>
-            <LIFTs data={ this.state.data[this.state.current] }/>
+            <LIFTs data={ data[current] }/>
           </Grid.Column>
           <Grid.Column width={1}>
           </Grid.Column>
