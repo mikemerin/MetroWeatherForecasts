@@ -1,9 +1,20 @@
 import React from 'react'
 import { Table } from 'semantic-ui-react'
+import { weather_types } from './WxTypes'
 
 export const LIFTs = (props) => {
 
   const { lift, lilift, mnr2, mnr3, mnr4, mnr5 } = props.data
+  const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+  const d = new Date()
+
+  var d_1 = d.getDay()
+  var d_2 = d_1 + 1
+  var d_3 = d_2 + 1
+  var d_4 = d_3 + 1
+  var d_5 = d_4 + 1
+
+  if ( lift.loc !== undefined ) { [d_1, d_2, d_3, d_4, d_5].map(x => x = (x > 6 ? x-=7 : x) ) }
 
   function body() {
 
@@ -20,6 +31,7 @@ export const LIFTs = (props) => {
 
     function cells(type) { return three_day.map((x, i) => <Table.Cell key={i}>{ x[type] }</Table.Cell> ) }
     function cells_range(type1, type2) { return three_day.map((x, i) => <Table.Cell key={i}>{ x[type1] }-{ x[type2] }</Table.Cell> )}
+    function cells_wx_types() { return three_day.map((x, i) => <Table.Cell key={i}>{ weather_types[x['weatherPrimaryCoded'].split(":")[2]] }</Table.Cell> ) }
 
 
     return (
@@ -46,7 +58,7 @@ export const LIFTs = (props) => {
         </Table.Row>
         <Table.Row>
           <Table.Cell>PRECIP</Table.Cell>
-          { cells('weatherPrimary') }
+          { cells_wx_types() }
         </Table.Row>
         <Table.Row>
           <Table.Cell>PRECIP %</Table.Cell>
@@ -85,13 +97,13 @@ export const LIFTs = (props) => {
         <Table.Row>
           <Table.Cell>WINTER FORECAST CONFIDENCE</Table.Cell>
           <Table.Cell colSpan={2}> </Table.Cell>
-          <Table.Cell>1ST 2in OF SNOW BY</Table.Cell>
+          <Table.Cell>1ST 2'' OF SNOW BY</Table.Cell>
           <Table.Cell colSpan={2}> </Table.Cell>
         </Table.Row>
         <Table.Row>
-          <Table.Cell>Day 4</Table.Cell>
+          <Table.Cell>{ weekdays[d_4] }</Table.Cell>
           <Table.Cell colSpan={2}>{ day4.weather }, { day4.maxTempF }ºF</Table.Cell>
-          <Table.Cell>Day 5</Table.Cell>
+          <Table.Cell>{ weekdays[d_5] }</Table.Cell>
           <Table.Cell colSpan={2}>{ day5.weather }, { day5.maxTempF }ºF</Table.Cell>
         </Table.Row>
 
@@ -99,42 +111,40 @@ export const LIFTs = (props) => {
     )
   }
 
-    // rh: {day1.minHumidity}-{day1.maxHumidity}%
-
-
-    // <Grid celled columns={ 7} textAlign ="center" verticalAlign="middle">
-    //   <Grid.Row>
-    //       { [0, 1, 2, 3, 4, 5, 6].map(x => output(x) ) }
-    //   </Grid.Row>
-    // </Grid>
-
     var lat = 0
     var long = 0
 
-    if (lift.length > 0) {
+    if (lift.loc !== undefined) {
       lat = lift.loc.lat
       long = lift.loc.long
-      lat = lat > 0 ? `${lat}ºN` : `${Math.abs(lat)}ºS`
-      long = long > 0 ? `${long}ºE` : `${Math.abs(long)}ºW`
     }
 
+    lat = lat > 0 ? `${lat}ºN` : `${Math.abs(lat)}ºS`
+    long = long > 0 ? `${long}ºE` : `${Math.abs(long)}ºW`
     const latlong = `Lat: ${ lat } Long: ${ long }`
 
     if ( lift.loc !== undefined) {
+
       return (
         <div>
           <div className="center">NYC Forecast - {latlong}</div>
-          Day 1: { lift.periods[0].weather }
+          Today: { lift.periods[0].weather }<br />
+          Tonight: { lift.periods[1].weather }<br />
+          { weekdays[d_2] }: { lift.periods[2].weather }<br />
+          { weekdays[d_2].slice(0,3) } Night: { lift.periods[3].weather }<br />
+          { weekdays[d_3] }: { lift.periods[4].weather }<br />
+          { weekdays[d_4] }: { lift.periods[6].weather }<br />
+          { weekdays[d_5] }: { lift.periods[8].weather }
           <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
 
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>  </Table.HeaderCell>
-                <Table.HeaderCell><h4>Day 1 6A-6P</h4></Table.HeaderCell>
-                <Table.HeaderCell><h4>Day 1 6P-6A</h4></Table.HeaderCell>
-                <Table.HeaderCell><h4>Day 2 6A-6P</h4></Table.HeaderCell>
-                <Table.HeaderCell><h4>Day 2 6P-6A</h4></Table.HeaderCell>
-                <Table.HeaderCell><h4>Day 3 6A-6P</h4></Table.HeaderCell>
+                <Table.HeaderCell><h4>{ weekdays[d_1].slice(0,3) }. 6A-6P</h4></Table.HeaderCell>
+                <Table.HeaderCell><h4>{ weekdays[d_1].slice(0,3) }. Night 6P-6A</h4></Table.HeaderCell>
+                <Table.HeaderCell><h4>{ weekdays[d_2].slice(0,3) }. 6A-6P</h4></Table.HeaderCell>
+                <Table.HeaderCell><h4>{ weekdays[d_2].slice(0,3) }. Night 6P-6A</h4></Table.HeaderCell>
+                <Table.HeaderCell><h4>{ weekdays[d_3].slice(0,3) }. 6A-6P</h4></Table.HeaderCell>
               </Table.Row>
             </Table.Header>
 

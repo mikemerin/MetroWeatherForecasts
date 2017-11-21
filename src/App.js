@@ -40,7 +40,6 @@ export default class App extends Component {
           <header className="App-header">
             <h1 className="App-title">Metro Weather Forecasts</h1>
           </header>
-          <h4>Website was made by Mike Merin using React.js and React-Semantic-Ui</h4>
         </div>
         <LIFTs data={ this.state }/>
       </div>
