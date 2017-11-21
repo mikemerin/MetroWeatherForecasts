@@ -1,4 +1,4 @@
-const URL = "http://api.aerisapi.com/forecasts/"
+const URL = "https://api.aerisapi.com/forecasts/"
 const id_secret = "?client_id=8XdPaXwzYWIbDTrF8iCL3&client_secret=ncTOr4kcLcjhRKVOeGRW2tecqJPTWRkCHLqErUli"
 const parameters = "&from=today&to=+5days&filter=daynight&limit=9"
 
