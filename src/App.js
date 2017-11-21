@@ -21,22 +21,16 @@ export default class App extends Component {
 
   componentWillMount() {
     console.log("mounting")
-    const lifts = [ "lift", "lilift", "mnr2", "mnr3", "mnr4", "mnr5" ]
-    ForecastAdapter.lift().then(data => {
-      const response = data.response[0]
-      this.setState({ lift: response })
-    })
+    // for (let x = 0; x < 2; x++) {
+      // ForecastAdapter.all(0).then(data => {
+      //   const response = data.response[0]
+      //   this.setState({ lift: response })
+      const data = ForecastAdapter.all(0)
+      // debugger
+
+        this.setState({ lift: data.response[0] })
+    // }
   }
-
-  // var lat = this.state.location.lat
-  // var long = this.state.location.long
-
-  // if (!!this.state.location) {
-  //   lat = lat > 0 ? `${lat}ºN` : `${Math.abs(lat)}ºS`
-  //   long = long > 0 ? `${long}ºE` : `${Math.abs(long)}ºW`
-  // }
-
-  // const latlong = `Lat: ${ lat } Long: ${ long }`
 
   render() {
 
@@ -48,7 +42,7 @@ export default class App extends Component {
           </header>
           <h4>Website was made by Mike Merin using React.js and React-Semantic-Ui</h4>
         </div>
-        <LIFTs />
+        <LIFTs data={ this.state }/>
       </div>
     )
 
