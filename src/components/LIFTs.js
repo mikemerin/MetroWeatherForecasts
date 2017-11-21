@@ -4,7 +4,7 @@ import { weather_types } from './WxTypes'
 
 export const LIFTs = (props) => {
 
-  const data = props.data
+  const { data, current } = props
 
   const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
   const d = new Date()
@@ -28,7 +28,7 @@ export const LIFTs = (props) => {
     const day5 = data.periods[8]
 
     const three_day = [day1, night1, day2, night2, day3]
-    
+
     function cells(type) { return three_day.map((x, i) => <Table.Cell key={i}>{ x[type] }</Table.Cell> ) }
     function cells_range(type1, type2) { return three_day.map((x, i) => <Table.Cell key={i}>{ x[type1] }-{ x[type2] }</Table.Cell> )}
     function cells_wx_types() { return three_day.map((x, i) => <Table.Cell key={i}>{ weather_types[x['weatherPrimaryCoded'].split(":")[2]] }</Table.Cell> ) }
@@ -74,31 +74,31 @@ export const LIFTs = (props) => {
         </Table.Row>
         <Table.Row>
           <Table.Cell>CHANGEOVER</Table.Cell>
-          <Table.Cell> </Table.Cell><Table.Cell> </Table.Cell><Table.Cell> </Table.Cell><Table.Cell> </Table.Cell><Table.Cell> </Table.Cell>
+          <Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>START</Table.Cell>
-          <Table.Cell> </Table.Cell><Table.Cell> </Table.Cell><Table.Cell> </Table.Cell><Table.Cell> </Table.Cell><Table.Cell> </Table.Cell>
+          <Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>STOP</Table.Cell>
-          <Table.Cell> </Table.Cell><Table.Cell> </Table.Cell><Table.Cell> </Table.Cell><Table.Cell> </Table.Cell><Table.Cell> </Table.Cell>
+          <Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>VISIBILITY (MILES)</Table.Cell>
-          <Table.Cell> </Table.Cell><Table.Cell> </Table.Cell><Table.Cell> </Table.Cell><Table.Cell> </Table.Cell><Table.Cell> </Table.Cell>
+          <Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>GROUND TEMP</Table.Cell>
-          <Table.Cell colSpan={2}> </Table.Cell>
+          <Table.Cell colSpan={2}>-</Table.Cell>
           <Table.Cell>ADVISORIES</Table.Cell>
-          <Table.Cell colSpan={2}> </Table.Cell>
+          <Table.Cell colSpan={2}>-</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>WINTER FORECAST CONFIDENCE</Table.Cell>
-          <Table.Cell colSpan={2}> </Table.Cell>
+          <Table.Cell colSpan={2}>-</Table.Cell>
           <Table.Cell>1ST 2'' OF SNOW BY</Table.Cell>
-          <Table.Cell colSpan={2}> </Table.Cell>
+          <Table.Cell colSpan={2}>-</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>{ weekdays[d_4] }</Table.Cell>
@@ -127,12 +127,12 @@ export const LIFTs = (props) => {
 
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell>  </Table.HeaderCell>
-                <Table.HeaderCell><h4>{ weekdays[d_1].slice(0,3) }. 6A-6P</h4></Table.HeaderCell>
-                <Table.HeaderCell><h4>{ weekdays[d_1].slice(0,3) }. Night 6P-6A</h4></Table.HeaderCell>
-                <Table.HeaderCell><h4>{ weekdays[d_2].slice(0,3) }. 6A-6P</h4></Table.HeaderCell>
-                <Table.HeaderCell><h4>{ weekdays[d_2].slice(0,3) }. Night 6P-6A</h4></Table.HeaderCell>
-                <Table.HeaderCell><h4>{ weekdays[d_3].slice(0,3) }. 6A-6P</h4></Table.HeaderCell>
+                <Table.HeaderCell><h4>WX</h4></Table.HeaderCell>
+                <Table.HeaderCell><h4>{weekdays[d_1].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.HeaderCell>
+                <Table.HeaderCell><h4>{weekdays[d_1].toUpperCase().slice(0,3)}. NIGHT 6P-6A</h4></Table.HeaderCell>
+                <Table.HeaderCell><h4>{weekdays[d_2].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.HeaderCell>
+                <Table.HeaderCell><h4>{weekdays[d_2].toUpperCase().slice(0,3)}. NIGHT 6P-6A</h4></Table.HeaderCell>
+                <Table.HeaderCell><h4>{weekdays[d_3].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.HeaderCell>
               </Table.Row>
             </Table.Header>
 
@@ -145,7 +145,7 @@ export const LIFTs = (props) => {
       )
 
     } else {
-      return "Please try again later"
+      return <div><br />Data is curenlty offline, please try again once you have a stable internet connection, or please try again in a few minutes.</div>
     }
 
 }

@@ -3,10 +3,10 @@ import { Menu, Button } from 'semantic-ui-react'
 
 export const Header = (props) => {
 
-  const { data, current } = props
+  const { data, current, handlePageChange } = props
 
-  const location = {0: "LIFT - NYC", 1: "LILIFT - Islip NY",
-        2: "MNR2 - White Plains NY", 3: "MNR3 - Beacon NY", 4: "MNR4 - Chester NY", 5: "MNR5 - Easton CT", }
+  const location = [ "LIFT - NYC", "LILIFT - Islip NY",
+       "MNR2 - White Plains NY", "MNR3 - Beacon NY", "MNR4 - Chester NY", "MNR5 - Easton CT" ]
 
   var lat = 0
   var long = 0
@@ -19,23 +19,21 @@ export const Header = (props) => {
   lat = lat > 0 ? `${lat}ºN` : `${Math.abs(lat)}ºS`
   long = long > 0 ? `${long}ºE` : `${Math.abs(long)}ºW`
 
-  const latlong = `Lat: ${ lat } Long: ${ long }`
+  const latlong = `Lat: ${ lat } - Long: ${ long }`
 
   return (
-    <Menu color='blue' inverted  fluid widths={3} size='huge' icon fixed='top' >
+    <Menu color='blue' inverted fluid widths={2} size='huge' icon fixed='top' >
 
-      <Menu.Item name='Metro Weather Forecasts' position='left' fitted='vertically' ></Menu.Item>
-
-      <Menu.Item name='type' fitted='vertically' >{ location[current] } - { latlong }</Menu.Item>
+      <Menu.Item name='type' position='left' fitted='vertically' >{ location[current] } - { latlong }</Menu.Item>
 
       <Menu.Item name='links' position='right' fitted='vertically'>
 
-        <Button compact color='blue' onClick={ props.handlePageChange } >LIFT</Button>
-        <Button compact color='blue' onClick={ props.handlePageChange } >LILIFT</Button>
-        <Button compact color='blue' onClick={ props.handlePageChange } >MNR2</Button>
-        <Button compact color='blue' onClick={ props.handlePageChange } >MNR3</Button>
-        <Button compact color='blue' onClick={ props.handlePageChange } >MNR4</Button>
-        <Button compact color='blue' onClick={ props.handlePageChange } >MNR5</Button>
+        <Button compact active={current === 0} color='blue' onClick={ handlePageChange } >LIFT</Button>
+        <Button compact active={current === 1} color='blue' onClick={ handlePageChange } >LILIFT</Button>
+        <Button compact active={current === 2} color='blue' onClick={ handlePageChange } >MNR2</Button>
+        <Button compact active={current === 3} color='blue' onClick={ handlePageChange } >MNR3</Button>
+        <Button compact active={current === 4} color='blue' onClick={ handlePageChange } >MNR4</Button>
+        <Button compact active={current === 5} color='blue' onClick={ handlePageChange } >MNR5</Button>
 
       </Menu.Item>
 

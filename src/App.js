@@ -47,7 +47,7 @@ export default class App extends Component {
           <Grid.Column width={1}>
           </Grid.Column>
           <Grid.Column width={14}>
-            <LIFTs data={ data[current] }/>
+            <LIFTs data={ data[current] } current={ current }/>
           </Grid.Column>
           <Grid.Column width={1}>
           </Grid.Column>
