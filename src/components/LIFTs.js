@@ -4,7 +4,8 @@ import { weather_types } from './WxTypes'
 
 export const LIFTs = (props) => {
 
-  const { lift, lilift, mnr2, mnr3, mnr4, mnr5 } = props.data
+  const data = props.data
+
   const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
   const d = new Date()
 
@@ -14,21 +15,20 @@ export const LIFTs = (props) => {
   var d_4 = d_3 + 1
   var d_5 = d_4 + 1
 
-  if ( lift.loc !== undefined ) { [d_1, d_2, d_3, d_4, d_5].map(x => x = (x > 6 ? x-=7 : x) ) }
+  if ( data.loc !== undefined ) { [d_1, d_2, d_3, d_4, d_5].map(x => x = (x > 6 ? x-=7 : x) ) }
 
   function body() {
 
-    const day1 = lift.periods[0]
-    const night1 = lift.periods[1]
-    const day2 = lift.periods[2]
-    const night2 = lift.periods[3]
-    const day3 = lift.periods[4]
-    const day4 = lift.periods[6]
-    const day5 = lift.periods[8]
+    const day1 = data.periods[0]
+    const night1 = data.periods[1]
+    const day2 = data.periods[2]
+    const night2 = data.periods[3]
+    const day3 = data.periods[4]
+    const day4 = data.periods[6]
+    const day5 = data.periods[8]
 
     const three_day = [day1, night1, day2, night2, day3]
-    const daynights = [day1, night1, day2, night2, day3, day4, day5]
-
+    
     function cells(type) { return three_day.map((x, i) => <Table.Cell key={i}>{ x[type] }</Table.Cell> ) }
     function cells_range(type1, type2) { return three_day.map((x, i) => <Table.Cell key={i}>{ x[type1] }-{ x[type2] }</Table.Cell> )}
     function cells_wx_types() { return three_day.map((x, i) => <Table.Cell key={i}>{ weather_types[x['weatherPrimaryCoded'].split(":")[2]] }</Table.Cell> ) }
@@ -111,30 +111,18 @@ export const LIFTs = (props) => {
     )
   }
 
-    var lat = 0
-    var long = 0
-
-    if (lift.loc !== undefined) {
-      lat = lift.loc.lat
-      long = lift.loc.long
-    }
-
-    lat = lat > 0 ? `${lat}ºN` : `${Math.abs(lat)}ºS`
-    long = long > 0 ? `${long}ºE` : `${Math.abs(long)}ºW`
-    const latlong = `Lat: ${ lat } Long: ${ long }`
-
-    if ( lift.loc !== undefined) {
+    if ( data.loc !== undefined) {
 
       return (
         <div>
-          <div className="center">NYC Forecast - {latlong}</div>
-          Today: { lift.periods[0].weather }<br />
-          Tonight: { lift.periods[1].weather }<br />
-          { weekdays[d_2] }: { lift.periods[2].weather }<br />
-          { weekdays[d_2].slice(0,3) } Night: { lift.periods[3].weather }<br />
-          { weekdays[d_3] }: { lift.periods[4].weather }<br />
-          { weekdays[d_4] }: { lift.periods[6].weather }<br />
-          { weekdays[d_5] }: { lift.periods[8].weather }
+          <br />
+          Today: { data.periods[0].weather }<br />
+          Tonight: { data.periods[1].weather }<br />
+          { weekdays[d_2] }: { data.periods[2].weather }<br />
+          { weekdays[d_2].slice(0,3) }. Night: { data.periods[3].weather }<br />
+          { weekdays[d_3] }: { data.periods[4].weather }<br />
+          { weekdays[d_4] }: { data.periods[6].weather }<br />
+          { weekdays[d_5] }: { data.periods[8].weather }
           <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
 
             <Table.Header>
