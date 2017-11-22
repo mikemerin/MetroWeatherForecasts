@@ -45,16 +45,15 @@ export const TIDES = (props) => {
 
     const station_days = stations[x]
 
-    const row_0 = station_days.map((x,i) => {
+    const row_0 = station_days.map((day,i) => {
       return (
         [
-        <Table.Cell key={`${i} tt`}>{ `${x[0].type.toUpperCase()} ${x[0].dateTimeISO.slice(11,16)}` }</Table.Cell>,
-        <Table.Cell key={`${i} h`}>{ `${x[0].heightFT}’` }</Table.Cell>
+        <Table.Cell key={`${i} tt`}>{ `${day[0].type.toUpperCase()} ${day[0].dateTimeISO.slice(11,16)}` }</Table.Cell>,
+        <Table.Cell key={`${i} h`}>{ `${day[0].heightFT}’` }</Table.Cell>
         ]
       )
     })
-    // { `${first[0].type.toUpperCase()} ${first[0].dateTimeISO.match(/T(\S+)-/)[1]}` }
-    // { `${first[0].heightFT}’` }
+
     return (
       <Table.Row>
         <Table.Cell colSpan={2} rowSpan={4} >{ names[x] }</Table.Cell>
@@ -63,8 +62,50 @@ export const TIDES = (props) => {
     )
   }
 
+  function location_bot(x) {
+
+    const station_days = stations[x]
+
+    const rows_13 = [1, 2, 3].map((row, i) => {
+
+      var this_row = station_days.map(day => day[row])
+
+      return (
+        <Table.Row key={i}>
+          { this_row.map((row_data, j) => {
+              return (
+                  [
+                  <Table.Cell key={`${j} tt`}> L Time </Table.Cell>,
+                  <Table.Cell key={`${j} ft`}> Ft’ </Table.Cell>
+                  ]
+              )
+            })
+          }
+        </Table.Row>
+      )
+
+      // return this_row.map(x => {
+      // 	return (
+      //     <Table.Row key={`${row} ${i}`}>
+      //       <Table.Cell> L Time \</Table.Cell>
+      //       <Table.Cell> Ft’ </Table.Cell>
+      //     </Table.Row>
+      // 	)
+      // })
+
+    })
+
+    return rows_13
+
+  }
+
   function location_24(x,row) {
-    if (row == 3 ) { //&& periods_to_days(0)[x][3].timestamp === null ) {
+    const station_days = stations[x]
+
+    const this_row = station_days.map(day => day[row])
+
+    debugger
+    if (row == 3 ) { //&& this_row[3] === undefined ) {
       return (
         <Table.Row>
           <Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell>
@@ -97,41 +138,23 @@ export const TIDES = (props) => {
     return (
       <Table.Body>
         { location_top(0) }
-        { location_24(0,1) }
-        { location_24(0,2) }
-        { location_24(0,3) }
+        { location_bot(0) }
         { location_top(1) }
-        { location_24(1,1) }
-        { location_24(1,2) }
-        { location_24(1,3) }
+        { location_bot(1) }
         { location_top(2) }
-        { location_24(2,1) }
-        { location_24(2,2) }
-        { location_24(2,3) }
+        { location_bot(2) }
         { location_top(3) }
-        { location_24(3,1) }
-        { location_24(3,2) }
-        { location_24(3,3) }
+        { location_bot(3) }
         { location_top(4) }
-        { location_24(4,1) }
-        { location_24(4,2) }
-        { location_24(4,3) }
+        { location_bot(4) }
         { location_top(5) }
-        { location_24(5,1) }
-        { location_24(5,2) }
-        { location_24(5,3) }
+        { location_bot(5) }
         { location_top(6) }
-        { location_24(6,1) }
-        { location_24(6,2) }
-        { location_24(6,3) }
+        { location_bot(6) }
         { location_top(7) }
-        { location_24(7,1) }
-        { location_24(7,2) }
-        { location_24(7,3) }
+        { location_bot(7) }
         { location_top(8) }
-        { location_24(8,1) }
-        { location_24(8,2) }
-        { location_24(8,3) }
+        { location_bot(8) }
       </Table.Body>
     )
 
