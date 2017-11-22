@@ -19,7 +19,7 @@ const TIDES1_URL = URL + "tides/" + "flushing+bay,ny" + id_secret + tide_paramet
 // const lifts = [LIFT_URL, LILIFT_URL, MNR2_URL, MNR3_URL, MNR4_URL, MNR5_URL,
               // TIDES1_URL, TIDES2_URL, TIDES3_URL, TIDES4_URL, TIDES5_URL, TIDES6_URL, TIDES7_URL, TIDES8_URL, TIDES9_URL ]
 
-const lifts = [LIFT_URL, "", "", "", "", "", TIDES1_URL]
+const lifts = ["", "", "", "", "", "", TIDES1_URL]
 
 export class ForecastAdapter {
 
