@@ -1,18 +1,25 @@
-import { Tempdata } from './Tempdata'
+import { Tempdata, Temptidedata } from './Tempdata'
 
-const URL = "https://api.aerisapi.com/forecasts/"
 const id_secret = "?client_id=8XdPaXwzYWIbDTrF8iCL3&client_secret=ncTOr4kcLcjhRKVOeGRW2tecqJPTWRkCHLqErUli"
-const parameters = "&from=today&to=+5days&filter=daynight&limit=9"
 
-const LIFT_URL = URL + "40.78,-73.97" + id_secret + parameters
-const LILIFT_URL = URL + "40.79,-71.10" + id_secret + parameters
-const MNR2_URL = URL + "41.06,-73.70" + id_secret + parameters
-const MNR3_URL = URL + "41.50,-74.10" + id_secret + parameters
-const MNR4_URL = URL + "41.51,-74.27" + id_secret + parameters
-const MNR5_URL = URL + "41.16,-73.13" + id_secret + parameters
+const URL = "https://api.aerisapi.com/"
 
-// const lifts = [LIFT_URL, LILIFT_URL, MNR2_URL, MNR3_URL, MNR4_URL, MNR5_URL]
-const lifts = [LIFT_URL, LILIFT_URL]
+const forecast_parameters = "&from=today&to=+5days&filter=daynight&limit=9"
+const tide_parameters = "&from=sunday&to=+7days&filter=highlow"
+
+const LIFT_URL = URL + "forecasts/" + "40.78,-73.97" + id_secret + forecast_parameters
+const LILIFT_URL = URL + "forecasts/" + "40.79,-71.10" + id_secret + forecast_parameters
+const MNR2_URL = URL + "forecasts/" + "41.06,-73.70" + id_secret + forecast_parameters
+const MNR3_URL = URL + "forecasts/" + "41.50,-74.10" + id_secret + forecast_parameters
+const MNR4_URL = URL + "forecasts/" + "41.51,-74.27" + id_secret + forecast_parameters
+const MNR5_URL = URL + "forecasts/" + "41.16,-73.13" + id_secret + forecast_parameters
+
+const TIDES1_URL = URL + "tides/" + "flushing+bay,ny" + id_secret + tide_parameters
+
+// const lifts = [LIFT_URL, LILIFT_URL, MNR2_URL, MNR3_URL, MNR4_URL, MNR5_URL,
+              // TIDES1_URL, TIDES2_URL, TIDES3_URL, TIDES4_URL, TIDES5_URL, TIDES6_URL, TIDES7_URL, TIDES8_URL, TIDES9_URL ]
+
+const lifts = [LIFT_URL, "", "", "", "", "", TIDES1_URL]
 
 export class ForecastAdapter {
 
@@ -25,7 +32,7 @@ export class ForecastAdapter {
         { throw new Error('Something went wrong') }
       }).catch((error) => {
         // alert("Sorry something went wrong and no run data was found.\n\nPlease try again shortly.\n\nIf this problem persists please contact Mike Merin.")
-        return Tempdata
+        return n > 6 ? Temptidedata : Tempdata
       })
   }
 

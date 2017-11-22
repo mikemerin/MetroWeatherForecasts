@@ -6,7 +6,7 @@ export const Header = (props) => {
   const { data, current, handlePageChange } = props
 
   const location = [ "LIFT - NYC", "LILIFT - Islip NY",
-       "MNR2 - White Plains NY", "MNR3 - Beacon NY", "MNR4 - Chester NY", "MNR5 - Easton CT" ]
+       "MNR2 - White Plains NY", "MNR3 - Beacon NY", "MNR4 - Chester NY", "MNR5 - Easton CT", "TIDES - NYC Area" ]
 
   var lat = 0
   var long = 0
@@ -19,7 +19,9 @@ export const Header = (props) => {
   lat = lat > 0 ? `${lat}ºN` : `${Math.abs(lat)}ºS`
   long = long > 0 ? `${long}ºE` : `${Math.abs(long)}ºW`
 
-  const latlong = `Lat: ${ lat } - Long: ${ long }`
+  var latlong = `Lat: ${ lat } - Long: ${ long }`
+
+  if ( current === 6 ) { latlong = "Various Locations" }
 
   return (
     <Menu color='blue' inverted fluid widths={2} size='huge' icon fixed='top' >
@@ -34,6 +36,7 @@ export const Header = (props) => {
         <Button compact active={current === 3} color='blue' onClick={ handlePageChange } >MNR3</Button>
         <Button compact active={current === 4} color='blue' onClick={ handlePageChange } >MNR4</Button>
         <Button compact active={current === 5} color='blue' onClick={ handlePageChange } >MNR5</Button>
+        <Button compact active={current === 6} color='blue' onClick={ handlePageChange } >TIDES</Button>
 
       </Menu.Item>
 

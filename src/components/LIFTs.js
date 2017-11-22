@@ -4,7 +4,7 @@ import { weather_types } from './WxTypes'
 
 export const LIFTs = (props) => {
 
-  const { data, current } = props
+  const { data } = props
 
   const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
   const d = new Date()
@@ -15,7 +15,12 @@ export const LIFTs = (props) => {
   var d_4 = d_3 + 1
   var d_5 = d_4 + 1
 
-  if ( data.loc !== undefined ) { [d_1, d_2, d_3, d_4, d_5].map(x => x = (x > 6 ? x-=7 : x) ) }
+  if ( data.loc !== undefined ) {
+    if (d_2 > 6) { d_2 -= 7 }
+    if (d_3 > 6) { d_3 -= 7 }
+    if (d_4 > 6) { d_4 -= 7 }
+    if (d_5 > 6) { d_5 -= 7 }
+  }
 
   function body() {
 
@@ -136,7 +141,6 @@ export const LIFTs = (props) => {
               </Table.Row>
             </Table.Header>
 
-
             { body() }
 
           </Table>
@@ -145,7 +149,7 @@ export const LIFTs = (props) => {
       )
 
     } else {
-      return <div><br />Data is curenlty offline, please try again once you have a stable internet connection, or please try again in a few minutes.</div>
+      return <div><br />Data is curenlty offline, please try again in a few minutes.</div>
     }
 
 }

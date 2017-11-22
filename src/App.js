@@ -5,7 +5,7 @@ import './App.css'
 import { ForecastAdapter } from './adapters'
 
 import { Header } from './components/Header'
-import { LIFTs } from './components/LIFTs'
+import FormContainer from './containers/FormContainer'
 
 
 export default class App extends Component {
@@ -14,13 +14,13 @@ export default class App extends Component {
     super(props, context)
     this.state = {
       current: 0,
-      data: [ {}, {}, {}, {}, {}, {} ],
+      data: [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ]
     }
   }
 
   componentWillMount() {
     console.log("mounting")
-    for (let x = 0; x < 6; x++) {
+    for (let x = 0; x < 15; x++) {
       ForecastAdapter.all(x).then(data => {
         const response = data.response[0]
         var current_data = this.state.data
@@ -32,7 +32,7 @@ export default class App extends Component {
 
   handlePageChange = (event, result) => {
     event.preventDefault()
-    const current = {"LIFT": 0, "LILIFT": 1, "MNR2": 2, "MNR3": 3, "MNR4": 4, "MNR5": 5}
+    const current = {"LIFT": 0, "LILIFT": 1, "MNR2": 2, "MNR3": 3, "MNR4": 4, "MNR5": 5, "TIDES": 6}
     this.setState({ current: current[result.children] })
   }
 
@@ -47,7 +47,7 @@ export default class App extends Component {
           <Grid.Column width={1}>
           </Grid.Column>
           <Grid.Column width={14}>
-            <LIFTs data={ data[current] } current={ current }/>
+            <FormContainer data={ data } current={ current }/>
           </Grid.Column>
           <Grid.Column width={1}>
           </Grid.Column>
