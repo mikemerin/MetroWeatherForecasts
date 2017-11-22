@@ -74,12 +74,12 @@ export const TIDES = (props) => {
     )
   }
 
-    if ( data.loc !== undefined) {
+    if ( data[0].loc !== undefined) {
 
       return (
         <div>
           <br />
-          The tides begin on Sunday {start_date}
+          This tide table begins on Sunday { start_date }
           <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
 
             <Table.Header>
