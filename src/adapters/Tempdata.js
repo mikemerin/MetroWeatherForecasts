@@ -120,197 +120,197 @@ export const Temptidedata = {
         timestamp: null,
         dateTimeISO: "2017-11-26T00:00:00-05:00",
         type: "",
-        heightFT: null,
-        heightM: null
-      },
-      {
-        timestamp: null,
-        dateTimeISO: "2017-11-26T00:00:00-05:00",
-        type: "l",
-        heightFT: null,
-        heightM: null
+        heightFT: 0,
+        heightM: 0
       },
       {
         timestamp: null,
         dateTimeISO: "2017-11-26T00:00:00-05:00",
         type: "",
-        heightFT: null,
-        heightM: null
+        heightFT: 0,
+        heightM: 0
+      },
+      {
+        timestamp: null,
+        dateTimeISO: "2017-11-26T00:00:00-05:00",
+        type: "",
+        heightFT: 0,
+        heightM: 0
       },
       {
       timestamp: null,
       dateTimeISO: "2017-11-26T00:00:00-05:00",
-      type: "l",
-      heightFT: null,
-      heightM: null
+      type: "",
+      heightFT: 0,
+      heightM: 0
       },
       {
       timestamp: null,
       dateTimeISO: "2017-11-27T00:00:00-05:00",
       type: "",
-      heightFT: null,
-      heightM: null
-      },
-      {
-      timestamp: null,
-      dateTimeISO: "2017-11-27T00:00:00-05:00",
-      type: "l",
-      heightFT: null,
-      heightM: null
+      heightFT: 0,
+      heightM: 0
       },
       {
       timestamp: null,
       dateTimeISO: "2017-11-27T00:00:00-05:00",
       type: "",
-      heightFT: null,
-      heightM: null
+      heightFT: 0,
+      heightM: 0
       },
       {
       timestamp: null,
       dateTimeISO: "2017-11-27T00:00:00-05:00",
-      type: "l",
-      heightFT: null,
-      heightM: null
+      type: "",
+      heightFT: 0,
+      heightM: 0
+      },
+      {
+      timestamp: null,
+      dateTimeISO: "2017-11-27T00:00:00-05:00",
+      type: "",
+      heightFT: 0,
+      heightM: 0
       },
       {
       timestamp: null,
       dateTimeISO: "2017-11-28T00:00:00-05:00",
       type: "",
-      heightFT: null,
-      heightM: null
+      heightFT: 0,
+      heightM: 0
       },
       {
       timestamp: null,
       dateTimeISO: "2017-11-28T00:00:00-05:00",
       type: "",
-      heightFT: null,
-      heightM: null
-      },
-      {
-      timestamp: null,
-      dateTimeISO: "2017-11-28T00:00:00-05:00",
-      type: "l",
-      heightFT: null,
-      heightM: null
+      heightFT: 0,
+      heightM: 0
       },
       {
       timestamp: null,
       dateTimeISO: "2017-11-28T00:00:00-05:00",
       type: "",
-      heightFT: null,
-      heightM: null
+      heightFT: 0,
+      heightM: 0
       },
       {
       timestamp: null,
-      dateTimeISO: "2017-11-29T00:00:00-05:00",
-      type: "l",
-      heightFT: null,
-      heightM: null
-      },
-      {
-      timestamp: null,
-      dateTimeISO: "2017-11-29T00:00:00-05:00",
+      dateTimeISO: "2017-11-28T00:00:00-05:00",
       type: "",
-      heightFT: null,
-      heightM: null
-      },
-      {
-      timestamp: null,
-      dateTimeISO: "2017-11-29T00:00:00-05:00",
-      type: "l",
-      heightFT: null,
-      heightM: null
+      heightFT: 0,
+      heightM: 0
       },
       {
       timestamp: null,
       dateTimeISO: "2017-11-29T00:00:00-05:00",
       type: "",
-      heightFT: null,
-      heightM: null
+      heightFT: 0,
+      heightM: 0
+      },
+      {
+      timestamp: null,
+      dateTimeISO: "2017-11-29T00:00:00-05:00",
+      type: "",
+      heightFT: 0,
+      heightM: 0
+      },
+      {
+      timestamp: null,
+      dateTimeISO: "2017-11-29T00:00:00-05:00",
+      type: "",
+      heightFT: 0,
+      heightM: 0
+      },
+      {
+      timestamp: null,
+      dateTimeISO: "2017-11-29T00:00:00-05:00",
+      type: "",
+      heightFT: 0,
+      heightM: 0
       },
       {
       timestamp: null,
       dateTimeISO: "2017-11-30T00:00:00-05:00",
-      type: "l",
-      heightFT: null,
-      heightM: null
+      type: "",
+      heightFT: 0,
+      heightM: 0
       },
       {
       timestamp: null,
       dateTimeISO: "2017-11-30T00:00:00-05:00",
       type: "",
-      heightFT: null,
-      heightM: null
-      },
-      {
-      timestamp: null,
-      dateTimeISO: "2017-11-30T00:00:00-05:00",
-      type: "l",
-      heightFT: null,
-      heightM: null
+      heightFT: 0,
+      heightM: 0
       },
       {
       timestamp: null,
       dateTimeISO: "2017-11-30T00:00:00-05:00",
       type: "",
-      heightFT: null,
-      heightM: null
+      heightFT: 0,
+      heightM: 0
       },
       {
       timestamp: null,
-      dateTimeISO: "2017-12-01T00:00:00-05:00",
-      type: "l",
-      heightFT: null,
-      heightM: null
-      },
-      {
-      timestamp: null,
-      dateTimeISO: "2017-12-01T00:00:00-05:00",
+      dateTimeISO: "2017-11-30T00:00:00-05:00",
       type: "",
-      heightFT: null,
-      heightM: null
-      },
-      {
-      timestamp: null,
-      dateTimeISO: "2017-12-01T00:00:00-05:00",
-      type: "l",
-      heightFT: null,
-      heightM: null
+      heightFT: 0,
+      heightM: 0
       },
       {
       timestamp: null,
       dateTimeISO: "2017-12-01T00:00:00-05:00",
       type: "",
-      heightFT: null,
-      heightM: null
+      heightFT: 0,
+      heightM: 0
       },
       {
       timestamp: null,
-      dateTimeISO: "2017-12-02T00:00:00-05:00",
-      type: "l",
-      heightFT: null,
-      heightM: null
+      dateTimeISO: "2017-12-01T00:00:00-05:00",
+      type: "",
+      heightFT: 0,
+      heightM: 0
+      },
+      {
+      timestamp: null,
+      dateTimeISO: "2017-12-01T00:00:00-05:00",
+      type: "",
+      heightFT: 0,
+      heightM: 0
+      },
+      {
+      timestamp: null,
+      dateTimeISO: "2017-12-01T00:00:00-05:00",
+      type: "",
+      heightFT: 0,
+      heightM: 0
       },
       {
       timestamp: null,
       dateTimeISO: "2017-12-02T00:00:00-05:00",
       type: "",
-      heightFT: null,
-      heightM: null
-      },
-      {
-      timestamp: null,
-      dateTimeISO: "2017-12-02T00:00:00-05:00",
-      type: "l",
-      heightFT: null,
-      heightM: null
+      heightFT: 0,
+      heightM: 0
       },
       {
       timestamp: null,
       dateTimeISO: "2017-12-02T00:00:00-05:00",
       type: "",
-      heightFT: null,
-      heightM: null
+      heightFT: 0,
+      heightM: 0
+      },
+      {
+      timestamp: null,
+      dateTimeISO: "2017-12-02T00:00:00-05:00",
+      type: "",
+      heightFT: 0,
+      heightM: 0
+      },
+      {
+      timestamp: null,
+      dateTimeISO: "2017-12-02T00:00:00-05:00",
+      type: "",
+      heightFT: 0,
+      heightM: 0
       }
     ],
     profile: {
