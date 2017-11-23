@@ -107,40 +107,6 @@ export const TIDES = (props) => {
 
   }
 
-  function location_24(x,row) {
-    const station_days = stations[x]
-
-    const this_row = station_days.map(day => day[row])
-
-    debugger
-    if (row === 3 ) { //&& this_row[3] === undefined ) {
-      return (
-        <Table.Row>
-          <Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell>
-        </Table.Row>
-      )
-    } else {
-      return (
-        <Table.Row>
-          <Table.Cell>Sun</Table.Cell>
-          <Table.Cell>’</Table.Cell>
-          <Table.Cell>Mon</Table.Cell>
-          <Table.Cell>’</Table.Cell>
-          <Table.Cell>Tue</Table.Cell>
-          <Table.Cell>’</Table.Cell>
-          <Table.Cell>Wed</Table.Cell>
-          <Table.Cell>’</Table.Cell>
-          <Table.Cell>Thu</Table.Cell>
-          <Table.Cell>’</Table.Cell>
-          <Table.Cell>Fri</Table.Cell>
-          <Table.Cell>’</Table.Cell>
-          <Table.Cell>Sat</Table.Cell>
-          <Table.Cell>’</Table.Cell>
-        </Table.Row>
-      )
-    }
-  }
-
   function body() {
 
     return (
