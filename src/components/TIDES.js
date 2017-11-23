@@ -72,26 +72,26 @@ export const TIDES = (props) => {
 
       return (
         <Table.Row key={i}>
-          { this_row.map((row_data, j) => {
+          { this_row.map((cell, j) => {
+            if (row === 3 && cell === undefined) {
               return (
                   [
-                  <Table.Cell key={`${j} tt`}> L Time </Table.Cell>,
-                  <Table.Cell key={`${j} ft`}> Ft’ </Table.Cell>
+                  <Table.Cell key={`${j} tt`}>-</Table.Cell>,
+                  <Table.Cell key={`${j} ft`}>-</Table.Cell>
                   ]
               )
-            })
+            } else {
+              return (
+                  [
+                  <Table.Cell key={`${j} tt`}>{ `${cell.type.toUpperCase()} ${cell.dateTimeISO.slice(11,16)}` }</Table.Cell>,
+                  <Table.Cell key={`${j} ft`}>{ `${cell.heightFT}’` }</Table.Cell>
+                  ]
+              )
+            }
+          })
           }
-        </Table.Row>
+      </Table.Row>
       )
-
-      // return this_row.map(x => {
-      // 	return (
-      //     <Table.Row key={`${row} ${i}`}>
-      //       <Table.Cell> L Time \</Table.Cell>
-      //       <Table.Cell> Ft’ </Table.Cell>
-      //     </Table.Row>
-      // 	)
-      // })
 
     })
 
@@ -168,7 +168,6 @@ export const TIDES = (props) => {
       <div>
         <br />
         This tide table begins on Sunday { start_date }
-        <font size='1'>
         <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
 
           <Table.Header>
@@ -187,7 +186,6 @@ export const TIDES = (props) => {
           { body() }
 
         </Table>
-        </font>
       </div>
 
     )
