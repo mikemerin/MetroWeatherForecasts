@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table } from 'semantic-ui-react'
 import { weather_types } from './WxTypes'
+import { Temptidedata } from '../adapters/Tempdata'
 
 export const TIDES = (props) => {
 
@@ -14,8 +15,15 @@ export const TIDES = (props) => {
   // data[n].periods[0].dateTimeISO.match(/T(\S+)-/)[1]
 
   function periods_to_days(n) {
+
+    var days = undefined
+
+    // if that specific location returns no data
+    if ( data[n] === undefined )
+      { data[n] = Temptidedata.response[0] }
+
     var station_periods = data[n].periods
-    var days = [ [ station_periods[0] ], [], [], [], [], [], [] ]
+    days = [ [ station_periods[0] ], [], [], [], [], [], [] ]
 
     var index = 0
 
@@ -105,7 +113,7 @@ export const TIDES = (props) => {
     const this_row = station_days.map(day => day[row])
 
     debugger
-    if (row == 3 ) { //&& this_row[3] === undefined ) {
+    if (row === 3 ) { //&& this_row[3] === undefined ) {
       return (
         <Table.Row>
           <Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell>
