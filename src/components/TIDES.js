@@ -1,13 +1,12 @@
 import React from 'react'
 import { Table } from 'semantic-ui-react'
-import { weather_types } from './WxTypes'
 import { Temptidedata } from '../adapters/Tempdata'
 
 export const TIDES = (props) => {
 
-  const { data, current } = props
+  const { data } = props
 
-  const start_date = data[0].periods[0].dateTimeISO.slice(0,10)
+  var dates = ["", "", "", "", "", "", "", "" ]
 
   // date
   // data[n].periods[0].dateTimeISO.slice(0,10)
@@ -33,6 +32,8 @@ export const TIDES = (props) => {
            { index++ }
       days[index].push(station_periods[i])
     }
+
+    days.forEach((x, i) => dates[i] = x[0].dateTimeISO.slice(5,10))
 
     return days
   }
@@ -141,19 +142,18 @@ export const TIDES = (props) => {
     return (
       <div>
         <br />
-        This tide table begins on Sunday { start_date }
         <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
 
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell colSpan={2}><h4>Location</h4></Table.HeaderCell>
-              <Table.HeaderCell colSpan={2}><h4>Sunday</h4></Table.HeaderCell>
-              <Table.HeaderCell colSpan={2}><h4>Monday</h4></Table.HeaderCell>
-              <Table.HeaderCell colSpan={2}><h4>Tuesday</h4></Table.HeaderCell>
-              <Table.HeaderCell colSpan={2}><h4>Wednesday</h4></Table.HeaderCell>
-              <Table.HeaderCell colSpan={2}><h4>Thursday</h4></Table.HeaderCell>
-              <Table.HeaderCell colSpan={2}><h4>Friday</h4></Table.HeaderCell>
-              <Table.HeaderCell colSpan={2}><h4>Saturday</h4></Table.HeaderCell>
+              <Table.HeaderCell colSpan={2}><h4>Sunday {dates[0]}</h4></Table.HeaderCell>
+              <Table.HeaderCell colSpan={2}><h4>Monday {dates[1]}</h4></Table.HeaderCell>
+              <Table.HeaderCell colSpan={2}><h4>Tuesday {dates[2]}</h4></Table.HeaderCell>
+              <Table.HeaderCell colSpan={2}><h4>Wednesday {dates[3]}</h4></Table.HeaderCell>
+              <Table.HeaderCell colSpan={2}><h4>Thursday {dates[4]}</h4></Table.HeaderCell>
+              <Table.HeaderCell colSpan={2}><h4>Friday {dates[5]}</h4></Table.HeaderCell>
+              <Table.HeaderCell colSpan={2}><h4>Saturday {dates[6]}</h4></Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
