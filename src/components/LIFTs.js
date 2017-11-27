@@ -42,6 +42,14 @@ export const LIFTs = (props) => {
     return (
       <Table.Body>
         <Table.Row>
+          <Table.Cell><h4>WX</h4></Table.Cell>
+          <Table.Cell><h4>{weekdays[d_1].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.Cell>
+          <Table.Cell><h4>{weekdays[d_1].toUpperCase().slice(0,3)}. NIGHT 6P-6A</h4></Table.Cell>
+          <Table.Cell><h4>{weekdays[d_2].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.Cell>
+          <Table.Cell><h4>{weekdays[d_2].toUpperCase().slice(0,3)}. NIGHT 6P-6A</h4></Table.Cell>
+          <Table.Cell><h4>{weekdays[d_3].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.Cell>
+        </Table.Row>
+        <Table.Row>
           <Table.Cell>TEMPS (ºF)</Table.Cell>
           <Table.Cell>{ day1.maxTempF }</Table.Cell>
           <Table.Cell>{ night1.minTempF }</Table.Cell>
@@ -129,17 +137,6 @@ export const LIFTs = (props) => {
           { weekdays[d_4] }: { data.periods[6].weather }<br />
           { weekdays[d_5] }: { data.periods[8].weather }
           <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
-
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell><h4>WX</h4></Table.HeaderCell>
-                <Table.HeaderCell><h4>{weekdays[d_1].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.HeaderCell>
-                <Table.HeaderCell><h4>{weekdays[d_1].toUpperCase().slice(0,3)}. NIGHT 6P-6A</h4></Table.HeaderCell>
-                <Table.HeaderCell><h4>{weekdays[d_2].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.HeaderCell>
-                <Table.HeaderCell><h4>{weekdays[d_2].toUpperCase().slice(0,3)}. NIGHT 6P-6A</h4></Table.HeaderCell>
-                <Table.HeaderCell><h4>{weekdays[d_3].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
 
             { body() }
 

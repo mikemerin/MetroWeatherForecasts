@@ -112,6 +112,16 @@ export const TIDES = (props) => {
 
     return (
       <Table.Body>
+        <Table.Row>
+          <Table.Cell colSpan={2}><h4>Location</h4></Table.Cell>
+          <Table.Cell colSpan={2}><h4>Sunday {dates[0]}</h4></Table.Cell>
+          <Table.Cell colSpan={2}><h4>Monday {dates[1]}</h4></Table.Cell>
+          <Table.Cell colSpan={2}><h4>Tuesday {dates[2]}</h4></Table.Cell>
+          <Table.Cell colSpan={2}><h4>Wednesday {dates[3]}</h4></Table.Cell>
+          <Table.Cell colSpan={2}><h4>Thursday {dates[4]}</h4></Table.Cell>
+          <Table.Cell colSpan={2}><h4>Friday {dates[5]}</h4></Table.Cell>
+          <Table.Cell colSpan={2}><h4>Saturday {dates[6]}</h4></Table.Cell>
+        </Table.Row>
         { location_top(0) }
         { location_bot(0) }
         { location_top(1) }
@@ -143,19 +153,6 @@ export const TIDES = (props) => {
       <div>
         <br />
         <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
-
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell colSpan={2}><h4>Location</h4></Table.HeaderCell>
-              <Table.HeaderCell colSpan={2}><h4>Sunday {dates[0]}</h4></Table.HeaderCell>
-              <Table.HeaderCell colSpan={2}><h4>Monday {dates[1]}</h4></Table.HeaderCell>
-              <Table.HeaderCell colSpan={2}><h4>Tuesday {dates[2]}</h4></Table.HeaderCell>
-              <Table.HeaderCell colSpan={2}><h4>Wednesday {dates[3]}</h4></Table.HeaderCell>
-              <Table.HeaderCell colSpan={2}><h4>Thursday {dates[4]}</h4></Table.HeaderCell>
-              <Table.HeaderCell colSpan={2}><h4>Friday {dates[5]}</h4></Table.HeaderCell>
-              <Table.HeaderCell colSpan={2}><h4>Saturday {dates[6]}</h4></Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
 
           { body() }
 
