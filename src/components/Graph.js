@@ -187,7 +187,7 @@ export const Graph = (props) => {
 
      return (
        <div>
-         <Bar data={ data } height={ 200 } options={ options }/>
+         <Bar data={ data } height={ 120 } options={ options }/>
        </div>
      );
 
