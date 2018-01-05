@@ -39,7 +39,7 @@ export const Graph = (props) => {
   }
 
   const options = {
-    showTooltips: false
+    showTooltips: false,
     tooltips: {
       enabled: false
       // mode: 'x-axis',
