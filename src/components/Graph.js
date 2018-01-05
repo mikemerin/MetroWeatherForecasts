@@ -165,7 +165,7 @@ export const Graph = (props) => {
            yAxisID: 'Temps',
            type: 'line',
            fill: '-1',
-           backgroundColor: 'rgba(255,100,100,0.05)',
+           backgroundColor: 'rgba(255,100,100,0.15)',
            borderColor: 'rgba(255,100,100,.8)',
            borderCapStyle: 'butt',
            borderDash: [],
@@ -187,7 +187,7 @@ export const Graph = (props) => {
 
      return (
        <div>
-         <Bar data={ data } height={ 120 } options={ options }/>
+         <Bar data={ data } height={ 150 } options={ options }/>
        </div>
      );
 
