@@ -1,10 +1,11 @@
 import React from 'react'
 import { Table } from 'semantic-ui-react'
+import { Graph } from './Graph'
 import { weather_types } from './WxTypes'
 
 export const LIFTs = (props) => {
 
-  const { data } = props
+  const { data, season, graph_data } = props
 
   const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
   const d = new Date()
@@ -22,7 +23,7 @@ export const LIFTs = (props) => {
     if (d_5 > 6) { d_5 -= 7 }
   }
 
-  function body() {
+  function body(season) {
 
     const day1 = data.periods[0]
     const night1 = data.periods[1]
@@ -38,6 +39,67 @@ export const LIFTs = (props) => {
     function cells_range(type1, type2) { return three_day.map((x, i) => <Table.Cell key={i}>{ x[type1] }-{ x[type2] }</Table.Cell> )}
     function cells_wx_types() { return three_day.map((x, i) => <Table.Cell key={i}>{ weather_types[x['weatherPrimaryCoded'].split(":")[2]] }</Table.Cell> ) }
 
+    function season_output(type) {
+      if ( season === "normal" ) {
+        switch(type) {
+          case "maxDewpointF":
+            return (
+              <Table.Row>
+                <Table.Cell>DEWPOINT (ºF)</Table.Cell>
+                <Table.Cell>{ day1.maxDewpointF }</Table.Cell>
+                <Table.Cell>-</Table.Cell>
+                <Table.Cell>{ day2.maxDewpointF }</Table.Cell>
+                <Table.Cell>-</Table.Cell>
+                <Table.Cell>{ day3.maxDewpointF }</Table.Cell>
+              </Table.Row>
+            )
+          case "THUNDER %":
+            return (
+              <Table.Row>
+                <Table.Cell>THUNDER %</Table.Cell>
+                <Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell>
+              </Table.Row>
+            )
+          case "bottom":
+            return (
+              <Table.Row>
+                <Table.Cell>DAYTIME AVG HUMIDITY</Table.Cell>
+                <Table.Cell colSpan={2}>{ day1.humidity }%</Table.Cell>
+                <Table.Cell>DAYTIME UV INDEX</Table.Cell>
+                <Table.Cell colSpan={2}>{ day1.uvi }</Table.Cell>
+              </Table.Row>
+            )
+          default: break;
+        }
+      } else if ( season === "winter" ) {
+        switch(type) {
+          case "snowIN":
+            return (
+              <Table.Row>
+                <Table.Cell>SNOW (IN)</Table.Cell>
+                { cells('snowIN') }
+              </Table.Row>
+            )
+            case "CHANGEOVER":
+              return (
+                <Table.Row>
+                  <Table.Cell>CHANGEOVER</Table.Cell>
+                  <Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell>
+                </Table.Row>
+              )
+            case "bottom":
+              return (
+                <Table.Row>
+                  <Table.Cell>FORECAST CONFIDENCE</Table.Cell>
+                  <Table.Cell colSpan={2}>-</Table.Cell>
+                  <Table.Cell>1ST 2'' OF SNOW BY</Table.Cell>
+                  <Table.Cell colSpan={2}>-</Table.Cell>
+                </Table.Row>
+              )
+            default: break;
+        }
+      }
+    }
 
     return (
       <Table.Body>
@@ -49,6 +111,15 @@ export const LIFTs = (props) => {
           <Table.Cell>{ night2.minTempF }</Table.Cell>
           <Table.Cell>{ day3.maxTempF }</Table.Cell>
         </Table.Row>
+        <Table.Row>
+          <Table.Cell>FEELS LIKE (ºF)</Table.Cell>
+          <Table.Cell>{ day1.maxFeelslikeF }</Table.Cell>
+          <Table.Cell>{ night1.minFeelslikeF }</Table.Cell>
+          <Table.Cell>{ day2.maxFeelslikeF }</Table.Cell>
+          <Table.Cell>{ night2.minFeelslikeF }</Table.Cell>
+          <Table.Cell>{ day3.maxFeelslikeF }</Table.Cell>
+        </Table.Row>
+        { season_output('maxDewpointF') }
         <Table.Row>
           <Table.Cell>WIND DIR</Table.Cell>
           { cells('windDir') }
@@ -69,18 +140,13 @@ export const LIFTs = (props) => {
           <Table.Cell>PRECIP %</Table.Cell>
           { cells('pop') }
         </Table.Row>
+        { season_output('THUNDER %') }
         <Table.Row>
           <Table.Cell>LIQUID (IN)</Table.Cell>
           { cells('precipIN') }
         </Table.Row>
-        <Table.Row>
-          <Table.Cell>SNOW (IN)</Table.Cell>
-          { cells('snowIN') }
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>CHANGEOVER</Table.Cell>
-          <Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell>
-        </Table.Row>
+        { season_output('snowIN') }
+        { season_output('CHANGEOVER') }
         <Table.Row>
           <Table.Cell>START</Table.Cell>
           <Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell>
@@ -99,12 +165,7 @@ export const LIFTs = (props) => {
           <Table.Cell>ADVISORIES</Table.Cell>
           <Table.Cell colSpan={2}>-</Table.Cell>
         </Table.Row>
-        <Table.Row>
-          <Table.Cell>WINTER FORECAST CONFIDENCE</Table.Cell>
-          <Table.Cell colSpan={2}>-</Table.Cell>
-          <Table.Cell>1ST 2'' OF SNOW BY</Table.Cell>
-          <Table.Cell colSpan={2}>-</Table.Cell>
-        </Table.Row>
+        { season_output('bottom') }
         <Table.Row>
           <Table.Cell>{ weekdays[d_4] }</Table.Cell>
           <Table.Cell colSpan={2}>{ day4.weather }, { day4.maxTempF }ºF</Table.Cell>
@@ -145,9 +206,10 @@ export const LIFTs = (props) => {
           <br />
           <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
 
-            { body() }
+            { body(season) }
 
           </Table>
+          <Graph graph_data={ graph_data } />
         </div>
 
       )

@@ -14,13 +14,14 @@ export default class App extends Component {
     super(props, context)
     this.state = {
       current: 0,
-      data: [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ]
+      season: "winter",
+      data: [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ]
     }
   }
 
   componentWillMount() {
     console.log("mounting")
-    for (let x = 0; x < 15; x++) {
+    for (let x = 0; x < 21; x++) {
       ForecastAdapter.all(x).then(data => {
         const response = data.response[0]
         var current_data = this.state.data
@@ -32,22 +33,28 @@ export default class App extends Component {
 
   handlePageChange = (event, result) => {
     event.preventDefault()
-    const current = {"LIFT": 0, "LILIFT": 1, "MNR2": 2, "MNR3": 3, "MNR4": 4, "MNR5": 5, "TIDES": 6}
+    const current = {"LIFT": 0, "LI": 1, "M2": 2, "M3": 3, "M4": 4, "M5": 5, "TIDES": 6}
     this.setState({ current: current[result.children] })
+  }
+
+  handleSeasonChange = (event, result) => {
+    event.preventDefault()
+    this.setState({ season: event.target.value })
   }
 
   render() {
 
-    const { data, current } = this.state
+    const { data, current, season } = this.state
 
     return (
       <div>
-        <Header data={ data[current] } current={ current } handlePageChange={ this.handlePageChange } />
+        <Header data={ data[current] } current={ current } season={ season }
+          handlePageChange={ this.handlePageChange } handleSeasonChange={ this.handleSeasonChange }/>
         <Grid>
           <Grid.Column width={1}>
           </Grid.Column>
           <Grid.Column width={14}>
-            <FormContainer data={ data } current={ current }/>
+            <FormContainer data={ data } current={ current } season={ season }/>
           </Grid.Column>
           <Grid.Column width={1}>
           </Grid.Column>
