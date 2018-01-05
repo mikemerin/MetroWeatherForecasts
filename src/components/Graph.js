@@ -39,9 +39,11 @@ export const Graph = (props) => {
   }
 
   const options = {
+    showTooltips: false
     tooltips: {
-      mode: 'x-axis',
-      position: 'nearest'
+      enabled: false
+      // mode: 'x-axis',
+      // position: 'nearest'
     },
     scales: {
       xAxes: [{
