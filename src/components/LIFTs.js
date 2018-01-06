@@ -209,7 +209,7 @@ export const LIFTs = (props) => {
             { body(season) }
 
           </Table>
-          <Graph graph_data={ graph_data } />
+          <Graph graph_data={ graph_data } season={ season }/>
         </div>
 
       )

@@ -3,9 +3,9 @@ import { Bar } from 'react-chartjs-2'
 
 export const Graph = (props) => {
 
-  const { graph_data } = props
+  const { graph_data, season } = props
 
-  var labels = [], precipIN = [], snowIN = [], tempF = [], freezing = []
+  var labels = [], precipIN = [], snowIN = [], tempF = [], freezing = [], feelslikeF = []
 
   const days_short = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
@@ -31,9 +31,11 @@ export const Graph = (props) => {
       labels.push(
         ( to_i(dt.slice(11,13)) < 3 ? `${days_short[new Date(dt).getDay()]} ${to_i(dt.slice(5,7))}/${to_i(dt.slice(8,10))} - ` : "" ) + to12( to_i( dt.slice(11,13) ))
       )
+      debugger
       precipIN.push( x.precipIN )
       snowIN.push( x.snowIN )
       tempF.push( x.tempF )
+      feelslikeF.push( x.feelslikeF )
       freezing.push( 32 )
      })
   }
@@ -90,7 +92,7 @@ export const Graph = (props) => {
 
 
 
-   const data = {
+   var data = {
        labels: labels,
        datasets: [
          {
@@ -117,52 +119,6 @@ export const Graph = (props) => {
            data: precipIN
          },
          {
-           label: 'Snow (in)',
-           yAxisID: 'Precip',
-           type: 'line',
-           fill: true,
-          //  lineTension: 0,
-           backgroundColor: 'rgba(150,150,255,.2)',
-           borderColor: 'rgba(150,150,255,.3)',
-           borderCapStyle: 'butt',
-           borderDash: [],
-           borderDashOffset: 0.0,
-           borderJoinStyle: 'miter',
-           pointBorderColor: 'rgba(150,150,255,.9)',
-           pointBackgroundColor: '#aaa',
-           pointBorderWidth: 1,
-           pointHoverRadius: 5,
-           pointHoverBackgroundColor: 'rgba(150,150,255,.3)',
-           pointHoverBorderColor: 'rgba(150,150,255,.3)',
-           pointHoverBorderWidth: 2,
-           pointRadius: 6,
-           pointHitRadius: 10,
-           pointStyle: 'star',
-           data: snowIN
-         },
-         {
-           label: 'Freezing Line (ºF)',
-           yAxisID: 'Temps',
-           type: 'line',
-           fill: false,
-           backgroundColor: 'rgba(200,150,150,0.1)',
-           borderColor: 'rgba(200,150,150,.4)',
-           borderCapStyle: 'butt',
-           borderDash: [],
-           borderDashOffset: 0.0,
-           borderJoinStyle: 'miter',
-           pointBorderColor: 'rgba(200,150,150,0)',
-           pointBackgroundColor: '#fff',
-           pointBorderWidth: 0,
-           pointHoverRadius: 5,
-           pointHoverBackgroundColor: 'rgba(200,150,150,1)',
-           pointHoverBorderColor: 'rgba(200,150,150,1)',
-           pointHoverBorderWidth: 2,
-           pointRadius: 0,
-           pointHitRadius: 10,
-           data: freezing
-         },
-         {
            label: 'Temps (ºF)',
            yAxisID: 'Temps',
            type: 'line',
@@ -186,6 +142,81 @@ export const Graph = (props) => {
          }
        ]
      };
+
+     if (graph_data.periods !== undefined) {
+       if (season === "winter") {
+         data.datasets.unshift({
+             label: 'Snow (in)',
+             yAxisID: 'Precip',
+             type: 'line',
+             fill: true,
+            //  lineTension: 0,
+             backgroundColor: 'rgba(150,150,255,.2)',
+             borderColor: 'rgba(150,150,255,.3)',
+             borderCapStyle: 'butt',
+             borderDash: [],
+             borderDashOffset: 0.0,
+             borderJoinStyle: 'miter',
+             pointBorderColor: 'rgba(150,150,255,.9)',
+             pointBackgroundColor: '#aaa',
+             pointBorderWidth: 1,
+             pointHoverRadius: 5,
+             pointHoverBackgroundColor: 'rgba(150,150,255,.3)',
+             pointHoverBorderColor: 'rgba(150,150,255,.3)',
+             pointHoverBorderWidth: 2,
+             pointRadius: 6,
+             pointHitRadius: 10,
+             pointStyle: 'star',
+             data: snowIN
+           })
+           data.datasets.push({
+               label: 'Freezing Line (ºF)',
+               yAxisID: 'Temps',
+               type: 'line',
+               fill: false,
+               backgroundColor: 'rgba(200,150,150,0.1)',
+               borderColor: 'rgba(200,150,150,.4)',
+               borderCapStyle: 'butt',
+               borderDash: [10,7],
+               borderDashOffset: 0.0,
+               borderJoinStyle: 'miter',
+               pointBorderColor: 'rgba(200,150,150,0)',
+               pointBackgroundColor: '#fff',
+               pointBorderWidth: 0,
+               pointHoverRadius: 5,
+               pointHoverBackgroundColor: 'rgba(200,150,150,1)',
+               pointHoverBorderColor: 'rgba(200,150,150,1)',
+               pointHoverBorderWidth: 2,
+               pointRadius: 0,
+               pointHitRadius: 10,
+               data: freezing
+            })
+       } else {
+         data.datasets.push({
+             label: 'Feels Like (ºF)',
+             yAxisID: 'Temps',
+             type: 'line',
+             fill: false,
+             backgroundColor: 'rgba(255,0,0,0)',
+             borderColor: 'rgba(255,0,0,.5)',
+             borderCapStyle: 'butt',
+             borderDash: [8,6],
+             borderDashOffset: 0.0,
+             borderJoinStyle: 'miter',
+             borderWidth: 1,
+             pointBorderColor: 'rgba(255,0,0,.8)',
+             pointBackgroundColor: '#fff',
+             pointBorderWidth: 1,
+             pointHoverRadius: 5,
+             pointHoverBackgroundColor: 'rgba(255,0,0,1)',
+             pointHoverBorderColor: 'rgba(255,0,0,1)',
+             pointHoverBorderWidth: 2,
+             pointRadius: 0,
+             pointHitRadius: 10,
+             data: feelslikeF
+         })
+       }
+     }
 
      return (
        <div>
