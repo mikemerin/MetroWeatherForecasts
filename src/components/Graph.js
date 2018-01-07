@@ -25,7 +25,6 @@ export const Graph = (props) => {
   }
 
   if (graph_data.periods !== undefined) {
-    graph_data.periods.pop()
     graph_data.periods.forEach(x => {
       const dt = x.dateTimeISO
       labels.push(
