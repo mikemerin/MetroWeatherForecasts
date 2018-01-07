@@ -21,14 +21,20 @@ export default class App extends Component {
 
   componentWillMount() {
     console.log("mounting")
-    for (let x = 0; x < 21; x++) {
-      ForecastAdapter.all(x).then(data => {
+    // for (let x = 0; x < 21; x++) {
+      ForecastAdapter.all(0).then(data => {
         const response = data.response[0]
         var current_data = this.state.data
-        current_data[x] = response
+        current_data[0] = response
         this.setState({ data: current_data })
       })
-    }
+      ForecastAdapter.all(6).then(data => {
+        const response = data.response[0]
+        var current_data = this.state.data
+        current_data[6] = response
+        this.setState({ data: current_data })
+      })
+    // }
   }
 
   handlePageChange = (event, result) => {
