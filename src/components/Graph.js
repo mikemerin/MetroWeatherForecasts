@@ -159,7 +159,6 @@ export const Graph = (props) => {
       data: tempF
     }
 
-    
     var freezingLineData = {
                     label: 'Freezing Line (ºF)',
                     yAxisID: 'Temps',
