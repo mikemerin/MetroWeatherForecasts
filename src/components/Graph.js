@@ -2,24 +2,15 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2'
 import 'chartjs-plugin-datalabels'
 
-// function arraySums(array) {
-//   var as = [...Array(array.length)].map(x => 0)
-//   var n = 0
-//   array.forEach((x,i) => x === 0 ? n = i : as[n] += x )
-//
-//   return as.map(x => x === 0 ? null : Math.round(x*100)/100 + '"' )
-//
-// }
-
+// takes all values in an array, returns summed consecutive values that are centered
 function arraySums(array) {
-  var as = [...Array(array.length)].map(x => 0)
-  var index = 0
-  var index2 = 0
-  var amount = 0
+  var array2 = [...Array(array.length)].map(x => 0)
+  var index = 0, index2 = 0, amount = 0
+  midpoint = () => { array2[ Math.floor((index+1+index2)/2) ] = amount }
+
   array.forEach((x,i) => {
     if (x === 0) {
-      var midpoint = Math.floor((index+1+index2)/2)
-      as[midpoint] = amount
+      midpoint()
       amount = 0
       index = i
     } else {
@@ -27,12 +18,12 @@ function arraySums(array) {
       amount += x
     }
   })
+
   if (amount !== 0) {
-    var midpoint = Math.floor((index+1+index2)/2)
-    as[midpoint] = amount
+    midpoint()
   }
 
-  return as.map(x => x === 0 ? null : Math.round(x*100)/100 + '"' )
+  return array2.map(x => x === 0 ? null : Math.round(x*100)/100 + '"' )
 
 }
 
