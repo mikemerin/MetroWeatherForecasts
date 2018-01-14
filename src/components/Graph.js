@@ -1,5 +1,40 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2'
+import 'chartjs-plugin-datalabels'
+
+// function arraySums(array) {
+//   var as = [...Array(array.length)].map(x => 0)
+//   var n = 0
+//   array.forEach((x,i) => x === 0 ? n = i : as[n] += x )
+//
+//   return as.map(x => x === 0 ? null : Math.round(x*100)/100 + '"' )
+//
+// }
+
+function arraySums(array) {
+  var as = [...Array(array.length)].map(x => 0)
+  var index = 0
+  var index2 = 0
+  var amount = 0
+  array.forEach((x,i) => {
+    if (x === 0) {
+      var midpoint = Math.floor((index+1+index2)/2)
+      as[midpoint] = amount
+      amount = 0
+      index = i
+    } else {
+      index2 = i
+      amount += x
+    }
+  })
+  if (amount !== 0) {
+    var midpoint = Math.floor((index+1+index2)/2)
+    as[midpoint] = amount
+  }
+
+  return as.map(x => x === 0 ? null : Math.round(x*100)/100 + '"' )
+
+}
 
 export const Graph = (props) => {
 
@@ -38,7 +73,46 @@ export const Graph = (props) => {
      })
   }
 
+  var snowSum = arraySums(snowIN)
+  var precipSum = arraySums(precipIN)
+
+  var minTemp = Math.min(...tempF)
+  var maxTemp = Math.max(...tempF)
+  var maxPrecip = Math.max(...precipIN)
+
+  if (season === "winter") {
+    maxPrecip = Math.max(...precipIN, ...snowIN)
+  } else {
+    minTemp = Math.min(...tempF, ...feelslikeF)
+    maxTemp = Math.max(...tempF, ...feelslikeF)
+  }
+
+  var ss = season === "winter" ? .05 : .01
+  var ss2 = 1 / ss
+
+  var precipDatalabels = { display: false }
+
+  if (season === "normal") {
+    precipDatalabels = {
+              backgroundColor: function(context) {
+    							return context.dataset.backgroundColor;
+    					},
+    					borderRadius: 2,
+    					color: 'white',
+    					font: {
+    						weight: 'bold'
+    					},
+              align: 'start',
+              anchor: 'start',
+              formatter: function(value, context) {
+                return precipSum[context.dataIndex]
+              }
+            }
+  }
+
   const options = {
+    name: "Forecast",
+
     showTooltips: false,
     tooltips: {
       enabled: false
@@ -60,11 +134,11 @@ export const Graph = (props) => {
         position: 'left',
         ticks: {
           beginAtZero: true,
-          stepSize: .05,
+          stepSize: ss,
+          max: Math.ceil((maxPrecip+ss) * ss2) / ss2,
           callback: function(label, index, labels) {
                         return Math.round(label*100)/100 + '"';
                     }
-
         }
       }, {
         id: 'Temps',
@@ -72,7 +146,10 @@ export const Graph = (props) => {
         type: 'linear',
         position: 'right',
         ticks: {
+          stepSize: 5,
           fontSize: 10,
+          min: Math.floor((minTemp-5)/5)*5,
+          max: Math.ceil((maxTemp+5)/5)*5,
           callback: function(label, index, labels) {
                         return label + 'ºF';
                     }
@@ -93,6 +170,7 @@ export const Graph = (props) => {
       yAxisID: 'Precip',
       type: 'line',
       fill: true,
+      datalabels: precipDatalabels,
      //  lineTension: 0,
       backgroundColor: 'rgba(0,0,100,.5)',
       borderColor: 'rgba(0,0,100,.6)',
@@ -116,6 +194,21 @@ export const Graph = (props) => {
         yAxisID: 'Precip',
         type: 'line',
         fill: true,
+        datalabels: {
+          backgroundColor: function(context) {
+							return context.dataset.backgroundColor;
+					},
+					borderRadius: 2,
+					color: 'black',
+					font: {
+						weight: 'bold'
+					},
+          align: 'start',
+          anchor: 'start',
+          formatter: function(value, context) {
+            return snowSum[context.dataIndex]
+          }
+        },
        //  lineTension: 0,
         backgroundColor: 'rgba(150,150,255,.2)',
         borderColor: 'rgba(150,150,255,.3)',
@@ -140,6 +233,9 @@ export const Graph = (props) => {
       yAxisID: 'Temps',
       type: 'line',
       fill: '+1',
+      datalabels: {
+          display: false
+      },
       backgroundColor: 'rgba(255,100,100,0.15)',
       borderColor: 'rgba(255,100,100,.8)',
       borderCapStyle: 'butt',
@@ -163,6 +259,9 @@ export const Graph = (props) => {
                     yAxisID: 'Temps',
                     type: 'line',
                     fill: false,
+                    datalabels: {
+                        display: false
+                    },
                     backgroundColor: 'rgba(100,100,255,0.15)',
                     borderColor: 'rgba(150,150,200,.4)',
                     borderCapStyle: 'butt',
@@ -185,6 +284,9 @@ export const Graph = (props) => {
                     yAxisID: 'Temps',
                     type: 'line',
                     fill: false,
+                    datalabels: {
+                        display: false
+                    },
                     backgroundColor: 'rgba(255,0,0,0)',
                     borderColor: 'rgba(255,0,0,.5)',
                     borderCapStyle: 'butt',

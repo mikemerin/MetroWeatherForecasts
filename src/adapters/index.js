@@ -8,15 +8,15 @@ const forecast_parameters = "&from=today&to=+5days&filter=daynight&limit=9"
 const graph_parameters = "&from=-3hours&filter=3hr&limit=48"
 const tide_parameters = "&from=sunday&to=+7days&filter=highlow"
 
-const LIFT_URL   = URL + "forecasts/40.78,-73.97" + id_secret + forecast_parameters
-const LILIFT_URL = URL + "forecasts/40.79,-71.10" + id_secret + forecast_parameters
+const LIFT_URL   = URL + "forecasts/40.78,-73.88" + id_secret + forecast_parameters
+const LILIFT_URL = URL + "forecasts/40.79,-73.10" + id_secret + forecast_parameters
 const MNR2_URL   = URL + "forecasts/41.06,-73.70" + id_secret + forecast_parameters
 const MNR3_URL   = URL + "forecasts/41.50,-74.10" + id_secret + forecast_parameters
 const MNR4_URL   = URL + "forecasts/41.51,-74.27" + id_secret + forecast_parameters
 const MNR5_URL =   URL + "forecasts/41.16,-73.13" + id_secret + forecast_parameters
 
-const LIFT_GRAPH   = URL + "forecasts/40.78,-73.97" + id_secret + graph_parameters
-const LILIFT_GRAPH = URL + "forecasts/40.79,-71.10" + id_secret + graph_parameters
+const LIFT_GRAPH   = URL + "forecasts/40.78,-73.88" + id_secret + graph_parameters
+const LILIFT_GRAPH = URL + "forecasts/40.79,-73.10" + id_secret + graph_parameters
 const MNR2_GRAPH   = URL + "forecasts/41.06,-73.70" + id_secret + graph_parameters
 const MNR3_GRAPH   = URL + "forecasts/41.50,-74.10" + id_secret + graph_parameters
 const MNR4_GRAPH   = URL + "forecasts/41.51,-74.27" + id_secret + graph_parameters

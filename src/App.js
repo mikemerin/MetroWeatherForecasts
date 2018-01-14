@@ -7,6 +7,8 @@ import { ForecastAdapter } from './adapters'
 import { Header } from './components/Header'
 import FormContainer from './containers/FormContainer'
 
+var month = (new Date()).getMonth()
+var season = month < 3 || month === 11 ? "winter" : "normal"
 
 export default class App extends Component {
 
@@ -14,7 +16,7 @@ export default class App extends Component {
     super(props, context)
     this.state = {
       current: 0,
-      season: "winter",
+      season: season,
       data: [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ]
     }
   }
@@ -29,6 +31,23 @@ export default class App extends Component {
         this.setState({ data: current_data })
       })
     }
+    // for debugging, does 4 calls instead of 21
+    // for (let x = 0; x < 2; x++) {
+    //   ForecastAdapter.all(x).then(data => {
+    //     const response = data.response[0]
+    //     var current_data = this.state.data
+    //     current_data[x] = response
+    //     this.setState({ data: current_data })
+    //   })
+    // }
+    // for (let x = 6; x < 8; x++) {
+    //   ForecastAdapter.all(x).then(data => {
+    //     const response = data.response[0]
+    //     var current_data = this.state.data
+    //     current_data[x] = response
+    //     this.setState({ data: current_data })
+    //   })
+    // }
   }
 
   handlePageChange = (event, result) => {
