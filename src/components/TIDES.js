@@ -8,8 +8,6 @@ export const TIDES = (props) => {
 
   var dates = ["", "", "", "", "", "", "", "" ]
 
-
-  debugger
   // date
   // data[n].periods[0].dateTimeISO.slice(0,10)
   // time

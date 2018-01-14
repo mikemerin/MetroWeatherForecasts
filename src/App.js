@@ -31,7 +31,7 @@ export default class App extends Component {
         this.setState({ data: current_data })
       })
     }
-    // for debugging, does 4 calls instead of 21
+    // for debugging TIDES pages, does 4 calls instead of 21
     // for (let x = 0; x < 2; x++) {
     //   ForecastAdapter.all(x).then(data => {
     //     const response = data.response[0]

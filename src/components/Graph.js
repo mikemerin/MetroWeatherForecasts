@@ -6,11 +6,10 @@ import 'chartjs-plugin-datalabels'
 function arraySums(array) {
   var array2 = [...Array(array.length)].map(x => 0)
   var index = 0, index2 = 0, amount = 0
-  midpoint = () => { array2[ Math.floor((index+1+index2)/2) ] = amount }
 
   array.forEach((x,i) => {
     if (x === 0) {
-      midpoint()
+      array2[ Math.floor((index+1+index2)/2) ] = amount
       amount = 0
       index = i
     } else {
@@ -20,7 +19,7 @@ function arraySums(array) {
   })
 
   if (amount !== 0) {
-    midpoint()
+    array2[ Math.floor((index+1+index2)/2) ] = amount
   }
 
   return array2.map(x => x === 0 ? null : Math.round(x*100)/100 + '"' )
