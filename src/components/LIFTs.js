@@ -83,7 +83,7 @@ export const LIFTs = (props) => {
             case "CHANGEOVER":
               return (
                 <Table.Row>
-                  <Table.Cell>CHANGEOVER</Table.Cell>
+                  <Table.Cell>CHANGE-OVER</Table.Cell>
                   <Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell>
                 </Table.Row>
               )
