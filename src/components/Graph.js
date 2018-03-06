@@ -77,7 +77,7 @@ export const Graph = (props) => {
     maxTemp = Math.max(...tempF, ...feelslikeF)
   }
 
-  var ss = season === "winter" ? .05 : .01
+  var ss = season === "winter" ? .1 : .01
   var ss2 = 1 / ss
 
   var precipDatalabels = { display: false }
