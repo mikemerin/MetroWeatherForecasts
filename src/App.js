@@ -68,7 +68,7 @@ export default class App extends Component {
       6: '7', 7: '8', 8: '9', 9: '0', 0: '1'
     };
     var text = prompt("Please enter the password to continue");
-    if (!text || t.match(/\W+/) || text.split("").map(x => map[x]).join("") !== pw) {
+    if (!text || text.match(/\W+/) || text.split("").map(x => map[x]).join("") !== pw) {
       alert("Sorry wrong password, please try again.")
       this.loginPassword();
     }
