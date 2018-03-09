@@ -30,7 +30,10 @@ export const TIDES = (props) => {
       if ( station_periods[i].dateTimeISO.slice(0,10) !==
            station_periods[i-1].dateTimeISO.slice(0,10) )
            { index++ }
-      days[index].push(station_periods[i])
+           debugger
+      if (days[index]) {
+        days[index].push(station_periods[i])
+      }
     }
 
     days.forEach((x, i) => dates[i] = x[0].dateTimeISO.slice(5,10))
