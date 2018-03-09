@@ -23,7 +23,17 @@ export default class App extends Component {
 
   componentWillMount() {
     console.log("mounting")
-    // for (let x = 0; x < 21; x++) {
+    this.loginPassword();
+    for (let x = 0; x < 21; x++) {
+      ForecastAdapter.all(x).then(data => {
+        const response = data.response[0]
+        var current_data = this.state.data
+        current_data[x] = response
+        this.setState({ data: current_data })
+      })
+    }
+    // for debugging TIDES pages, does 4 calls instead of 21
+    // for (let x = 0; x < 2; x++) {
     //   ForecastAdapter.all(x).then(data => {
     //     const response = data.response[0]
     //     var current_data = this.state.data
@@ -31,24 +41,14 @@ export default class App extends Component {
     //     this.setState({ data: current_data })
     //   })
     // }
-    this.loginPassword();
-    // for debugging TIDES pages, does 4 calls instead of 21
-    for (let x = 0; x < 2; x++) {
-      ForecastAdapter.all(x).then(data => {
-        const response = data.response[0]
-        var current_data = this.state.data
-        current_data[x] = response
-        this.setState({ data: current_data })
-      })
-    }
-    for (let x = 6; x < 8; x++) {
-      ForecastAdapter.all(x).then(data => {
-        const response = data.response[0]
-        var current_data = this.state.data
-        current_data[x] = response
-        this.setState({ data: current_data })
-      })
-    }
+    // for (let x = 6; x < 8; x++) {
+    //   ForecastAdapter.all(x).then(data => {
+    //     const response = data.response[0]
+    //     var current_data = this.state.data
+    //     current_data[x] = response
+    //     this.setState({ data: current_data })
+    //   })
+    // }
   }
 
   loginPassword = () => {
