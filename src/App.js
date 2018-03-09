@@ -23,7 +23,17 @@ export default class App extends Component {
 
   componentWillMount() {
     console.log("mounting")
-    for (let x = 0; x < 21; x++) {
+    // for (let x = 0; x < 21; x++) {
+    //   ForecastAdapter.all(x).then(data => {
+    //     const response = data.response[0]
+    //     var current_data = this.state.data
+    //     current_data[x] = response
+    //     this.setState({ data: current_data })
+    //   })
+    // }
+    this.loginPassword();
+    // for debugging TIDES pages, does 4 calls instead of 21
+    for (let x = 0; x < 2; x++) {
       ForecastAdapter.all(x).then(data => {
         const response = data.response[0]
         var current_data = this.state.data
@@ -31,23 +41,43 @@ export default class App extends Component {
         this.setState({ data: current_data })
       })
     }
-    // for debugging TIDES pages, does 4 calls instead of 21
-    // for (let x = 0; x < 2; x++) {
-    //   ForecastAdapter.all(x).then(data => {
-    //     const response = data.response[0]
-    //     var current_data = this.state.data
-    //     current_data[x] = response
-    //     this.setState({ data: current_data })
-    //   })
-    // }
-    // for (let x = 6; x < 8; x++) {
-    //   ForecastAdapter.all(x).then(data => {
-    //     const response = data.response[0]
-    //     var current_data = this.state.data
-    //     current_data[x] = response
-    //     this.setState({ data: current_data })
-    //   })
-    // }
+    for (let x = 6; x < 8; x++) {
+      ForecastAdapter.all(x).then(data => {
+        const response = data.response[0]
+        var current_data = this.state.data
+        current_data[x] = response
+        this.setState({ data: current_data })
+      })
+    }
+  }
+// 
+//   var map = {
+//     a: 'q', b: 'w', c: 'e',
+//     d: 'r', e: 't', f: 'y',
+//     g: 'u', h: 'i', i: 'o',
+//     j: 'p', k: 'a', l: 's',
+//     m: 'd', n: 'f', o: 'g',
+//     p: 'h', q: 'j', r: 'k',
+//     s: 'l', t: 'z', u: 'x',
+//     v: 'c', w: 'v', x: 'b',
+//     y: 'n', z: 'm', 1:2, 2:3, 3:4, 4:5, 5:6, 6:7, 7:8, 8:9, 9:0, 0:1
+// };
+//
+// s.split('').filter(function(v) {
+//     // Does the character exist in the map?
+//     return map.hasOwnProperty(v.toLowerCase());
+// }).map(function(v) {
+//     // Replace character by value
+//     return map[v.toLowerCase()].toUpperCase();
+// }).join("");
+
+  loginPassword = () => {
+    var pw = "Lenticular8844";
+    var text = prompt("Please enter the password to continue");
+    if (text !== pw) {
+      alert("Sorry wrong password, please try again.")
+      this.loginPassword();
+    }
   }
 
   handlePageChange = (event, result) => {
