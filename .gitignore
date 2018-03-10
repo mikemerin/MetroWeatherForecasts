@@ -19,9 +19,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.settings/.jsdtscope
-.project
-.settings/org.eclipse.wst.jsdt.ui.superType.container
-.settings/org.eclipse.wst.jsdt.ui.superType.name
-semantic/tasks/config/admin/templates/.buildpath
-semantic/tasks/config/admin/templates/.settings/org.eclipse.wst.validation.prefs

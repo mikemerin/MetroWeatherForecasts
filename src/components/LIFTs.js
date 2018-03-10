@@ -5,25 +5,7 @@ import { weather_types } from './WxTypes'
 
 export const LIFTs = (props) => {
 
-  const { data, current, season, graph_data } = props
-
-
-  // duplicate of header, move both to app.js in future version
-  const location = [ "LIFT - NYC", "LILIFT - Islip NY",
-       "MNR2 - White Plains NY", "MNR3 - Beacon NY", "MNR4 - Chester NY", "MNR5 - Easton CT", "TIDES - NYC Area" ]
-
-  var lat = 0
-  var long = 0
-
-  if (data.loc !== undefined) {
-    lat = data.loc.lat
-    long = data.loc.long
-  }
-
-  lat = lat > 0 ? `${lat}ºN` : `${Math.abs(lat)}ºS`
-  long = long > 0 ? `${long}ºE` : `${Math.abs(long)}ºW`
-
-  var latlong = `Lat: ${ lat } - Long: ${ long }`
+  const { data, season, graph_data } = props
 
   const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
   const d = new Date()
@@ -101,7 +83,7 @@ export const LIFTs = (props) => {
             case "CHANGEOVER":
               return (
                 <Table.Row>
-                  <Table.Cell>CHANGE-OVER</Table.Cell>
+                  <Table.Cell>CHANGEOVER</Table.Cell>
                   <Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell><Table.Cell>-</Table.Cell>
                 </Table.Row>
               )
@@ -227,7 +209,6 @@ export const LIFTs = (props) => {
             { body(season) }
 
           </Table>
-          <center><b>{ location[current] } - { latlong }</b></center>
           <Graph graph_data={ graph_data } season={ season }/>
         </div>
 
