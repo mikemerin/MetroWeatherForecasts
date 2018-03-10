@@ -1,0 +1,6 @@
+tree d738b07ad25891e5f47c9ba6837e715ac2e90761
+parent e54924ede87f10161e541b84510486c40b6a2813
+author Mike Merin <mikemerinweather@gmail.com> 1515344069 -0500
+committer Mike Merin <mikemerinweather@gmail.com> 1515344069 -0500
+
+major rework: winter/summer forms, hourly graphs
