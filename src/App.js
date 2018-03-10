@@ -23,8 +23,17 @@ export default class App extends Component {
 
   componentWillMount() {
     console.log("mounting")
-    this.loginPassword();
-    for (let x = 0; x < 21; x++) {
+    this.greeting();
+    // for (let x = 0; x < 21; x++) {
+    //   ForecastAdapter.all(x).then(data => {
+    //     const response = data.response[0]
+    //     var current_data = this.state.data
+    //     current_data[x] = response
+    //     this.setState({ data: current_data })
+    //   })
+    // }
+    // for debugging main or LIFT pages, does 4 calls instead of 21
+    for (let x = 0; x < 2; x++) {
       ForecastAdapter.all(x).then(data => {
         const response = data.response[0]
         var current_data = this.state.data
@@ -32,26 +41,17 @@ export default class App extends Component {
         this.setState({ data: current_data })
       })
     }
-    // for debugging TIDES pages, does 4 calls instead of 21
-    // for (let x = 0; x < 2; x++) {
-    //   ForecastAdapter.all(x).then(data => {
-    //     const response = data.response[0]
-    //     var current_data = this.state.data
-    //     current_data[x] = response
-    //     this.setState({ data: current_data })
-    //   })
-    // }
-    // for (let x = 6; x < 8; x++) {
-    //   ForecastAdapter.all(x).then(data => {
-    //     const response = data.response[0]
-    //     var current_data = this.state.data
-    //     current_data[x] = response
-    //     this.setState({ data: current_data })
-    //   })
-    // }
+    for (let x = 6; x < 8; x++) {
+      ForecastAdapter.all(x).then(data => {
+        const response = data.response[0]
+        var current_data = this.state.data
+        current_data[x] = response
+        this.setState({ data: current_data })
+      })
+    }
   }
 
-  loginPassword = () => {
+  greeting = () => {
     var pw = "Stfzoexsqk9955";
     var map = {
       a: 'q', b: 'w', c: 'e', d: 'r', e: 't', f: 'y',
@@ -70,7 +70,7 @@ export default class App extends Component {
     var text = prompt("Please enter the password to continue");
     if (!text || text.match(/\W+/) || text.split("").map(x => map[x]).join("") !== pw) {
       alert("Sorry wrong password, please try again.")
-      this.loginPassword();
+      this.greeting();
     }
   }
 
