@@ -23,8 +23,17 @@ export default class App extends Component {
 
   componentWillMount() {
     console.log("mounting")
-    this.loginPassword();
-    for (let x = 0; x < 21; x++) {
+    this.greeting();
+    // for (let x = 0; x < 21; x++) {
+    //   ForecastAdapter.all(x).then(data => {
+    //     const response = data.response[0]
+    //     var current_data = this.state.data
+    //     current_data[x] = response
+    //     this.setState({ data: current_data })
+    //   })
+    // }
+    // for debugging main or LIFT pages, does 4 calls instead of 21
+    for (let x = 0; x < 2; x++) {
       ForecastAdapter.all(x).then(data => {
         const response = data.response[0]
         var current_data = this.state.data
@@ -32,27 +41,18 @@ export default class App extends Component {
         this.setState({ data: current_data })
       })
     }
-    // for debugging TIDES pages, does 4 calls instead of 21
-    // for (let x = 0; x < 2; x++) {
-    //   ForecastAdapter.all(x).then(data => {
-    //     const response = data.response[0]
-    //     var current_data = this.state.data
-    //     current_data[x] = response
-    //     this.setState({ data: current_data })
-    //   })
-    // }
-    // for (let x = 6; x < 8; x++) {
-    //   ForecastAdapter.all(x).then(data => {
-    //     const response = data.response[0]
-    //     var current_data = this.state.data
-    //     current_data[x] = response
-    //     this.setState({ data: current_data })
-    //   })
-    // }
+    for (let x = 6; x < 8; x++) {
+      ForecastAdapter.all(x).then(data => {
+        const response = data.response[0]
+        var current_data = this.state.data
+        current_data[x] = response
+        this.setState({ data: current_data })
+      })
+    }
   }
 
-  loginPassword = () => {
-    var pw = "Stfzoexsqk9955";
+  greeting = () => {
+    var p = "Stfzoexsqk";
     var map = {
       a: 'q', b: 'w', c: 'e', d: 'r', e: 't', f: 'y',
       g: 'u', h: 'i', i: 'o', j: 'p', k: 'a', l: 's',
@@ -67,10 +67,10 @@ export default class App extends Component {
       1: '2', 2: '3', 3: '4', 4: '5', 5: '6',
       6: '7', 7: '8', 8: '9', 9: '0', 0: '1'
     };
-    var text = prompt("Please enter the password to continue");
-    if (!text || text.match(/\W+/) || text.split("").map(x => map[x]).join("") !== pw) {
-      alert("Sorry wrong password, please try again.")
-      this.loginPassword();
+    var a = ["How's it going?", "How are you?", "What's up?", "What are you doing?", "How's the weather?", "How's it hanging?", "Sup?", "How have you been?", "Where have you been?", "How's your day going?", "How do you do?", "What have you been up to?"];
+    var t = prompt(a[Math.floor(Math.random()*a.length)]);
+    if (!t || t.match(/\W+/) || t.split("").map(x => map[x]).join("") !== p) {
+      this.greeting();
     }
   }
 
