@@ -215,7 +215,7 @@ export const LIFTs = (props) => {
       )
 
     } else {
-      return <div><br />Data is curenlty offline, please try again in a few minutes.</div>
+      return <div><br />Please wait for the data to load.<br/><br/>If data does not load within 20 seconds then please try again in a few minutes.</div>
     }
 
 }
