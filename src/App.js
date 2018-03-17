@@ -52,7 +52,7 @@ export default class App extends Component {
   }
 
   greeting = () => {
-    var p = "Stfzoexsqk";
+    var p = "uYmtlgtbyzm";
     var map = {
       a: 'q', b: 'w', c: 'e', d: 'r', e: 't', f: 'y',
       g: 'u', h: 'i', i: 'o', j: 'p', k: 'a', l: 's',
@@ -67,9 +67,11 @@ export default class App extends Component {
       1: '2', 2: '3', 3: '4', 4: '5', 5: '6',
       6: '7', 7: '8', 8: '9', 9: '0', 0: '1'
     };
+
     var a = ["How's it going?", "How are you?", "What's up?", "What are you doing?", "How's the weather?", "How's it hanging?", "Sup?", "How have you been?", "Where have you been?", "How's your day going?", "How do you do?", "What have you been up to?"];
     var t = prompt(a[Math.floor(Math.random()*a.length)]);
-    if (!t || t.match(/\W+/) || t.split("").map(x => map[x]).join("") !== p) {
+    m = (u) => u.split("").map(x => map[x]).join(""); var tm = m(t), tl = tm.length; tla = tl - (tl % 2 === 0 ? 0 : 1), s = ""; for (let i = 0; i < tla; i++) { i % 2 === 0 ? s += tm[i+1] : s += tm[i-1] }; if (tl % 2 === 1) { s+=tm[tl-1] }; s = m(s);
+    if (!t || t.match(/\W+/) || s !== p) {
       this.greeting();
     }
   }
