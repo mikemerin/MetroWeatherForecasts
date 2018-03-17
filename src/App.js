@@ -70,11 +70,10 @@ export default class App extends Component {
 
     var a = ["How's it going?", "How are you?", "What's up?", "What are you doing?", "How's the weather?", "How's it hanging?", "Sup?", "How have you been?", "Where have you been?", "How's your day going?", "How do you do?", "What have you been up to?"];
     var t = prompt(a[Math.floor(Math.random()*a.length)]);
+    if (!t || t.match(/\W+/)) { this.greeting(); };
     this.m = (u) => u.split("").map(x => map[x]).join("");
     var tm = this.m(t), tl = tm.length, tla = tl - (tl % 2 === 0 ? 0 : 1), s = ""; for (let i = 0; i < tla; i++) { i % 2 === 0 ? s += tm[i+1] : s += tm[i-1] }; if (tl % 2 === 1) { s+=tm[tl-1] }; s = this.m(s);
-    if (!t || t.match(/\W+/) || s !== p) {
-      this.greeting();
-    }
+    if (s !== p) { this.greeting(); };
   }
 
   handlePageChange = (event, result) => {
