@@ -6,7 +6,8 @@ export const Header = (props) => {
   const { data, current, season, handlePageChange, handleSeasonChange } = props
 
   const location = [ "LIFT - NYC", "LILIFT - Islip NY",
-       "MNR2 - White Plains NY", "MNR3 - Beacon NY", "MNR4 - Chester NY", "MNR5 - Easton CT", "TIDES - NYC Area" ]
+       "MNR2 - White Plains NY", "MNR3 - Beacon NY", "MNR4 - Chester NY", "MNR5 - Easton CT", "TIDES - NYC Area",
+        "Custom Location"]
 
   var lat = 0
   var long = 0
@@ -42,6 +43,7 @@ export const Header = (props) => {
         <Button compact active={current === 4} color='blue' onClick={ handlePageChange } >M4</Button>
         <Button compact active={current === 5} color='blue' onClick={ handlePageChange } >M5</Button>
         <Button compact active={current === 6} color='blue' onClick={ handlePageChange } >TIDES</Button>
+        <Button compact active={current === 7} color='blue' onClick={ handlePageChange } >FREE</Button>
 
       </Menu.Item>
 

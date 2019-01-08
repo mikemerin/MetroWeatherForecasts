@@ -51,6 +51,20 @@ export class ForecastAdapter {
       })
   }
 
+  static free(loc) {
+    var full_url = URL + "forecasts/" + loc + id_secret + forecast_parameters
+    return fetch(full_url)
+      .then( res => {
+        if (res.ok)
+      { return res.json() }
+      else
+        { throw new Error('Something went wrong') }
+      }).catch((error) => {
+        // alert("Sorry something went wrong and no run data was found.\n\nPlease try again shortly.\n\nIf this problem persists please contact Mike Merin.")
+        // return n > 12 ? Temptidedata : Tempdata
+      })
+  }
+
 }
 
 
