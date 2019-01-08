@@ -23,11 +23,20 @@ export const Header = (props) => {
   var latlong = `Lat: ${ lat } - Long: ${ long }`
 
   if ( current === 6 ) { latlong = "Various Locations" }
+  if ( current === 7 ) { latlong = "Custom Lat/Long" }
+  var full_header;
+  if(current !== 7) {
+    full_header = location[current] + " - " + latlong;
+  } else {
+    full_header = "Custom Location"
+  }
+
+
 
   return (
     <Menu color='blue' inverted fluid widths={3} size='huge' icon fixed='top' >
 
-      <Menu.Item name='type' position='left' fitted='vertically' >{ location[current] } - { latlong }</Menu.Item>
+      <Menu.Item name='type' position='left' fitted='vertically' >{ full_header }</Menu.Item>
 
       <Menu.Item name='type' fitted='vertically' >
         <Button compact active={season === "normal"} color='blue' value="normal" onClick={ handleSeasonChange } >Normal Form</Button>
