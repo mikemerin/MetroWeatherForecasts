@@ -29,8 +29,6 @@ export const FREE = (props) => {
 
           var main, high_low, high_low_value;
 
-          console.log(loc, metric)
-
           if(per.isDay){
             main = (same_date ? "TODAY" : day_of_week) + ":\t";
           	high_low = "HIGHS:\t";
@@ -52,11 +50,10 @@ export const FREE = (props) => {
           var snow_wx = false
           var ice_wx = false
 
-          per.weatherPrimaryCoded.split(":").forEach(x => {
-            if(winter_array.includes(x)) { winter_wx = true }
-            if(snow_array.includes(x)) { snow_wx = true }
-            if(ice_array.includes(x)) { ice_wx = true }
-          })
+          var weather_code = per.weatherPrimaryCoded.split(":")[2]
+          if(winter_array.includes(weather_code)) { winter_wx = true }
+          if(snow_array.includes(weather_code)) { snow_wx = true }
+          if(ice_array.includes(weather_code)) { ice_wx = true }
 
           var precip_value, liquid_value, snow_value, ice_value;
           if(per.precipIN === 0 || per.precipIN === null) {
