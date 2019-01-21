@@ -106,8 +106,12 @@ export const FREE = (props) => {
             clouds_value = rc1 + "0-" + rc2 + "0%"
           }
 
-          var wind_value = per.windSpeedMinMPH + "-" + per.windSpeedMaxMPH + " MPH " + per.windDir + " G" + per.windGustMPH
-          if(metric) { wind_value += " / " + per.windSpeedMinKPH + "-" + per.windSpeedMaxKPH + " KPH " + per.windDir + " G" + per.windGustKPH }
+          var wind_value = per.windDir + " " + per.windSpeedMinMPH + "-" + per.windSpeedMaxMPH + " MPH";
+          if(per.windGustMPH > per.windSpeedMaxMPH) { wind_value += " G " + per.windGustMPH }
+          if(metric) {
+            wind_value += " / " + per.windSpeedMinKPH + "-" + per.windSpeedMaxKPH + " KPH ";
+            if(per.windGustMPH > per.windSpeedMaxMPH) { wind_value += " G " + per.windGustKPH }
+          }
 
           document.getElementById("free_" + i).innerText = main + main_value + "\n" +
                                                              high_low + high_low_value + "\n" +
@@ -152,6 +156,7 @@ export const FREE = (props) => {
       <div id="free_6" /><br/>
       <div id="free_7" /><br/>
       <div id="free_8" /><br/>
+      <div id="free_9" /><br/>
 
     </div>
   )
