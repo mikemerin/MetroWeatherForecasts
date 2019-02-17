@@ -4,13 +4,19 @@ This application is meant solely to help Metro Weather create forecasts and depo
 
 ![Main](https://imgur.com/hEMyY77.png)
 
+---
+
 Graphs are also generated and can be directly copied and pasted into emails.
 
 ![Graph](https://imgur.com/bFHtHhZ.png)
 
+---
+
 The LIFT forms are valid for the day of, and the TIDES will point to the next Sunday (or the current Sunday if you're doing it the day of).
 
 ![Tides](https://imgur.com/PZCV9I5.png)
+
+---
 
 Using the FREE tab You can enter a zip code, city and state, or city and province/country and it will give you a formatted forecast. You can click the metric checkbox to output additional temperatures in Celcius and winds in KPH, useful for when forcasting clients in Canada, Mexico, or elsewhere.
 
