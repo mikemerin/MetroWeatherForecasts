@@ -1,4 +1,4 @@
-![Main](https://imgur.com/hEMyY77)
+![Main](https://imgur.com/hEMyY77.png)
 
 # Metro Weather Forecasts
 
