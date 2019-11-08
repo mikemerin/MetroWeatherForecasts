@@ -1,8 +1,11 @@
 import React from 'react'
+//import { Graph } from './GraphFREE'
 import { Button, Checkbox, Form } from 'semantic-ui-react'
 import { ForecastAdapter } from '../adapters'
 
 export const FREE = (props) => {
+
+  // var graph_data = {}; //todo: link up graph
 
   this.get_forecast = (loc, metric) => {
     for(let i1=0; i1<9; i1++){
@@ -11,6 +14,7 @@ export const FREE = (props) => {
     ForecastAdapter.free(loc).then(data => {
       if(data.success) {
         const r = data.response[0];
+        this.graph_data = data.response[0];
         r.periods.forEach((x, i) => {
           var per = data.response[0].periods[i]
 
@@ -126,11 +130,31 @@ export const FREE = (props) => {
   }
 
   this.handleSubmit = (e) => {
-    e.preventDefault()
-    var loc = e.target.children[0].children[1].value;
-    var metric = (e.target.children[1].children[0].classList[1] === "checked" ? true : false);
+    e.preventDefault();
+    var loc = document.getElementById('free_loc').value;
+    var metric = (document.getElementById('free_metric').value === "checked" ? true : false);
     this.get_forecast(loc, metric)
   }
+
+  this.handleShortcut = (e) => {
+    e.preventDefault();
+    document.getElementById('free_loc').value = shortcuts[e.target.textContent]['name'];
+    //document.getElementById('free_metric').value = shortcuts[e.target.textContent]['metric'] ? "checked" : "";
+  }
+
+  var shortcuts = {
+    "Atlanta" : { "name" : "Atlanta, Georgia" },
+    "Chicago" : { "name" : "Chicago, Illinois" },
+    "LA" : { "name" : "Los Angeles, CA" },
+    "NYC" : { "name" : "New York, New York" },
+    "Pitt" : { "name" : "Pittsburgh, Pennsylvania" },
+    "Philly" : { "name" : "Philadelphia, Pennsylvania" },
+    "Toronto" : { "name" : "Toronto, Ontario", "metric" : true }
+  }
+
+  var shortcut_buttons = Object.keys(shortcuts).map(shortcut => {
+    return <Button key={ "button_" + shortcut } color='blue' inverted onClick={ this.handleShortcut } >{shortcut}</Button>
+  })
 
   return (
     <div>
@@ -139,8 +163,10 @@ export const FREE = (props) => {
       <Form onSubmit={this.handleSubmit}>
         <Form.Field>
           <label>Enter the [Zip Code], [City, State] or [City, Province/Country]</label>
-          <input name='loc' placeholder='New York, NY or Toronto, Ontario' />
+          <input id='free_loc' name='loc' placeholder='New York, NY or Toronto, Ontario' />
         </Form.Field>
+        { shortcut_buttons }
+        <br /><br />
         <Form.Field>
           <Checkbox name='metric' id='free_metric' label='Click if you need metric' />
         </Form.Field>
@@ -156,8 +182,10 @@ export const FREE = (props) => {
       <div id="free_6" /><br/>
       <div id="free_7" /><br/>
       <div id="free_8" /><br/>
-      <div id="free_9" /><br/>
+
 
     </div>
   )
 }
+
+//<Graph graph_data={ this.graph_data } season={ props.season }/>

@@ -8,7 +8,7 @@ import { Header } from './components/Header'
 import FormContainer from './containers/FormContainer'
 
 var month = (new Date()).getMonth()
-var season = month < 3 || month === 11 ? "winter" : "normal"
+var season = month <= 3 || month >= 10 ? "winter" : "normal"
 
 export default class App extends Component {
 

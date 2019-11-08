@@ -29,7 +29,7 @@ function arraySums(array) {
 export const Graph = (props) => {
 
   const { graph_data, season } = props
-
+  
   var labels = [], precipIN = [], snowIN = [], tempF = [], freezing = [], feelslikeF = []
 
   const days_short = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']

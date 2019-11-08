@@ -21,7 +21,7 @@ export default class FormContainer extends Component {
       else
         { return <div><center><br />Tide data is curenlty offline, please try again in a few minutes.</center></div> }
     } else {
-      return <FREE />
+      return <FREE season={ season }/>
     }
 
   }
