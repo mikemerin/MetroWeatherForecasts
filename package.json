@@ -6,6 +6,7 @@
     "chart.js": "^2.7.3",
     "chartjs-plugin-datalabels": "^0.1.0",
     "gulp": "^4.0.2",
+    "node": "^13.1.0",
     "react": "^16.7.0",
     "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.7.0",
