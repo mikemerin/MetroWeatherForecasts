@@ -1,13 +1,29 @@
-import React from 'react'
+
+import React, { Component } from 'react'
 //import { Graph } from './GraphFREE'
 import { Button, Checkbox, Form } from 'semantic-ui-react'
 import { ForecastAdapter } from '../adapters'
 
-export const FREE = (props) => {
+export class FREE extends Component {
 
+  constructor() {
+    super();
+    this.state = {
+        shortcuts: {
+        "Atlanta" : { "name" : "Atlanta, Georgia" },
+        "Chicago" : { "name" : "Chicago, Illinois" },
+        "LA" : { "name" : "Los Angeles, CA" },
+        "NYC" : { "name" : "New York, New York" },
+        "Pitt" : { "name" : "Pittsburgh, Pennsylvania" },
+        "Philly" : { "name" : "Philadelphia, Pennsylvania" },
+        "Toronto" : { "name" : "Toronto, Ontario", "metric" : true }
+      },
+      metric: false
+    }
+  }
   // var graph_data = {}; //todo: link up graph
 
-  this.get_forecast = (loc, metric) => {
+  get_forecast = (loc) => {
     for(let i1=0; i1<9; i1++){
       document.getElementById("free_" + i1).innerText = "";
     }
@@ -37,12 +53,12 @@ export const FREE = (props) => {
             main = (same_date ? "TODAY" : day_of_week) + ":\t";
           	high_low = "HIGHS:\t";
           	high_low_value = per.maxTempF + "°F"
-            if (metric) { high_low_value += " / " + per.maxTempC + "°C" }
+            if (this.state.metric) { high_low_value += " / " + per.maxTempC + "°C" }
           } else {
           	main = (same_date ? "TONIGHT" : day_of_week + " NIGHT") + ":\t";
           	high_low = "LOWS:\t";
           	high_low_value = per.minTempF + "°F"
-            if (metric) { high_low_value += " / " + per.minTempC + "°C" }
+            if (this.state.metric) { high_low_value += " / " + per.minTempC + "°C" }
           }
 
           var main_value = per.weather.toUpperCase()
@@ -64,19 +80,19 @@ export const FREE = (props) => {
             liquid_value = "TRACE"
           } else {
             liquid_value = per.precipIN + '"'
-            if (metric) { liquid_value += " / " + per.precipMM + "MM" }
+            if (this.state.metric) { liquid_value += " / " + per.precipMM + "MM" }
           }
           if(per.snowIN === 0 || per.snowIN === null) {
             snow_value = "TRACE"
           } else {
             snow_value = per.snowIN + '"'
-            if (metric) { snow_value += " / " + per.snowCM + "CM" }
+            if (this.state.metric) { snow_value += " / " + per.snowCM + "CM" }
           }
           if(per.iceaccumIN === 0 || per.iceaccumIN === null) {
             ice_value = "TRACE"
           } else {
             ice_value = per.iceaccumIN + '"'
-            if (metric) { ice_value += " / " + per.iceaccumIN + "MM" }
+            if (this.state.metric) { ice_value += " / " + per.iceaccumIN + "MM" }
           }
 
           if(per.pop < 10) {
@@ -112,7 +128,7 @@ export const FREE = (props) => {
 
           var wind_value = per.windDir + " " + per.windSpeedMinMPH + "-" + per.windSpeedMaxMPH + " MPH";
           if(per.windGustMPH > per.windSpeedMaxMPH) { wind_value += " G " + per.windGustMPH }
-          if(metric) {
+          if(this.state.metric) {
             wind_value += " / " + per.windSpeedMinKPH + "-" + per.windSpeedMaxKPH + " KPH ";
             if(per.windGustMPH > per.windSpeedMaxMPH) { wind_value += " G " + per.windGustKPH }
           }
@@ -129,63 +145,58 @@ export const FREE = (props) => {
     })
   }
 
-  this.handleSubmit = (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
     var loc = document.getElementById('free_loc').value;
-    var metric = (document.getElementById('free_metric').value === "checked" ? true : false);
-    this.get_forecast(loc, metric)
+    this.get_forecast(loc);
   }
 
-  this.handleShortcut = (e) => {
+  handleShortcut = (e) => {
     e.preventDefault();
-    document.getElementById('free_loc').value = shortcuts[e.target.textContent]['name'];
-    //document.getElementById('free_metric').value = shortcuts[e.target.textContent]['metric'] ? "checked" : "";
+    document.getElementById('free_loc').value = this.state.shortcuts[e.target.textContent]['name'];
+    this.setState({ metric: this.state.shortcuts[e.target.textContent]['metric'] });
   }
 
-  var shortcuts = {
-    "Atlanta" : { "name" : "Atlanta, Georgia" },
-    "Chicago" : { "name" : "Chicago, Illinois" },
-    "LA" : { "name" : "Los Angeles, CA" },
-    "NYC" : { "name" : "New York, New York" },
-    "Pitt" : { "name" : "Pittsburgh, Pennsylvania" },
-    "Philly" : { "name" : "Philadelphia, Pennsylvania" },
-    "Toronto" : { "name" : "Toronto, Ontario", "metric" : true }
+  handleMetric = (e) => {
+    this.setState({ metric: !this.state.metric});
   }
 
-  var shortcut_buttons = Object.keys(shortcuts).map(shortcut => {
-    return <Button key={ "button_" + shortcut } color='blue' inverted onClick={ this.handleShortcut } >{shortcut}</Button>
-  })
+  render() {
+    var shortcut_buttons = Object.keys(this.state.shortcuts).map(shortcut => {
+      return <Button key={ "button_" + shortcut } color='blue' inverted onClick={ this.handleShortcut } >{ shortcut }</Button>
+    })
 
-  return (
-    <div>
-      <br />
-      <br />
-      <Form onSubmit={this.handleSubmit}>
-        <Form.Field>
-          <label>Enter the [Zip Code], [City, State] or [City, Province/Country]</label>
-          <input id='free_loc' name='loc' placeholder='New York, NY or Toronto, Ontario' />
-        </Form.Field>
-        { shortcut_buttons }
+    return (
+      <div>
+        <br />
+        <br />
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Field>
+            <label>Enter the [Zip Code], [City, State] or [City, Province/Country]</label>
+            <input id='free_loc' name='loc' placeholder='New York, NY or Toronto, Ontario' />
+          </Form.Field>
+          { shortcut_buttons }
+          <br /><br />
+          <Form.Field>
+            <Checkbox name='metric' id='free_metric' checked={ this.state.metric } onClick={ this.handleMetric } label='Click if you need metric' />
+          </Form.Field>
+          <Button name='submit' type='submit'>Submit</Button>
+        </Form>
         <br /><br />
-        <Form.Field>
-          <Checkbox name='metric' id='free_metric' label='Click if you need metric' />
-        </Form.Field>
-        <Button name='submit' type='submit'>Submit</Button>
-      </Form>
-      <br /><br />
-      <div id="free_0" /><br/>
-      <div id="free_1" /><br/>
-      <div id="free_2" /><br/>
-      <div id="free_3" /><br/>
-      <div id="free_4" /><br/>
-      <div id="free_5" /><br/>
-      <div id="free_6" /><br/>
-      <div id="free_7" /><br/>
-      <div id="free_8" /><br/>
+        <div id="free_0" /><br/>
+        <div id="free_1" /><br/>
+        <div id="free_2" /><br/>
+        <div id="free_3" /><br/>
+        <div id="free_4" /><br/>
+        <div id="free_5" /><br/>
+        <div id="free_6" /><br/>
+        <div id="free_7" /><br/>
+        <div id="free_8" /><br/>
 
 
-    </div>
-  )
+      </div>
+    )
+  }
 }
 
 //<Graph graph_data={ this.graph_data } season={ props.season }/>
