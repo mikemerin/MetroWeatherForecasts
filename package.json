@@ -1,11 +1,13 @@
 {
   "name": "metroweatherforecasts",
-  "version": "0.1.0",
+  "version": "2.3.1",
   "private": true,
   "dependencies": {
+    "babel-cli": "^6.26.0",
     "chart.js": "^2.7.3",
     "chartjs-plugin-datalabels": "^0.1.0",
     "gulp": "^4.0.2",
+    "lodash": "^4.17.15",
     "node": "11.5.0",
     "react": "^16.7.0",
     "react-chartjs-2": "^2.7.4",
@@ -15,7 +17,8 @@
     "semantic-ui": "^2.4.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.76.0",
-    "webpack": "^4.41.2"
+    "typescript": "^3.7.2",
+    "webpack": "4.41.0"
   },
   "scripts": {
     "start": "react-scripts start",
