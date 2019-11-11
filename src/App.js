@@ -4,7 +4,7 @@ import './App.css'
 
 import { ForecastAdapter } from './adapters'
 
-import { Header } from './components/Header'
+import { Header, Info } from './components/Header'
 import FormContainer from './containers/FormContainer'
 
 var month = (new Date()).getMonth()
@@ -18,7 +18,7 @@ export default class App extends Component {
       current: 0,
       season: season,
       data: [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ],
-      debug: false
+      debug: true
     }
   }
 
@@ -84,8 +84,8 @@ export default class App extends Component {
   }
 
   handleSeasonChange = (event, result) => {
-    event.preventDefault()
-    this.setState({ season: event.target.value })
+    event.preventDefault();
+    this.setState({ season: result.value });
   }
 
   render() {
@@ -94,13 +94,18 @@ export default class App extends Component {
 
     return (
       <div>
-        <Header data={ data[current] } current={ current } season={ season }
+        <Header current={ current } season={ season }
           handlePageChange={ this.handlePageChange } handleSeasonChange={ this.handleSeasonChange }/>
         <Grid>
           <Grid.Column width={1}>
           </Grid.Column>
           <Grid.Column width={14}>
-            <FormContainer data={ data } current={ current } season={ season }/>
+            <Grid.Row>
+              <Info data={ data[current] } current={ current } />
+            </Grid.Row>
+            <Grid.Row>
+              <FormContainer data={ data } current={ current } season={ season }/>
+            </Grid.Row>
           </Grid.Column>
           <Grid.Column width={1}>
           </Grid.Column>
