@@ -18,7 +18,7 @@ export default class App extends Component {
       current: 0,
       season: season,
       data: [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ],
-      debug: true
+      debug: false
     }
   }
 
