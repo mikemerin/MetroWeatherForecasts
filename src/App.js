@@ -79,7 +79,7 @@ export default class App extends Component {
 
   handlePageChange = (event, result) => {
     event.preventDefault()
-    const current = {"LIFT": 0, "LI": 1, "M2": 2, "M3": 3, "M4": 4, "M5": 5, "TIDES": 6, "FREE": 7}
+    const current = {"LIFT": 0, "LI": 1, "M2": 2, "M3": 3, "M4": 4, "M5": 5, "TIDES": 6, "CUSTOM": 7}
     this.setState({ current: current[result.children] })
   }
 

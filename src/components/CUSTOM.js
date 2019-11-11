@@ -1,10 +1,10 @@
 
 import React, { Component } from 'react'
-//import { Graph } from './GraphFREE'
+//import { Graph } from './GraphCustom'
 import { Button, Checkbox, Form } from 'semantic-ui-react'
 import { ForecastAdapter } from '../adapters'
 
-export class FREE extends Component {
+export class CUSTOM extends Component {
 
   constructor() {
     super();
@@ -25,9 +25,9 @@ export class FREE extends Component {
 
   get_forecast = (loc) => {
     for(let i1=0; i1<9; i1++){
-      document.getElementById("free_" + i1).innerText = "";
+      document.getElementById("custom_" + i1).innerText = "";
     }
-    ForecastAdapter.free(loc).then(data => {
+    ForecastAdapter.custom(loc).then(data => {
       if(data.success) {
         const r = data.response[0];
         this.graph_data = data.response[0];
@@ -133,27 +133,27 @@ export class FREE extends Component {
             if(per.windGustMPH > per.windSpeedMaxMPH) { wind_value += " G " + per.windGustKPH }
           }
 
-          document.getElementById("free_" + i).innerText = main + main_value + "\n" +
+          document.getElementById("custom_" + i).innerText = main + main_value + "\n" +
                                                              high_low + high_low_value + "\n" +
                                                              "% OF PRECIP:\t" + precip_value + "\n" +
                                                              "% OF CLOUDS:\t" + clouds_value + "\n" +
                                                              "WIND:\t" + wind_value
         })
       } else {
-        document.getElementById("free_0").innerText = "Cannot find that location, or there may be another error. Please try again"
+        document.getElementById("custom_0").innerText = "Cannot find that location, or there may be another error. Please try again"
       }
     })
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    var loc = document.getElementById('free_loc').value;
+    var loc = document.getElementById('custom_loc').value;
     this.get_forecast(loc);
   }
 
   handleShortcut = (e) => {
     e.preventDefault();
-    document.getElementById('free_loc').value = this.state.shortcuts[e.target.textContent]['name'];
+    document.getElementById('custom_loc').value = this.state.shortcuts[e.target.textContent]['name'];
     this.setState({ metric: this.state.shortcuts[e.target.textContent]['metric'] });
   }
 
@@ -173,25 +173,25 @@ export class FREE extends Component {
         <Form onSubmit={this.handleSubmit}>
           <Form.Field>
             <label>Enter the [Zip Code], [City, State] or [City, Province/Country]</label>
-            <input id='free_loc' name='loc' placeholder='New York, NY or Toronto, Ontario' />
+            <input id='custom_loc' name='loc' placeholder='New York, NY or Toronto, Ontario' />
           </Form.Field>
           { shortcut_buttons }
           <br /><br />
           <Form.Field>
-            <Checkbox name='metric' id='free_metric' checked={ this.state.metric } onClick={ this.handleMetric } label='Click if you need metric' />
+            <Checkbox name='metric' id='custom_metric' checked={ this.state.metric } onClick={ this.handleMetric } label='Click if you need metric' />
           </Form.Field>
           <Button name='submit' type='submit'>Submit</Button>
         </Form>
         <br /><br />
-        <div id="free_0" /><br/>
-        <div id="free_1" /><br/>
-        <div id="free_2" /><br/>
-        <div id="free_3" /><br/>
-        <div id="free_4" /><br/>
-        <div id="free_5" /><br/>
-        <div id="free_6" /><br/>
-        <div id="free_7" /><br/>
-        <div id="free_8" /><br/>
+        <div id="custom_0" /><br/>
+        <div id="custom_1" /><br/>
+        <div id="custom_2" /><br/>
+        <div id="custom_3" /><br/>
+        <div id="custom_4" /><br/>
+        <div id="custom_5" /><br/>
+        <div id="custom_6" /><br/>
+        <div id="custom_7" /><br/>
+        <div id="custom_8" /><br/>
 
 
       </div>

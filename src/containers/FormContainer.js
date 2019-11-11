@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { LIFTs } from '../components/LIFTs'
 import { TIDES } from '../components/TIDES'
-import { FREE } from '../components/FREE'
+import { CUSTOM } from '../components/CUSTOM'
 
 export default class FormContainer extends Component {
 
@@ -21,7 +21,7 @@ export default class FormContainer extends Component {
       else
         { return <div><center><br />Tide data is curenlty offline, please try again in a few minutes.</center></div> }
     } else {
-      return <FREE season={ season }/>
+      return <CUSTOM season={ season }/>
     }
 
   }

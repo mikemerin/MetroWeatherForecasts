@@ -1,25 +1,28 @@
 import React from 'react'
-import { Grid, Menu, Button, Icon, Segment } from 'semantic-ui-react'
+import { Menu, Button, Icon, Segment } from 'semantic-ui-react'
 
 export const Header = (props) => {
 
   const { current, season, handlePageChange, handleSeasonChange } = props
 
-  var page_buttons = ['LIFT', 'LI', 'M2', 'M3', 'M4', 'M5', 'TIDES', 'FREE'].map((page, i) => {
+  var lift_buttons = ['LIFT', 'LI', 'M2', 'M3', 'M4', 'M5'].map((page, i) => {
+    return <Button compact key={i} size='mini' active={current === i} color='blue' onClick={ handlePageChange } >{page}</Button>;
+  });
+
+  var other_buttons = ['TIDES', 'CUSTOM'].map((page, i) => {
+    i += 6;
     return <Button compact key={i} size='mini' active={current === i} color='blue' onClick={ handlePageChange } >{page}</Button>;
   });
 
 
   return (
-    <Menu color='blue' inverted fluid widths={1} size='huge' icon fixed='top' >
+    <Menu color='blue' inverted fluid widths={1} size='mini' icon fixed='top' >
 
-        <Menu.Item name='links' position='right' fitted='vertically'>
-          <Button.Group>
-            { page_buttons }
-          </Button.Group>
-            <Button icon circular compact active={season === "normal"} color='blue' value="normal" onClick={ handleSeasonChange } ><Icon name='sun' /></Button>
-            <Button icon circular compact active={season === "winter"} color='blue' value="winter" onClick={ handleSeasonChange } ><Icon name='snowflake outline' /></Button>
-
+        <Menu.Item name='lift_links' fitted='vertically'>
+          <Button.Group>{ lift_buttons }</Button.Group>
+          <Button.Group>{ other_buttons }</Button.Group>
+          <Button icon circular compact active={season === "normal"} color='blue' value="normal" onClick={ handleSeasonChange } ><Icon name='sun' /></Button>
+          <Button icon circular compact active={season === "winter"} color='blue' value="winter" onClick={ handleSeasonChange } ><Icon name='snowflake outline' /></Button>
         </Menu.Item>
 
     </Menu>
@@ -27,14 +30,16 @@ export const Header = (props) => {
 
 }
 
-
 export const Info = (props) => {
 
   const { data, current } = props;
 
-  const location = [ "LIFT - NYC", "LILIFT - Islip NY",
-       "MNR2 - White Plains NY", "MNR3 - Beacon NY", "MNR4 - Chester NY", "MNR5 - Easton CT", "TIDES - NYC Area",
-        "Custom Location"]
+  const location = [
+        "NYC", "Islip NY",
+        "White Plains NY", "Beacon NY", "Chester NY", "Easton CT",
+        "TIDES - NYC Area",
+        "Custom Location"
+      ]
 
   var lat = 0
   var long = 0
@@ -60,7 +65,6 @@ export const Info = (props) => {
 
   return (
     <div>
-    <br />
       <center>
         <Segment compact color='blue' textAlign='center'>
           <h3>{ full_header }</h3>
