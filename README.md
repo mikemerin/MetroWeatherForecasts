@@ -26,7 +26,7 @@ Using the FREE tab You can enter a zip code, city and state, or city and provinc
 
 # Important Note
 
-Please note: the API that this application connects to has a limit of 750 calls per day, and because the application connects to all 6 LIFT forecast stations it makes 21 calls (two for each of the 6 forecast stations (one for the table, one for the graph), and one for each of the 9 tide stations), meaning this application can be used 35 times a day. Not too big of a deal, but please don't spam it.
+Please note: I have limited the amount of calls to the API that can be made, and because the application connects to all 6 LIFT forecast stations it makes 21 calls (two for each of the 6 forecast stations (one for the table, one for the graph), and one for each of the 9 tide stations), meaning this application can be used a few dozen times a day. Not too big of a deal, but please don't spam it.
 
 This is meant to be a base forecast; please do research on your own to fine-tune the forecasts as you see fit.
 

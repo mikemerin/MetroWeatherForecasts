@@ -1,8 +1,9 @@
-import { Tempdata, Temptidedata } from './Tempdata'
+import { Tempdata, Temptidedata } from './Tempdata';
+import Scrambler from '../components/Scrambler';
 
-const id_secret = "?client_id=8XdPaXwzYWIbDTrF8iCL3&client_secret=ncTOr4kcLcjhRKVOeGRW2tecqJPTWRkCHLqErUli"
+const id_secret = `?client_id=${Scrambler('G6ˆQzGrexçXNuP:/CZYmpø6LW1')}&client_secret=${Scrambler('wfH.C2mw/dwLjaDMHBIøåvXMc0wvAkCQMX∑ßWdLJVkOmpl')}`;
 
-const URL = "https://api.aerisapi.com/"
+const URL = "https://api." + Scrambler('vçßrp®.mµrœ¥s∆øpq') + ".com/";
 
 const forecast_parameters = "&from=today&to=+5days&filter=daynight&limit=9"
 const graph_parameters = "&from=-3hours&filter=3hr&limit=48"
@@ -41,10 +42,11 @@ export class ForecastAdapter {
   static all(n) {
     return fetch(lifts[n])
       .then( res => {
-        if (res.ok)
-      { return res.json() }
-      else
-        { throw new Error('Something went wrong') }
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error('Something went wrong with call ' + lifts[n]);
+        }
       }).catch((error) => {
         // alert("Sorry something went wrong and no run data was found.\n\nPlease try again shortly.\n\nIf this problem persists please contact Mike Merin.")
         return n > 12 ? Temptidedata : Tempdata
@@ -55,10 +57,11 @@ export class ForecastAdapter {
     var custom_url = URL + "forecasts/" + loc + id_secret + forecast_parameters
     return fetch(custom_url)
       .then( res => {
-        if (res.ok)
-      { return res.json() }
-      else
-        { throw new Error('Something went wrong') }
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error('Something went wrong with call ' + custom_url);
+        }
       }).catch((error) => {
         // alert("Sorry something went wrong and no run data was found.\n\nPlease try again shortly.\n\nIf this problem persists please contact Mike Merin.")
         // return n > 12 ? Temptidedata : Tempdata
