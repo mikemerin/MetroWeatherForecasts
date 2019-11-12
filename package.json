@@ -3,12 +3,11 @@
   "version": "2.3.1",
   "private": true,
   "dependencies": {
-    "babel-cli": "^6.26.0",
     "chart.js": "^2.7.3",
     "chartjs-plugin-datalabels": "^0.1.0",
+    "diff": ">=3.5.0",
     "fbjs": "^1.0.0",
     "gulp": "^4.0.2",
-    "lodash": "^4.17.15",
     "node": "11.5.0",
     "react": "^16.7.0",
     "react-chartjs-2": "^2.7.4",
@@ -23,7 +22,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "npm audit fix && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
