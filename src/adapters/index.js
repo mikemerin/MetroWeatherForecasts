@@ -51,9 +51,9 @@ export class ForecastAdapter {
       })
   }
 
-  static free(loc) {
-    var full_url = URL + "forecasts/" + loc + id_secret + forecast_parameters
-    return fetch(full_url)
+  static custom(loc) {
+    var custom_url = URL + "forecasts/" + loc + id_secret + forecast_parameters
+    return fetch(custom_url)
       .then( res => {
         if (res.ok)
       { return res.json() }
