@@ -8,8 +8,8 @@ import Greeting from './components/Greeting';
 import { Header, Info } from './components/Header';
 import FormContainer from './containers/FormContainer';
 
-var month = (new Date()).getMonth()
-var season = month <= 3 || month >= 10 ? "winter" : "normal"
+var month = (new Date()).getMonth();
+var season = month <= 3 || month >= 10 ? "winter" : "normal";
 
 export default class App extends Component {
 
@@ -19,8 +19,11 @@ export default class App extends Component {
       current: 0,
       season: season,
       data: [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ],
+      // data: [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ],
+      // tides: [ {}, {}, {}, {}, {}, {}, {}, {}, {} ],
+      tides: false,
       login: false,
-      debug: true
+      debug: false
     }
   }
 
@@ -28,7 +31,7 @@ export default class App extends Component {
     if (prevState.login === false && this.state.login === true) {
       if (this.state.debug) {
         // for debugging LIFT pages, does less calls
-        var pages = 2;
+        var pages = 1;
         for (let x = 0; x < pages; x++) {
           ForecastAdapter.all(x).then(data => {
             const response = data.response[0]
@@ -46,7 +49,7 @@ export default class App extends Component {
           })
         }
       } else {
-        for (let x = 0; x < 21; x++) {
+        for (let x = 0; x < 12; x++) {
           ForecastAdapter.all(x).then(data => {
             const response = data.response[0]
             var current_data = this.state.data
@@ -56,10 +59,25 @@ export default class App extends Component {
         }
       }
     }
+    if (this.state.tides && prevState.tides === false) {
+      for (let x = 12; x < 21; x++) {
+        ForecastAdapter.all(x).then(data => {
+          const response = data.response[0]
+          var current_data = this.state.data
+          current_data[x] = response
+          this.setState({ data: current_data, tides: true })
+        })
+      }
+    }
   }
 
   hl = () => {
     this.setState({ login: true });
+  }
+
+  handleTides = (event, result) => {
+    event.preventDefault();
+    this.setState({ tides: true });
   }
 
   handlePageChange = (event, result) => {
@@ -75,7 +93,7 @@ export default class App extends Component {
 
   render() {
 
-    const { login, data, current, season } = this.state
+    const { login, data, current, season, tides } = this.state
 
     if (login) {
       return (
@@ -90,7 +108,7 @@ export default class App extends Component {
                 <Info data={ data[current] } current={ current } />
               </Grid.Row>
               <Grid.Row>
-                <FormContainer data={ data } current={ current } season={ season }/>
+                <FormContainer data={ data } current={ current } season={ season } tides={ tides } handleTides={ this.handleTides }/>
               </Grid.Row>
             </Grid.Column>
             <Grid.Column width={1}>

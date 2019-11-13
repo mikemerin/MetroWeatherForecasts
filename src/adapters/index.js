@@ -1,41 +1,51 @@
 import { Tempdata, Temptidedata } from './Tempdata';
 import Scrambler from '../components/Scrambler';
 
-const id_secret = `?client_id=${Scrambler('G6ˆQzGrexçXNuP:/CZYmpø6LW1')}&client_secret=${Scrambler('wfH.C2mw/dwLjaDMHBIøåvXMc0wvAkCQMX∑ßWdLJVkOmpl')}`;
+const locs = [
+  {'name': 'LIFT', 'loc': '40.78,-73.88'},
+  {'name': 'LILIFT', 'loc': '40.79,-73.10'},
+  {'name': 'MNR2', 'loc': '41.06,-73.70'},
+  {'name': 'MNR3', 'loc': '41.50,-74.10'},
+  {'name': 'MNR4', 'loc': '41.51,-74.27'},
+  {'name': 'MNR5', 'loc': '41.16,-73.13'}
+];
 
-const URL = "https://api." + Scrambler('vçßrp®.mµrœ¥s∆øpq') + ".com/";
+const tides = [
+  {'name': 'College Point (Flushing Bay)', 'loc': 'flushing+bay,ny'},
+  {'name': '91st East River (Horns)', 'loc': 'mill+rock,ny'},
+  {'name': '59th St. (Queensboro)', 'loc': 'queensboro+bridge,ny'},
+  {'name': 'Gowanus Canal', 'loc': 'gowanus+canal,ny'},
+  {'name': 'The Battery', 'loc': 'the+battery,ny'},
+  {'name': 'Great Kills', 'loc': 'great+kills,ny'},
+  {'name': 'Lower Hudson Bay', 'loc': 'fort+wadsworth,ny'},
+  {'name': 'Coney Island', 'loc': 'coney,ny'},
+  {'name': 'Rockaway', 'loc': 'rockaway,ny'}
+];
 
-const forecast_parameters = "&from=today&to=+5days&filter=daynight&limit=9"
-const graph_parameters = "&from=-3hours&filter=3hr&limit=48"
-const tide_parameters = "&from=sunday&to=+7days&filter=highlow"
+const lifts = [];
 
-const LIFT_URL   = URL + "forecasts/40.78,-73.88" + id_secret + forecast_parameters
-const LILIFT_URL = URL + "forecasts/40.79,-73.10" + id_secret + forecast_parameters
-const MNR2_URL   = URL + "forecasts/41.06,-73.70" + id_secret + forecast_parameters
-const MNR3_URL   = URL + "forecasts/41.50,-74.10" + id_secret + forecast_parameters
-const MNR4_URL   = URL + "forecasts/41.51,-74.27" + id_secret + forecast_parameters
-const MNR5_URL =   URL + "forecasts/41.16,-73.13" + id_secret + forecast_parameters
+['forecast', 'graph'].forEach(param => {
+  locs.forEach(loc => {
+      lifts.push(generate_URL(param, loc['loc']));
+  })
+});
 
-const LIFT_GRAPH   = URL + "forecasts/40.78,-73.88" + id_secret + graph_parameters
-const LILIFT_GRAPH = URL + "forecasts/40.79,-73.10" + id_secret + graph_parameters
-const MNR2_GRAPH   = URL + "forecasts/41.06,-73.70" + id_secret + graph_parameters
-const MNR3_GRAPH   = URL + "forecasts/41.50,-74.10" + id_secret + graph_parameters
-const MNR4_GRAPH   = URL + "forecasts/41.51,-74.27" + id_secret + graph_parameters
-const MNR5_GRAPH =   URL + "forecasts/41.16,-73.13" + id_secret + graph_parameters
+tides.forEach(loc => {
+  lifts.push(generate_URL('tide', loc['loc']));
+})
 
-const TIDES1_URL = URL + "tides/flushing+bay,ny"       + id_secret + tide_parameters
-const TIDES2_URL = URL + "tides/mill+rock,ny"          + id_secret + tide_parameters
-const TIDES3_URL = URL + "tides/queensboro+bridge,ny"  + id_secret + tide_parameters
-const TIDES4_URL = URL + "tides/gowanus+canal,ny"      + id_secret + tide_parameters
-const TIDES5_URL = URL + "tides/the+battery,ny"        + id_secret + tide_parameters
-const TIDES6_URL = URL + "tides/great+kills,ny"        + id_secret + tide_parameters
-const TIDES7_URL = URL + "tides/fort+wadsworth,ny"     + id_secret + tide_parameters
-const TIDES8_URL = URL + "tides/coney,ny"              + id_secret + tide_parameters
-const TIDES9_URL = URL + "tides/rockaway,ny"           + id_secret + tide_parameters
+function generate_URL(param, loc) {
+  const id_secret = `?client_id=${Scrambler('G6ˆQzGrexçXNuP:/CZYmpø6LW1')}&client_secret=${Scrambler('wfH.C2mw/dwLjaDMHBIøåvXMc0wvAk.CQMX∑ßWdLJV©∆kOmpl')}`;
+  const URL = "https://api." + Scrambler('vçßrp®.mµrœ¥s∆øpq') + ".com/";
 
-const lifts = [LIFT_URL, LILIFT_URL, MNR2_URL, MNR3_URL, MNR4_URL, MNR5_URL,
-              LIFT_GRAPH, LILIFT_GRAPH, MNR2_GRAPH, MNR3_GRAPH, MNR4_GRAPH, MNR5_GRAPH,
-              TIDES1_URL, TIDES2_URL, TIDES3_URL, TIDES4_URL, TIDES5_URL, TIDES6_URL, TIDES7_URL, TIDES8_URL, TIDES9_URL ]
+  const URLs = {
+    'forecast': { 'prefix': 'forecasts', 'query': '&from=today&to=+5days&filter=daynight&limit=9' },
+    'graph': { 'prefix': 'forecasts', 'query': '&from=-3hours&filter=3hr&limit=48' },
+    'tide': { 'prefix': 'tides', 'query': '&from=sunday&to=+7days&filter=highlow' }
+  };
+
+  return `${URL}${URLs[param]['prefix']}/${loc}${id_secret}${URLs[param]['query']}`;
+}
 
 export class ForecastAdapter {
 
@@ -54,7 +64,7 @@ export class ForecastAdapter {
   }
 
   static custom(loc) {
-    var custom_url = URL + "forecasts/" + loc + id_secret + forecast_parameters
+    var custom_url = generate_URL('forecast', loc);
     return fetch(custom_url)
       .then( res => {
         if (res.ok) {

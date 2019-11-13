@@ -30,7 +30,6 @@ export const TIDES = (props) => {
       if ( station_periods[i].dateTimeISO.slice(0,10) !==
            station_periods[i-1].dateTimeISO.slice(0,10) )
            { index++ }
-           debugger
       if (days[index]) {
         days[index].push(station_periods[i])
       }
@@ -175,7 +174,7 @@ export const TIDES = (props) => {
     )
 
   } else {
-    return <div><br />Data is curenlty offline, please try again in a few minutes.</div>
+    return <div><br />Please wait for the data to load.<br/><br/>If data does not load within 20 seconds then please try again in a few minutes.</div>
   }
 
 }
