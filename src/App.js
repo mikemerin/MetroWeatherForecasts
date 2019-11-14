@@ -18,56 +18,38 @@ export default class App extends Component {
     this.state = {
       current: 0,
       season: season,
+      temperature: 'ºF',
       data: [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ],
       // data: [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ],
       // tides: [ {}, {}, {}, {}, {}, {}, {}, {}, {} ],
       tides: false,
       login: false,
-      debug: false
+      debug: true
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.login === false && this.state.login === true) {
-      if (this.state.debug) {
-        // for debugging LIFT pages, does less calls
-        var pages = 1;
-        for (let x = 0; x < pages; x++) {
-          ForecastAdapter.all(x).then(data => {
-            const response = data.response[0]
-            var current_data = this.state.data
-            current_data[x] = response
-            this.setState({ data: current_data })
-          })
-        }
-        for (let x = 6; x < 6+pages; x++) {
-          ForecastAdapter.all(x).then(data => {
-            const response = data.response[0]
-            var current_data = this.state.data
-            current_data[x] = response
-            this.setState({ data: current_data })
-          })
-        }
-      } else {
-        for (let x = 0; x < 12; x++) {
-          ForecastAdapter.all(x).then(data => {
-            const response = data.response[0]
-            var current_data = this.state.data
-            current_data[x] = response
-            this.setState({ data: current_data })
-          })
-        }
+    var calls = [];
+    if (!prevState.login && this.state.login) {
+      var pages = (this.state.debug ? 1 : 6); // for debugging LIFT pages, does less calls
+      for (let x = 0; x < pages; x++) {
+        calls.push(x, x+6);
       }
     }
-    if (this.state.tides && prevState.tides === false) {
+    if (!prevState.tides && this.state.tides) {
       for (let x = 12; x < 21; x++) {
-        ForecastAdapter.all(x).then(data => {
-          const response = data.response[0]
-          var current_data = this.state.data
-          current_data[x] = response
-          this.setState({ data: current_data, tides: true })
-        })
+        calls.push(x);
       }
+    }
+
+    if (calls.length > 0) {
+      ForecastAdapter.all(calls).then(all_called_data => {
+        var current_data = this.state.data;
+        all_called_data.forEach((data, i) => {
+          current_data[calls[i]] = data;
+        })
+        this.setState({ data: current_data })
+      })
     }
   }
 
@@ -91,34 +73,43 @@ export default class App extends Component {
     this.setState({ season: result.value });
   }
 
+  handleTemperatureChange = (event, result) => {
+    event.preventDefault();
+    this.setState({ temperature: result.value });
+  }
+
   render() {
 
-    const { login, data, current, season, tides } = this.state
+    const { login, data, current, season, tides, temperature } = this.state
 
     if (login) {
       return (
         <>
-          <Header current={ current } season={ season }
-            handlePageChange={ this.handlePageChange } handleSeasonChange={ this.handleSeasonChange }/>
-          <Grid>
-            <Grid.Column width={1}>
-            </Grid.Column>
-            <Grid.Column width={14}>
-              <Grid.Row>
-                <Info data={ data[current] } current={ current } />
-              </Grid.Row>
-              <Grid.Row>
-                <FormContainer data={ data } current={ current } season={ season } tides={ tides } handleTides={ this.handleTides }/>
-              </Grid.Row>
-            </Grid.Column>
-            <Grid.Column width={1}>
-            </Grid.Column>
-          </Grid>
+          <Header current={ current } handlePageChange={ this.handlePageChange }/>
+          <center><br /><br /><br />
+            <Grid>
+              <Grid.Column width={1}>
+              </Grid.Column>
+              <Grid.Column width={14}>
+                <Grid.Row>
+                  <Info data={ data[current] } current={ current }
+                    season={ season } handleSeasonChange={ this.handleSeasonChange }
+                    temperature={ temperature } handleTemperatureChange={ this.handleTemperatureChange }
+                  />
+                </Grid.Row>
+                <Grid.Row>
+                  <FormContainer data={ data } current={ current } season={ season } tides={ tides } handleTides={ this.handleTides }/>
+                </Grid.Row>
+              </Grid.Column>
+              <Grid.Column width={1}>
+              </Grid.Column>
+            </Grid>
+          </center>
         </>
       )
     } else {
       return (
-        <Greeting hl={ this.hl } />
+        <Greeting hl={ this.hl } p={ this.state.debug } />
       )
     }
 

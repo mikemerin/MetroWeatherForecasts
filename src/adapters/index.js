@@ -1,4 +1,4 @@
-import { Tempdata, Temptidedata } from './Tempdata';
+import Tempdata from './Tempdata';
 import Scrambler from '../components/Scrambler';
 
 const locs = [
@@ -50,17 +50,29 @@ function generate_URL(param, loc) {
 export class ForecastAdapter {
 
   static all(n) {
-    return fetch(lifts[n])
-      .then( res => {
-        if (res.ok) {
-          return res.json();
+    return Promise.all(n.map((url, i) =>
+      fetch(lifts[url]).then(resp => {
+        if (resp.ok) {
+          return resp.json();
         } else {
           throw new Error('Something went wrong with call ' + lifts[n]);
         }
       }).catch((error) => {
         // alert("Sorry something went wrong and no run data was found.\n\nPlease try again shortly.\n\nIf this problem persists please contact Mike Merin.")
-        return n > 12 ? Temptidedata : Tempdata
+      }).then(res => {
+        if (res.success) {
+          return res.response[0];
+        } else {
+          if (n[i] < 6) {
+            return Tempdata('forecast');
+          } else if (n[i] < 12) {
+            return Tempdata('graph');
+          } else {
+            return Tempdata('tide');
+          }
+        }
       })
+    ))
   }
 
   static custom(loc) {

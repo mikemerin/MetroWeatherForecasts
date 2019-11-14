@@ -6,7 +6,7 @@ export const TIDES = (props) => {
 
   const { data } = props
 
-  var dates = ["", "", "", "", "", "", "", "" ]
+  var dates = ["", "", "", "", "", "", "", ""]
 
   // date
   // data[n].periods[0].dateTimeISO.slice(0,10)
@@ -14,14 +14,13 @@ export const TIDES = (props) => {
   // data[n].periods[0].dateTimeISO.match(/T(\S+)-/)[1]
 
   function periods_to_days(n) {
-
-    var days = undefined
+    var days = undefined;
 
     // if that specific location returns no data
     if ( data[n] === undefined )
       { data[n] = Temptidedata.response[0] }
 
-    var station_periods = data[n].periods
+    var station_periods = data[n].periods;
     days = [ [ station_periods[0] ], [], [], [], [], [], [] ]
 
     var index = 0
@@ -37,13 +36,12 @@ export const TIDES = (props) => {
 
     days.forEach((x, i) => dates[i] = x[0].dateTimeISO.slice(5,10))
 
-    return days
   }
 
   const stations = [0,1,2,3,4,5,6,7,8].map(x => periods_to_days(x) )
 
   function location_top(x) {
-
+    const stations = [0,1,2,3,4,5,6,7,8].map(x => periods_to_days(x) )
     const names = [ "1. College Point (Flushing Bay)",
                     "2. 91st East River (Horns)",
                     "3. 59th St. (Queensboro)",
@@ -54,8 +52,9 @@ export const TIDES = (props) => {
                     "8. Coney Island",
                     "9. Rockaway" ]
 
-    const station_days = stations[x]
+    const station_days = stations[x];
 
+    debugger
     const row_0 = station_days.map((day,i) => {
       return (
         [
@@ -148,7 +147,7 @@ export const TIDES = (props) => {
 
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell colspan={2}><h4>Location</h4></Table.HeaderCell>
+              <Table.HeaderCell colSpan={2}><h4>Location</h4></Table.HeaderCell>
               <Table.HeaderCell><h4>Sun</h4></Table.HeaderCell>
               <Table.HeaderCell><h4>{dates[0]}</h4></Table.HeaderCell>
               <Table.HeaderCell><h4>Mon</h4></Table.HeaderCell>
@@ -174,7 +173,7 @@ export const TIDES = (props) => {
     )
 
   } else {
-    return <div><br />Please wait for the data to load.<br/><br/>If data does not load within 20 seconds then please try again in a few minutes.</div>
+    return <div><br />Please wait for the data to load.<br/><br/>If data does not load within 10 seconds then please try again in a few minutes.</div>
   }
 
 }
