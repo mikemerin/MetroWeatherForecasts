@@ -22,35 +22,40 @@ export default class App extends Component {
       data: [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ],
       // data: [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ],
       // tides: [ {}, {}, {}, {}, {}, {}, {}, {}, {} ],
-      tides: false,
-      login: false,
-      debug: true
+      lifts: 0,
+      tides: 0,
+      login: 0,
+      debug: 0
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    var calls = [];
+    var calls = [], { lifts, tides } = this.state;
     if (!prevState.login && this.state.login) {
-      var pages = (this.state.debug ? 1 : 6); // for debugging LIFT pages, does less calls
+      var pages = (this.state.debug ? 1 : 6);
       for (let x = 0; x < pages; x++) {
         calls.push(x, x+6);
       }
+      lifts = 1;
     }
-    if (!prevState.tides && this.state.tides) {
+    if (!prevState.tides && this.state.tides === 1) {
       for (let x = 12; x < 21; x++) {
         calls.push(x);
       }
+      tides = 2;
     }
 
-    if (calls.length > 0) {
-      ForecastAdapter.all(calls).then(all_called_data => {
-        var current_data = this.state.data;
-        all_called_data.forEach((data, i) => {
-          current_data[calls[i]] = data;
-        })
-        this.setState({ data: current_data })
+    if (calls.length > 0) this.update_data(calls, lifts, tides);
+  }
+
+  update_data(calls, lifts, tides) {
+    ForecastAdapter.all(calls).then(all_called_data => {
+      var current_data = this.state.data;
+      all_called_data.forEach((data, i) => {
+        current_data[calls[i]] = data;
       })
-    }
+      this.setState({ data: current_data, lifts: lifts, tides: tides });
+    })
   }
 
   hl = () => {
@@ -59,7 +64,7 @@ export default class App extends Component {
 
   handleTides = (event, result) => {
     event.preventDefault();
-    this.setState({ tides: true });
+    this.setState({ tides: 1 });
   }
 
   handlePageChange = (event, result) => {

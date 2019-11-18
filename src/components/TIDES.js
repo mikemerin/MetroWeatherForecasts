@@ -1,179 +1,122 @@
-import React from 'react'
-import { Table } from 'semantic-ui-react'
-import { Temptidedata } from '../adapters/Tempdata'
+import React, { Component } from 'react';
+import { Table } from 'semantic-ui-react';
 
-export const TIDES = (props) => {
+export class TIDES extends Component {
 
-  const { data } = props
-
-  var dates = ["", "", "", "", "", "", "", ""]
-
-  // date
-  // data[n].periods[0].dateTimeISO.slice(0,10)
-  // time
-  // data[n].periods[0].dateTimeISO.match(/T(\S+)-/)[1]
-
-  function periods_to_days(n) {
-    var days = undefined;
-
-    // if that specific location returns no data
-    if ( data[n] === undefined )
-      { data[n] = Temptidedata.response[0] }
-
-    var station_periods = data[n].periods;
-    days = [ [ station_periods[0] ], [], [], [], [], [], [] ]
-
-    var index = 0
-
-    for (let i = 1; i < station_periods.length; i++) {
-      if ( station_periods[i].dateTimeISO.slice(0,10) !==
-           station_periods[i-1].dateTimeISO.slice(0,10) )
-           { index++ }
-      if (days[index]) {
-        days[index].push(station_periods[i])
-      }
+  constructor(props, context) { //todo: metric
+    super();
+    this.state = {
+      all_station_data: this.format_station_data(props)
     }
-
-    days.forEach((x, i) => dates[i] = x[0].dateTimeISO.slice(5,10))
-
   }
 
-  const stations = [0,1,2,3,4,5,6,7,8].map(x => periods_to_days(x) )
+  format_station_data(props) {
+    const stations = [ "1. College Point (Flushing Bay)",
+                          "2. 91st East River (Horns)",
+                          "3. 59th St. (Queensboro)",
+                          "4. Gowanus Canal",
+                          "5. The Battery",
+                          "6. Great Kills",
+                          "7. Lower Hudson Bay",
+                          "8. Coney Island",
+                          "9. Rockaway" ]; //todo: bring to props
+    var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => ({ "name": day, "date": null }) );
 
-  function location_top(x) {
-    const stations = [0,1,2,3,4,5,6,7,8].map(x => periods_to_days(x) )
-    const names = [ "1. College Point (Flushing Bay)",
-                    "2. 91st East River (Horns)",
-                    "3. 59th St. (Queensboro)",
-                    "4. Gowanus Canal",
-                    "5. The Battery",
-                    "6. Great Kills",
-                    "7. Lower Hudson Bay",
-                    "8. Coney Island",
-                    "9. Rockaway" ]
+    var all_station_data = { "days": days, "stations" : [] };
 
-    const station_days = stations[x];
+    props.data.forEach((station, station_index) => {
+      var station_data = { "name": stations[station_index], "temp_data": station.temp_data };
+      if (station !== undefined && !station.temp_data) {
+        const station_periods = station.periods;
+        var date_index = 0;
 
-    debugger
-    const row_0 = station_days.map((day,i) => {
-      return (
-        [
-        <Table.Cell key={`${i} tt`}>{ `${day[0].type.toUpperCase()} ${day[0].dateTimeISO.slice(11,16)}` }</Table.Cell>,
-        <Table.Cell key={`${i} h`}>{ `${day[0].heightFT}’` }</Table.Cell>
-        ]
-      )
+        for (let i = 0; i < station_periods.length; i++) {
+          if (i > 0 && station_periods[i].dateTimeISO.slice(0,10) !== station_periods[i-1].dateTimeISO.slice(0,10) ) date_index++;
+
+          const date = station_periods[i].dateTimeISO.slice(5,10);
+          station_periods[i]["time"] = station_periods[i].dateTimeISO.slice(11,16);
+          station_periods[i]["type"] = station_periods[i]["type"].toUpperCase();
+
+          if (!station_data[ days[date_index]["date"] ]) {
+            if (!days[date_index]["date"]) days[date_index]["date"] = date;
+            station_data[ days[date_index]["date"] ] = [ station_periods[i] ];
+          } else {
+            station_data[ days[date_index]["date"] ].push(station_periods[i]);
+          }
+        }
+      }
+
+      all_station_data["stations"].push(station_data);
+    })
+
+    return all_station_data;
+  }
+
+  header() {
+    const header_cells = this.state.all_station_data["days"].map((day,i) => {
+      return ["name", "date"].map(cell_type => {
+          return <Table.HeaderCell key={day[cell_type] + "_" + cell_type}><h4>{day[cell_type]}</h4></Table.HeaderCell>;
+      })
     })
 
     return (
-      <Table.Row>
-        <Table.Cell colSpan={2} rowSpan={4} >{ names[x] }</Table.Cell>
-        { row_0 }
-      </Table.Row>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell colSpan={2}><h4>Location</h4></Table.HeaderCell>
+          { header_cells }
+        </Table.Row>
+      </Table.Header>
     )
   }
 
-  function location_bot(x) {
+  body() {
+    const body_cells = this.state.all_station_data.stations.map(station => {
+      var station_rows = [ ];
+      var cell_types = [
+        { "name": "type", "addon": "" },
+        { "name": "heightFT", "addon": "'"} //todo: metric here as , both FT/M and (this.state.metric ? "m" : "'")
+      ];
 
-    const station_days = stations[x]
+      for (let row = 0; row < 4; row++) {
+        let station_row = [];
+        if (row === 0) station_row.push( <Table.Cell key={ station.name } colSpan={2} rowSpan={4} >{ station.name }</Table.Cell> );
 
-    const rows_13 = [1, 2, 3].map((row, i) => {
+        this.state.all_station_data.days.forEach((day, day_index) => {
+          const day_info = (station.temp_data ? undefined : station[day["date"]][row]);
+          const no_data = day_info === undefined;
 
-      var this_row = station_days.map(day => day[row])
-
-      return (
-        <Table.Row key={i}>
-          { this_row.map((cell, j) => {
-            if (row === 3 && cell === undefined) {
-              return (
-                  [
-                  <Table.Cell key={`${j} tt`}>-</Table.Cell>,
-                  <Table.Cell key={`${j} ft`}>-</Table.Cell>
-                  ]
-              )
-            } else {
-              return (
-                  [
-                  <Table.Cell key={`${j} tt`}>{ `${cell.type.toUpperCase()} ${cell.dateTimeISO.slice(11,16)}` }</Table.Cell>,
-                  <Table.Cell key={`${j} ft`}>{ `${cell.heightFT}’` }</Table.Cell>
-                  ]
-              )
-            }
+          cell_types[0]["addon"] = (no_data ? "" : " " + day_info["time"]); //todo: don't like this, need to refactor with below text line and/or cell_types above
+          cell_types.forEach(cell_type => {
+            const key = (station.temp_data ? day_index : day["date"]) + "_" + cell_type["name"];
+            const text = (no_data ? "-" : day_info[cell_type["name"]] + cell_type["addon"]);
+            station_row.push( <Table.Cell error={ station.temp_data } key={key}><h4>{ text }</h4></Table.Cell> );
           })
-          }
-      </Table.Row>
-      )
+        })
 
-    })
+        station_rows.push( <Table.Row key={ station.name + "_" + row}>{station_row}</Table.Row> );
+      }
 
-    return rows_13
-
-  }
-
-  function body() {
+      return station_rows;
+    });
 
     return (
       <Table.Body>
-        { location_top(0) }
-        { location_bot(0) }
-        { location_top(1) }
-        { location_bot(1) }
-        { location_top(2) }
-        { location_bot(2) }
-        { location_top(3) }
-        { location_bot(3) }
-        { location_top(4) }
-        { location_bot(4) }
-        { location_top(5) }
-        { location_bot(5) }
-        { location_top(6) }
-        { location_bot(6) }
-        { location_top(7) }
-        { location_bot(7) }
-        { location_top(8) }
-        { location_bot(8) }
+        { body_cells }
       </Table.Body>
     )
 
   }
 
-  // returns
-
-  if ( data[0].loc !== undefined) {
-
+  render() {
     return (
       <div>
         <br />
         <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
-
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell colSpan={2}><h4>Location</h4></Table.HeaderCell>
-              <Table.HeaderCell><h4>Sun</h4></Table.HeaderCell>
-              <Table.HeaderCell><h4>{dates[0]}</h4></Table.HeaderCell>
-              <Table.HeaderCell><h4>Mon</h4></Table.HeaderCell>
-              <Table.HeaderCell><h4>{dates[1]}</h4></Table.HeaderCell>
-              <Table.HeaderCell><h4>Tue</h4></Table.HeaderCell>
-              <Table.HeaderCell><h4>{dates[2]}</h4></Table.HeaderCell>
-              <Table.HeaderCell><h4>Wed</h4></Table.HeaderCell>
-              <Table.HeaderCell><h4>{dates[3]}</h4></Table.HeaderCell>
-              <Table.HeaderCell><h4>Thu</h4></Table.HeaderCell>
-              <Table.HeaderCell><h4>{dates[4]}</h4></Table.HeaderCell>
-              <Table.HeaderCell><h4>Fri</h4></Table.HeaderCell>
-              <Table.HeaderCell><h4>{dates[5]}</h4></Table.HeaderCell>
-              <Table.HeaderCell><h4>Sat</h4></Table.HeaderCell>
-              <Table.HeaderCell><h4>{dates[6]}</h4></Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-
-          { body() }
-
+          { this.header() }
+          { this.body() }
         </Table>
       </div>
-
     )
-
-  } else {
-    return <div><br />Please wait for the data to load.<br/><br/>If data does not load within 10 seconds then please try again in a few minutes.</div>
   }
 
 }

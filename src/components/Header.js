@@ -32,7 +32,7 @@ export const Info = (props) => {
   const { data, current, season, handleSeasonChange, temperature, handleTemperatureChange } = props;
 
   const option_buttons = () => {
-    if (current !== 6) {
+    if (current < 6) {
       const season_buttons = [{'value': 'normal', 'icon': 'sun'}, {'value': 'winter', 'icon': 'snowflake outline'}].map(button => {
         const active = (season === button.value);
         return <Button icon circular compact size='mini' active={active} basic={!active} color='blue' key={button.value} value={button.value} onClick={ handleSeasonChange } ><Icon name={button.icon} /></Button>;

@@ -1,38 +1,41 @@
 import React, { Component } from 'react';
-import { Button, Loader } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 
 import { LIFTs } from '../components/LIFTs';
 import { TIDES } from '../components/TIDES';
 import { CUSTOM } from '../components/CUSTOM';
 
-export default class FormContainer extends Component {
+import { DataLoadingMessage, DataErrorMessage } from '../components/Common';
 
-  loader = (type) => {
-    return <center><br /><Loader active inline>{type} data is loading or is currently offline.<br />If this takes more than 10 seconds, please try again in a few minutes.</Loader></center>;
-  }
+export default class FormContainer extends Component {
 
   render() {
 
     const { data, current, season, tides, handleTides } = this.props;
-
+    
     if ( current < 6 ) {
-      if ( data[current].loc !== undefined && data[current].loc.lat !== 0 ) {
+      if ( data[current].loc !== undefined && data[current].loc.lat !== 0 ) { // todo: if lifts
         return <LIFTs data={ data[current] } graph_data={ data[current + 6] } current={ current } season={ season }/>
+      } else if (data[current].temp_data) {
+        return <DataErrorMessage type='Lift' />;
       } else {
-        return this.loader('Lift');
+        return <DataLoadingMessage type='Lift' />;
       }
     } else if ( current === 6 ) {
-      if ( data[12].loc !== undefined && data[12].loc.lat !== 0 ) {
-        if (tides) {
-          return <TIDES data={ data.slice(12) } current={ current } />;
-        } else {
-          return this.loader('Tide');
-        }
-      // } else if (tides) {
-      //   return this.loader('Tide'); //todo, is this needed?
-      } else {
-        return <center><br /><Button onClick={ handleTides }>Click to load tide data</Button></center>;
+      var output = '';
+      switch(tides) {
+        case 0:
+          output = <center><br /><Button onClick={ handleTides }>Click to load tide data</Button></center>;
+          break;
+        case 1:
+          output = <DataLoadingMessage type='Tide' />;
+          break;
+        case 2:
+          output = <TIDES data={ data.slice(12) } current={ current } />;
+          break;
+        default: output = `no info found (debug: tides = ${tides})`; break;
       }
+      return output;
     } else {
       return <CUSTOM season={ season }/>
     }
