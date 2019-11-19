@@ -1,5 +1,4 @@
-import Tempdata from './Tempdata';
-import Scrambler from '../components/Scrambler';
+import { Scrambler } from '../components/Common';
 
 const locs = [
   {'name': 'LIFT', 'loc': '40.78,-73.88'},
@@ -58,19 +57,10 @@ export class ForecastAdapter {
           throw new Error('Something went wrong with call ' + lifts[n]);
         }
       }).catch((error) => {
-        // alert("Sorry something went wrong and no run data was found.\n\nPlease try again shortly.\n\nIf this problem persists please contact Mike Merin.")
+        // alert("Sorry something went wrong and no run data was found.\n\nPlease wait a few minutes and try again.\n\nIf this problem persists please contact Mike Merin.");
+        return "Error found: " + error;
       }).then(res => {
-        if (res.success) {
-          return res.response[0];
-        } else {
-          if (n[i] < 6) {
-            return Tempdata('forecast');
-          } else if (n[i] < 12) {
-            return Tempdata('graph');
-          } else {
-            return Tempdata('tide');
-          }
-        }
+        return res.success ? res.response[0] : { fail_data: true, error: res };
       })
     ))
   }
@@ -86,7 +76,7 @@ export class ForecastAdapter {
         }
       }).catch((error) => {
         // alert("Sorry something went wrong and no run data was found.\n\nPlease try again shortly.\n\nIf this problem persists please contact Mike Merin.")
-        // return n > 12 ? Temptidedata : Tempdata
+        // return n > 12 ? FailTideData : FailData
       })
   }
 

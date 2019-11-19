@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button, Segment } from 'semantic-ui-react';
-import Scrambler from './Scrambler';
+import { Scrambler } from './Common';
 
 export default class Greeting extends Component {
 

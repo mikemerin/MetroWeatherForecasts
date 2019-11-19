@@ -3,10 +3,17 @@ import { Table } from 'semantic-ui-react';
 
 export class TIDES extends Component {
 
-  constructor(props, context) { //todo: metric
+  constructor(props, context) {
     super();
     this.state = {
+      units: props.units, // todo: NO!
       all_station_data: this.format_station_data(props)
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.units.temperature !== this.props.units.temperature) {
+      this.setState({ units: this.props.units });
     }
   }
 
@@ -25,8 +32,8 @@ export class TIDES extends Component {
     var all_station_data = { "days": days, "stations" : [] };
 
     props.data.forEach((station, station_index) => {
-      var station_data = { "name": stations[station_index], "temp_data": station.temp_data };
-      if (station !== undefined && !station.temp_data) {
+      var station_data = { "name": stations[station_index], "fail_data": station.fail_data };
+      if (station !== undefined && !station.fail_data) {
         const station_periods = station.periods;
         var date_index = 0;
 
@@ -72,25 +79,37 @@ export class TIDES extends Component {
   body() {
     const body_cells = this.state.all_station_data.stations.map(station => {
       var station_rows = [ ];
-      var cell_types = [
-        { "name": "type", "addon": "" },
-        { "name": "heightFT", "addon": "'"} //todo: metric here as , both FT/M and (this.state.metric ? "m" : "'")
-      ];
 
       for (let row = 0; row < 4; row++) {
         let station_row = [];
         if (row === 0) station_row.push( <Table.Cell key={ station.name } colSpan={2} rowSpan={4} >{ station.name }</Table.Cell> );
 
         this.state.all_station_data.days.forEach((day, day_index) => {
-          const day_info = (station.temp_data ? undefined : station[day["date"]][row]);
+          const day_info = (station.fail_data ? undefined : station[day["date"]][row]);
           const no_data = day_info === undefined;
 
-          cell_types[0]["addon"] = (no_data ? "" : " " + day_info["time"]); //todo: don't like this, need to refactor with below text line and/or cell_types above
-          cell_types.forEach(cell_type => {
-            const key = (station.temp_data ? day_index : day["date"]) + "_" + cell_type["name"];
-            const text = (no_data ? "-" : day_info[cell_type["name"]] + cell_type["addon"]);
-            station_row.push( <Table.Cell error={ station.temp_data } key={key}><h4>{ text }</h4></Table.Cell> );
-          })
+          var key = (station.fail_data ? day_index : day["date"]) + "_type";
+          var text = (no_data ? "-" : day_info["type"] + " " + day_info["time"]);
+          station_row.push( <Table.Cell error={ station.fail_data } key={key}><h4>{ text }</h4></Table.Cell> );
+
+          var units = (this.state.units.temperature === "ºF" ? { "name": "heightFT", "addon": " '"} : { "name": "heightM", "addon": " m"});
+          key = (station.fail_data ? day_index : day["date"]) + "_height";
+          text = (no_data ? "-" : (Math.round(day_info[units["name"]] * 100)/100) + units["addon"]);
+          station_row.push( <Table.Cell error={ station.fail_data } key={key}><h4>{ text }</h4></Table.Cell> );
+
+          // keeping above because I added in rounding of the tide heights which isn't done for time, can be refactored later but it's good enough for now. Old code below
+
+          // var cell_types = [
+          //   { "name": "type", "addon": "" },
+          //   { "name": "heightFT", "addon": "'"} //todo: units here as , both FT/M and (this.state.units ? "m" : "'")
+          // ];
+
+          // cell_types[0]["addon"] = (no_data ? "" : " " + day_info["time"]); // don't like the folllowing lines, need to refactor with below text line and/or cell_types above
+          // cell_types.forEach(cell_type => {
+          //   const key = (station.fail_data ? day_index : day["date"]) + "_" + cell_type["name"];
+          //   const text = (no_data ? "-" : day_info[cell_type["name"]] + cell_type["addon"]);
+          //   station_row.push( <Table.Cell error={ station.fail_data } key={key}><h4>{ text }</h4></Table.Cell> );
+          // })
         })
 
         station_rows.push( <Table.Row key={ station.name + "_" + row}>{station_row}</Table.Row> );
@@ -108,6 +127,8 @@ export class TIDES extends Component {
   }
 
   render() {
+    if (this.props.debug) console.log(this.constructor.name + " rendering", this);
+
     return (
       <div>
         <br />

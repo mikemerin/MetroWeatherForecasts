@@ -18,7 +18,7 @@ The LIFT forms are valid for the day of, and the TIDES will point to the next Su
 
 ---
 
-Using the FREE tab You can enter a zip code, city and state, or city and province/country and it will give you a formatted forecast. You can click the metric checkbox to output additional temperatures in Celcius and winds in KPH, useful for when forcasting clients in Canada, Mexico, or elsewhere.
+Using the FREE tab You can enter a zip code, city and state, or city and province/country and it will give you a formatted forecast. You can click the metric checkbox to output additional units in Celcius/KPH which useful for when forcasting clients in Canada, Mexico, or elsewhere.
 
 ![Free](https://imgur.com/9BeQJx9.png)
 

@@ -3,7 +3,8 @@ import { Menu, Button, Icon, Segment } from 'semantic-ui-react'
 
 export const Header = (props) => {
 
-  const { current, handlePageChange } = props;
+  const { debug, current, handlePageChange } = props;
+  if (debug) console.log("Header rendering", props);
 
   var lift_buttons = ['LIFT', 'LI', 'M2', 'M3', 'M4', 'M5'].map((page, i) => {
     return <Button compact key={i} size='mini' active={current === i} color='blue' onClick={ handlePageChange } >{page}</Button>;
@@ -29,28 +30,31 @@ export const Header = (props) => {
 
 export const Info = (props) => {
 
-  const { data, current, season, handleSeasonChange, temperature, handleTemperatureChange } = props;
+  const { debug, data, current, season, handleSeasonChange, units, handleUnitChange } = props;
+  if (debug) console.log("Info rendering", props);
 
   const option_buttons = () => {
-    if (current < 6) {
-      const season_buttons = [{'value': 'normal', 'icon': 'sun'}, {'value': 'winter', 'icon': 'snowflake outline'}].map(button => {
-        const active = (season === button.value);
-        return <Button icon circular compact size='mini' active={active} basic={!active} color='blue' key={button.value} value={button.value} onClick={ handleSeasonChange } ><Icon name={button.icon} /></Button>;
-      })
+    const season_buttons = [{'value': 'normal', 'icon': 'sun'}, {'value': 'winter', 'icon': 'snowflake outline'}].map(button => {
+      const active = (season === button.value);
+      return <Button icon circular compact size='mini' active={active} basic={!active} color='blue' key={button.value} value={button.value} onClick={ handleSeasonChange } ><Icon name={button.icon} /></Button>;
+    })
 
-      const temperature_buttons = ['ºF', 'ºC'].map(temp => {
-        const active = (temperature === temp);
-        return <Button icon circular compact size='mini' active={active} basic={!active} color='blue' key={temp} value={temp} onClick={ handleTemperatureChange }>{temp}</Button>;
-      })
+    const unit_buttons = ['ºF', 'ºC'].map(temp => {
+      const active = (units.temperature === temp);
+      return <Button icon circular compact size='mini' active={active} basic={!active} color='blue' key={temp} value={temp} onClick={ handleUnitChange }>{temp}</Button>;
+    })
 
+    if (current === 6) {
       return (
         <Segment.Group horizontal>
-          <Segment>
-            { season_buttons }
-          </Segment>
-          <Segment>
-            { temperature_buttons }
-          </Segment>
+        <Segment>{ unit_buttons }</Segment>
+        </Segment.Group>
+      )
+    } else {
+      return (
+        <Segment.Group horizontal>
+        <Segment>{ season_buttons }</Segment>
+        <Segment>{ unit_buttons }</Segment>
         </Segment.Group>
       )
     }

@@ -16,23 +16,23 @@ export default class App extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
+      debug: 2,
       current: 0,
       season: season,
-      temperature: 'ºF',
+      units: this.get_units("ºF"),
       data: [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ],
       // data: [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ],
       // tides: [ {}, {}, {}, {}, {}, {}, {}, {}, {} ],
       lifts: 0,
       tides: 0,
-      login: 0,
-      debug: 0
+      login: 0
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     var calls = [], { lifts, tides } = this.state;
     if (!prevState.login && this.state.login) {
-      var pages = (this.state.debug ? 1 : 6);
+      var pages = (this.state.debug === 2 ? 1 : 6);
       for (let x = 0; x < pages; x++) {
         calls.push(x, x+6);
       }
@@ -78,32 +78,55 @@ export default class App extends Component {
     this.setState({ season: result.value });
   }
 
-  handleTemperatureChange = (event, result) => {
+  handleUnitChange = (event, result) => {
     event.preventDefault();
-    this.setState({ temperature: result.value });
+    const units = this.get_units(result.value);
+    this.setState({ units: units });
+  }
+
+  get_units = (unit) => {
+    var temperature = "ºF", precip = "IN", speed = "MPH", distance = "MI";
+
+    if (unit === "ºC") {
+      temperature = "ºC";
+      precip = "MM";
+      speed = "KPH";
+      distance = "KM";
+    };
+
+    return {
+      temperature: temperature,
+      precip: precip,
+      speed: speed,
+      distance: distance
+    };
   }
 
   render() {
 
-    const { login, data, current, season, tides, temperature } = this.state
+    const { debug, login, data, current, season, tides, units } = this.state
+
+    if (debug) console.log("\n\n" + this.constructor.name + " rendering", this);
 
     if (login) {
       return (
         <>
-          <Header current={ current } handlePageChange={ this.handlePageChange }/>
+          <Header debug={ debug } current={ current } handlePageChange={ this.handlePageChange }/>
           <center><br /><br /><br />
             <Grid>
               <Grid.Column width={1}>
               </Grid.Column>
               <Grid.Column width={14}>
                 <Grid.Row>
-                  <Info data={ data[current] } current={ current }
+                  <Info debug={ debug } data={ data[current] } current={ current }
                     season={ season } handleSeasonChange={ this.handleSeasonChange }
-                    temperature={ temperature } handleTemperatureChange={ this.handleTemperatureChange }
+                    units={ units } handleUnitChange={ this.handleUnitChange }
                   />
                 </Grid.Row>
                 <Grid.Row>
-                  <FormContainer data={ data } current={ current } season={ season } tides={ tides } handleTides={ this.handleTides }/>
+                  <FormContainer debug={ debug } data={ data } current={ current } season={ season }
+                    tides={ tides } handleTides={ this.handleTides } units={ units }
+                  />
                 </Grid.Row>
               </Grid.Column>
               <Grid.Column width={1}>
