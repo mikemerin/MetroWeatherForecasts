@@ -125,7 +125,3 @@ export class ForecastAdapter {
   }
 
 }
-
-
-
-// return lifts.map(lift => fetch(lift).then( res => res.json() ) )

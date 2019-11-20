@@ -23,11 +23,11 @@ export const Scrambler = (v) => {
 }
 
 export const DataLoadingMessage = (props) => {
-  const { type } = props;
+  const { type } = props; //todo: stopwatch, and <Progress value='' total='' progress='ratio' />
   return (
     <center>
       <br />
-      <Loader active inline size="massive" />
+      <Loader active inline indeterminate size="massive" />
       <br />
       <h1>
         {type} data is loading or is currently offline.<br />
