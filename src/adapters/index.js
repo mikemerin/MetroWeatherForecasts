@@ -1,6 +1,7 @@
+import { Component } from 'react';
 import { Scrambler } from '../components/Common';
 
-const locs = [
+const locs = [ //todo: move this to app
   {'name': 'LIFT', 'loc': '40.78,-73.88'},
   {'name': 'LILIFT', 'loc': '40.79,-73.10'},
   {'name': 'MNR2', 'loc': '41.06,-73.70'},
@@ -9,7 +10,7 @@ const locs = [
   {'name': 'MNR5', 'loc': '41.16,-73.13'}
 ];
 
-const tides = [
+const tides = [ //todo: move this to app
   {'name': 'College Point (Flushing Bay)', 'loc': 'flushing+bay,ny'},
   {'name': '91st East River (Horns)', 'loc': 'mill+rock,ny'},
   {'name': '59th St. (Queensboro)', 'loc': 'queensboro+bridge,ny'},
@@ -39,12 +40,48 @@ function generate_URL(param, loc) {
 
   const URLs = {
     'forecast': { 'prefix': 'forecasts', 'query': '&from=today&to=+5days&filter=daynight&limit=9' },
-    'graph': { 'prefix': 'forecasts', 'query': '&from=-3hours&filter=3hr&limit=48' },
+    'graph': { 'prefix': 'forecasts', 'query': '&from=-1hours&filter=1hr&limit=144' },
     'tide': { 'prefix': 'tides', 'query': '&from=sunday&to=+7days&filter=highlow' }
   };
 
   return `${URL}${URLs[param]['prefix']}/${loc}${id_secret}${URLs[param]['query']}`;
 }
+
+
+class HelperFunctions extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    }
+  }
+
+  add_day_data = (period, index) => {
+    const day_of_week = this.state.days[new Date(period.dateTimeISO.slice(0,10)).getDay()];
+    const short = day_of_week.slice(0,3);
+    const short_upper = short.toUpperCase();
+    var text_forecast = day_of_week;
+    var table_forecast = short_upper + ". 6A-6P";
+    if (period.isDay) {
+      if (index === 0) text_forecast = "Today";
+      if (index === 1) text_forecast = "Tonight";
+    } else {
+      text_forecast = (index < 2 ? "Tonight" : short + ". Night");
+      table_forecast = short_upper + ". NIGHT 6P-6A";
+    }
+    return {
+      day_of_week: day_of_week,
+      short: short,
+      short_upper: short_upper,
+      text_forecast: text_forecast,
+      table_forecast: table_forecast
+    }
+  }
+
+}
+
+const helper_functions = new HelperFunctions();
 
 export class ForecastAdapter {
 
@@ -60,7 +97,14 @@ export class ForecastAdapter {
         // alert("Sorry something went wrong and no run data was found.\n\nPlease wait a few minutes and try again.\n\nIf this problem persists please contact Mike Merin.");
         return "Error found: " + error;
       }).then(res => {
-        return res.success ? res.response[0] : { fail_data: true, error: res };
+        if (res.success) {
+          res.response[0].periods.forEach((period, index) => {
+            res.response[0].periods[index]["day"] = helper_functions.add_day_data(period, index);
+          })
+          return res.response[0];
+        } else {
+          return { fail_data: true, error: res };
+        }
       })
     ))
   }
@@ -76,7 +120,7 @@ export class ForecastAdapter {
         }
       }).catch((error) => {
         // alert("Sorry something went wrong and no run data was found.\n\nPlease try again shortly.\n\nIf this problem persists please contact Mike Merin.")
-        // return n > 12 ? FailTideData : FailData
+        return "Error found: " + error;
       })
   }
 

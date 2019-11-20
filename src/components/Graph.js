@@ -28,7 +28,7 @@ function arraySums(array) {
 
 export const Graph = (props) => {
 
-  const { graph_data, season } = props
+  const { units, graph_data, season } = props
 
   var labels = [], precipIN = [], snowIN = [], tempF = [], freezing = [], feelslikeF = []
 
@@ -50,10 +50,10 @@ export const Graph = (props) => {
   }
 
   if (graph_data.periods !== undefined) {
-    graph_data.periods.forEach(x => {
+    graph_data.periods.forEach((x,i) => {
       const dt = x.dateTimeISO
       labels.push(
-        ( to_i(dt.slice(11,13)) < 3 ? `${days_short[new Date(dt).getDay()]} ${to_i(dt.slice(5,7))}/${to_i(dt.slice(8,10))} - ` : "" ) + to12( to_i( dt.slice(11,13) ))
+        ( to_i(dt.slice(11,13)) < 3 || i === 0 ? `${days_short[new Date(dt).getDay()]} ${to_i(dt.slice(5,7))}/${to_i(dt.slice(8,10))} - ` : "" ) + to12( to_i( dt.slice(11,13) ))
       )
       precipIN.push( x.precipIN )
       snowIN.push( x.snowIN )
@@ -102,18 +102,17 @@ export const Graph = (props) => {
 
   const options = {
     name: "Forecast",
-
-    showTooltips: false,
+    showTooltips: true,
     tooltips: {
-      enabled: false
-      // mode: 'x-axis',
-      // position: 'nearest'
+      mode: 'index',
+      position: 'nearest'
     },
     scales: {
       xAxes: [{
         stacked: true,
         ticks: {
-          autoSkip: false,
+          autoSkip: true,
+          maxTicksLimit: 48,
           maxRotation: 90,
           minRotation: 90
         }
@@ -126,9 +125,7 @@ export const Graph = (props) => {
           beginAtZero: true,
           stepSize: ss,
           max: Math.ceil((maxPrecip+ss) * ss2) / ss2,
-          callback: function(label, index, labels) {
-                        return Math.round(label*100)/100 + '"';
-                    }
+          callback: (label, index, labels) => { return Math.round(label*100)/100 + (units.precip === "IN" ? '"' : "mm"); }
         }
       }, {
         id: 'Temps',
@@ -140,9 +137,7 @@ export const Graph = (props) => {
           fontSize: 10,
           min: Math.floor((minTemp-5)/5)*5,
           max: Math.ceil((maxTemp+5)/5)*5,
-          callback: function(label, index, labels) {
-                        return label + 'ºF';
-                    }
+          callback: (label, index, labels) => { return label + units.temperature; }
         },
         gridLines : {
            display : false
@@ -161,7 +156,7 @@ export const Graph = (props) => {
       type: 'line',
       fill: true,
       datalabels: precipDatalabels,
-     //  lineTension: 0,
+      lineTension: .3,
       backgroundColor: 'rgba(0,0,100,.5)',
       borderColor: 'rgba(0,0,100,.6)',
       borderCapStyle: 'butt',
@@ -219,10 +214,11 @@ export const Graph = (props) => {
         data: snowIN
       }
     var tempsData = {
-      label: 'Temps (ºF)',
+      label: 'Temps (' + units.temperature + ')',
       yAxisID: 'Temps',
       type: 'line',
       fill: '+1',
+      lineTension: .4,
       datalabels: {
           display: false
       },
@@ -245,7 +241,7 @@ export const Graph = (props) => {
     }
 
     var freezingLineData = {
-                    label: 'Freezing Line (ºF)',
+                    label: 'Freezing Line (' + units.temperature + ')',
                     yAxisID: 'Temps',
                     type: 'line',
                     fill: false,
@@ -270,7 +266,7 @@ export const Graph = (props) => {
                     data: freezing
                   }
     var feelsLikeFData = {
-                    label: 'Feels Like (ºF)',
+                    label: 'Feels Like (' + units.temperature + ')',
                     yAxisID: 'Temps',
                     type: 'line',
                     fill: false,

@@ -90,14 +90,15 @@ export const Info = (props) => {
   }
 
   return (
-    <center>
-      <Segment.Group compact>
+    <div id="info_div">
+      <Segment.Group compact id="info_box">
         { option_buttons() }
         <Segment color='blue' textAlign='center'>
           <h3>{ full_header }</h3>
         </Segment>
       </Segment.Group>
-    </center>
+      <br /><br />
+    </div>
   )
 
 }

@@ -6,14 +6,7 @@ export class TIDES extends Component {
   constructor(props, context) {
     super();
     this.state = {
-      units: props.units, // todo: NO!
       all_station_data: this.format_station_data(props)
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.units.temperature !== this.props.units.temperature) {
-      this.setState({ units: this.props.units });
     }
   }
 
@@ -59,7 +52,7 @@ export class TIDES extends Component {
     return all_station_data;
   }
 
-  header() {
+  get_header() {
     const header_cells = this.state.all_station_data["days"].map((day,i) => {
       return ["name", "date"].map(cell_type => {
           return <Table.HeaderCell key={day[cell_type] + "_" + cell_type}><h4>{day[cell_type]}</h4></Table.HeaderCell>;
@@ -76,7 +69,7 @@ export class TIDES extends Component {
     )
   }
 
-  body() {
+  get_body() {
     const body_cells = this.state.all_station_data.stations.map(station => {
       var station_rows = [ ];
 
@@ -92,7 +85,7 @@ export class TIDES extends Component {
           var text = (no_data ? "-" : day_info["type"] + " " + day_info["time"]);
           station_row.push( <Table.Cell error={ station.fail_data } key={key}><h4>{ text }</h4></Table.Cell> );
 
-          var units = (this.state.units.temperature === "ºF" ? { "name": "heightFT", "addon": " '"} : { "name": "heightM", "addon": " m"});
+          var units = (this.props.units.temperature === "ºF" ? { "name": "heightFT", "addon": " '"} : { "name": "heightM", "addon": " m"});
           key = (station.fail_data ? day_index : day["date"]) + "_height";
           text = (no_data ? "-" : (Math.round(day_info[units["name"]] * 100)/100) + units["addon"]);
           station_row.push( <Table.Cell error={ station.fail_data } key={key}><h4>{ text }</h4></Table.Cell> );
@@ -101,7 +94,7 @@ export class TIDES extends Component {
 
           // var cell_types = [
           //   { "name": "type", "addon": "" },
-          //   { "name": "heightFT", "addon": "'"} //todo: units here as , both FT/M and (this.state.units ? "m" : "'")
+          //   { "name": "heightFT", "addon": "'"} //todo: units here as , both FT/M and (this.props.units ? "m" : "'")
           // ];
 
           // cell_types[0]["addon"] = (no_data ? "" : " " + day_info["time"]); // don't like the folllowing lines, need to refactor with below text line and/or cell_types above
@@ -133,8 +126,8 @@ export class TIDES extends Component {
       <div>
         <br />
         <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
-          { this.header() }
-          { this.body() }
+          { this.get_header() }
+          { this.get_body() }
         </Table>
       </div>
     )

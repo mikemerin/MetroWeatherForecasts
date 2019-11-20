@@ -26,3 +26,28 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+body {
+  text-align: center;
+}
+
+#info_div {
+  width: 100%;
+  position: fixed;
+  left: 50%;
+  margin-top: 15px;
+  top: 92px;
+  transform: translate(-50%, -50%);
+  background-image: linear-gradient(to top, rgba(255,255,255,.5), rgba(255,255,255,1));
+}
+
+#info_box {
+  top: 20px;
+  background: white;
+  border: 0px;
+  box-shadow: 0 0 4px #0E6EB8;
+}
+
+#body {
+  padding-top: 160px;
+}

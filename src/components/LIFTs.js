@@ -7,31 +7,23 @@ export class LIFTs extends Component {
 
   constructor(props) {
     super();
-    const { debug, data, season, units, graph_data } = props; // todo: iffy data practice; it's better to store the constructed data and pass down the rest like season/units
+    const { data, forecast_days, graph_data } = props; // todo: iffy data practice; it's better to store the constructed data and pass down the rest like season/units
     this.state = {
-      debug: debug,
-      data: data,
-      season: season,
-      units: units,
       graph_data: graph_data,
       weekdays: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      days: forecast_days, // todo: get rid of, use props directly
       WeatherTypes: WeatherTypes,
-      days: this.get_days(),
       periods: this.get_periods(data)
     }
   }
 
-  get_days() {
-    var days = [];
-    const day = new Date().getDay()
-    for (let i = day; i < day+5; i++) {
-      days.push(i > 6 ? i-7 : i);
-    }
-    return days;
-  }
-
-  get_periods(data) {
+  get_periods = (data) => {
     const { periods } = data;
+    // console.log(periods)
+    // debugger
+    // const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    // return {
+    //   "day1": { day: "", periods: periods[0] },
     return {
       "day1": periods[0],
       "night1": periods[1],
@@ -43,20 +35,10 @@ export class LIFTs extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.season !== this.props.season) {
-      this.setState({ season: this.props.season });
-    }
-    if (prevState.units.temperature !== this.props.units.temperature) {
-      this.setState({ units: this.props.units });
-    }
-  }
+  body = () => {
 
-  body() {
-
-    console.log("lift body", this.state)
     const { periods } = this.state;
-    const { temperature, precip, speed, distance } = this.state.units;
+    const { temperature, precip, speed, distance } = this.props.units;
 
     return (
       <Table.Body>
@@ -76,7 +58,7 @@ export class LIFTs extends Component {
           <Table.Cell>{ periods["night2"]["minFeelslike" + temperature[1]] }</Table.Cell>
           <Table.Cell>{ periods["day3"]["maxFeelslike" + temperature[1]] }</Table.Cell>
         </Table.Row>
-        { this.season_output('maxDewpointF') }
+        { this.season_output('maxDewpoint' + temperature[1]) }
         <Table.Row>
           <Table.Cell>WIND DIR</Table.Cell>
           { this.cells('windDir') }
@@ -134,11 +116,11 @@ export class LIFTs extends Component {
     )
   }
 
-  season_output(type) {
+  season_output = (type) => {
     const { periods } = this.state;
-    const { temperature, precip } = this.state.units;
+    const { temperature, precip } = this.props.units;
 
-    if ( this.state.season === "normal" ) {
+    if ( this.props.season === "normal" ) {
       switch(type) {
         case "maxDewpointF":
           return (
@@ -169,7 +151,7 @@ export class LIFTs extends Component {
           )
         default: break;
       }
-    } else if ( this.state.season === "winter" ) {
+    } else {
       switch(type) {
         case "snowIN":
           return (
@@ -200,63 +182,61 @@ export class LIFTs extends Component {
     }
   }
 
-  cells(type) {
+  cells = (type) => {
     return Object.keys(this.state.periods).slice(0,5).map((period, i) => <Table.Cell key={i}>{ this.state.periods[period][type] }</Table.Cell> );
   }
 
-  cells_range(type1, type2) {
+  cells_range = (type1, type2) => {
     return Object.keys(this.state.periods).slice(0,5).map((period, i) => <Table.Cell key={i}>{ this.state.periods[period][type1] }-{ this.state.periods[period][type2] }</Table.Cell> );
   }
 
-  cells_wx_types() {
+  cells_wx_types = () => {
     return Object.keys(this.state.periods).slice(0,5).map((period, i) => {
       return <Table.Cell key={i}>{ this.state.WeatherTypes[this.state.periods[period]['weatherPrimaryCoded'].split(":")[2]] }</Table.Cell>;
     });
   }
 
+  get_top_text = () => {
+    const top_text = this.props.data.periods.map((period, index) => {
+      return <p key={"top_text_" + index}>{ period.day.text_forecast + ": " + period.weather }</p>;
+    })
+    return <div style={{"textAlign": "left"}}>{ top_text }</div>;
+  }
+
+  get_table_header = () => {
+    var table_header = [<Table.Cell key="copy below"><h4>Copy below</h4></Table.Cell>];
+    this.props.data.periods.slice(0,5).forEach((period, index) => {
+      table_header.push(<Table.Cell key={"table_forecast_" + index}><h4>{ period.day.header_forecast }</h4></Table.Cell>);
+    })
+    return (
+      <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
+        <Table.Header>
+          <Table.Row>
+            { table_header }
+          </Table.Row>
+        </Table.Header>
+      </Table>
+    );
+  }
+
   render() {
-    const { debug, data, days, weekdays, graph_data, season } = this.state;
+    const { debug, season, units } = this.props;
+    const { days, weekdays, graph_data } = this.state;
 
     if (debug) console.log(this.constructor.name + " rendering", this);
+    return (
+      <>
+        <br />
+        { this.get_top_text() }
+        { this.get_table_header() }
 
-    if ( data.loc !== undefined) {
-      return (
-        <div>
-          <br />
-          Today: { data.periods[0].weather }<br />
-          Tonight: { data.periods[1].weather }<br />
-          { weekdays[days[1]] }: { data.periods[2].weather }<br />
-          { weekdays[days[1]].slice(0,3) }. Night: { data.periods[3].weather }<br />
-          { weekdays[days[2]] }: { data.periods[4].weather }<br />
-          { weekdays[days[3]] }: { data.periods[6].weather }<br />
-          { weekdays[days[4]] }: { data.periods[8].weather }
-          <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
+        <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
 
-            <Table.Header>
-              <Table.Row>
-                <Table.Cell><h4>Copy below</h4></Table.Cell>
-                <Table.Cell><h4>{weekdays[days[0]].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.Cell>
-                <Table.Cell><h4>{weekdays[days[0]].toUpperCase().slice(0,3)}. NIGHT 6P-6A</h4></Table.Cell>
-                <Table.Cell><h4>{weekdays[days[1]].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.Cell>
-                <Table.Cell><h4>{weekdays[days[1]].toUpperCase().slice(0,3)}. NIGHT 6P-6A</h4></Table.Cell>
-                <Table.Cell><h4>{weekdays[days[2]].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.Cell>
-              </Table.Row>
-            </Table.Header>
+          { this.body() }
 
-          </Table>
-          <br />
-          <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
-
-            { this.body() }
-
-          </Table>
-          <Graph graph_data={ graph_data } season={ season }/>
-        </div>
-
-      )
-
-    } else {
-      return <div><br />Please wait for the data to load.<br/><br/>If data does not load within 20 seconds then please try again in a few minutes.</div>
-    }
+        </Table>
+        <Graph graph_data={ graph_data } season={ season } units={ units }/>
+      </>
+    )
   }
 }
