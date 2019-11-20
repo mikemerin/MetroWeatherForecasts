@@ -26,12 +26,12 @@ export const DataLoadingMessage = (props) => {
   const { debug, type } = props; //todo: stopwatch, and <Progress value='' total='' progress='ratio' />
   var text;
   if (debug) {
-    text = [ <h1>Debug (state {debug}) is active for {type}</h1> ];
+    text = [ <h1 key="loading debug">Debug (state {debug}) is active for {type}</h1> ];
   } else {
     text = [
-      <h1>{type} data is loading or is currently offline.</h1>,
-      <h1>If this takes more than 20 seconds, please try again in a few minutes.</h1>,
-      <h1>If this problem persists, please contact Mike Merin.</h1>
+      <h1 key="loading 1">{type} data is loading or is currently offline.</h1>,
+      <h1 key="loading 2">If this takes more than 20 seconds, please try again in a few minutes.</h1>,
+      <h1 key="loading 3">If this problem persists, please contact Mike Merin.</h1>
     ];
   }
   return (
@@ -39,7 +39,7 @@ export const DataLoadingMessage = (props) => {
       <br />
       <Loader active inline indeterminate size="massive" />
       <br />
-      <h1>{ text }</h1>
+      { text }
     </center>
   )
 }
