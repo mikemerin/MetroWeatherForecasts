@@ -1,28 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Table } from 'semantic-ui-react';
 import { Graph } from './Graph';
-import { WeatherTypes } from './Common';
+import { WeatherTypes as weather_types } from './Common';
 
-export class LIFTs extends Component {
+export const LIFTs = (props) => {
 
-  constructor(props) {
-    super();
-    this.state = {
-      weather_types: WeatherTypes
-    }
-  }
+  const { debug, data, graph_data, season, units } = props;
+  const { periods } = data;
+  const { temperature, precip, speed, distance } = units;
+  const FC = temperature[1];
 
-  get_top_text = () => {
-    const top_text = this.props.data.periods.map((period, index) => {
+  const get_top_text = () => {
+    const top_text = props.data.periods.map((period, index) => {
       return <p key={"top_text_" + index}>{ period.day.text_forecast + ": " + period.weather }</p>;
     })
     return <div style={{"textAlign": "left"}}>{ top_text }</div>;
   }
 
-  get_table_header = () => {
-    var table_header = [<Table.Cell key="copy below"><h4>Copy below</h4></Table.Cell>];
-    this.props.data.periods.slice(0,5).forEach((period, index) => {
-      table_header.push(<Table.Cell key={"table_forecast_" + index}><h4>{ period.day.table_forecast }</h4></Table.Cell>);
+  const get_table_header = () => {
+    var table_header = [ <Table.Cell key="copy below"><h4>Copy below</h4></Table.Cell> ];
+    periods.slice(0,5).forEach((period, index) => {
+      table_header.push( <Table.Cell key={"table_forecast_" + index}><h4>{ period.day.table_forecast }</h4></Table.Cell> );
     })
     return (
       <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
@@ -35,13 +33,7 @@ export class LIFTs extends Component {
     );
   }
 
-  get_body = () => {
-
-    const { weather_types } = this.state;
-    const { data, season, units } = this.props;
-    const { periods } = data;
-    const { temperature, precip, speed, distance } = units;
-    const FC = temperature[1];
+  const get_body = () => {
     const first = (precip === "IN" ? "2'" : "5cm");
     const day4 = periods[0].isDay ? 6 : 5;
     const day5 = day4 + 2;
@@ -73,8 +65,8 @@ export class LIFTs extends Component {
       { side: "L",  header: `FORECAST CONFIDENCE`,                                          type: "blank",      season: "winter" },
       { side: "R",  header: `UV INDEX`,                         name: "uvi",                                    season: "normal" },
       { side: "R",  header: `1ST ${first} OF SNOW BY`,                                      type: "blank",      season: "winter" },
-      { side: "L",  header: `${periods[day4].day.header_forecast}`, name: day4,   unit: FC,  type: "forecast"},
-      { side: "R",  header: `${periods[day5].day.header_forecast}`, name: day5,   unit: FC,  type: "forecast"}
+      { side: "L",  header: `${periods[day4].day.table_forecast}`, name: day4,   unit: FC,  type: "forecast"},
+      { side: "R",  header: `${periods[day5].day.table_forecast}`, name: day5,   unit: FC,  type: "forecast"}
     ];
 
     three_day_forecast_rows.forEach(row => {
@@ -127,18 +119,15 @@ export class LIFTs extends Component {
     )
   }
 
-  render() {
-    const { debug, graph_data, season, units } = this.props;
 
-    if (debug) console.log(this.constructor.name + " rendering", this);
-    return (
-      <>
-        <br />
-        { this.get_top_text() }
-        { this.get_table_header() }
-        { this.get_body() }
-        <Graph graph_data={ graph_data } season={ season } units={ units }/>
-      </>
-    )
-  }
+  if (debug) console.log("LIFTs rendering", props);
+  return (
+    <>
+      <br />
+      { get_top_text() }
+      { get_table_header() }
+      { get_body() }
+      <Graph graph_data={ graph_data } season={ season } units={ units }/>
+    </>
+  )
 }

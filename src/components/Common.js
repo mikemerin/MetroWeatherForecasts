@@ -195,7 +195,7 @@ export const DebugLiftData = [
           "short": "Mon",
           "short_upper": "MON",
           "text_forecast": "Today",
-          "header_forecast": "MON. 6A-6P"
+          "table_forecast": "MON. 6A-6P"
         }
       },
       {
@@ -292,7 +292,7 @@ export const DebugLiftData = [
           "short": "Mon",
           "short_upper": "MON",
           "text_forecast": "Tonight",
-          "header_forecast": "MON. NIGHT 6P-6A"
+          "table_forecast": "MON. NIGHT 6P-6A"
         }
       },
       {
@@ -389,7 +389,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tuesday",
-          "header_forecast": "TUE. 6A-6P"
+          "table_forecast": "TUE. 6A-6P"
         }
       },
       {
@@ -486,7 +486,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tue. Night",
-          "header_forecast": "TUE. NIGHT 6P-6A"
+          "table_forecast": "TUE. NIGHT 6P-6A"
         }
       },
       {
@@ -583,7 +583,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wednesday",
-          "header_forecast": "WED. 6A-6P"
+          "table_forecast": "WED. 6A-6P"
         }
       },
       {
@@ -680,7 +680,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wed. Night",
-          "header_forecast": "WED. NIGHT 6P-6A"
+          "table_forecast": "WED. NIGHT 6P-6A"
         }
       },
       {
@@ -788,7 +788,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thursday",
-          "header_forecast": "THU. 6A-6P"
+          "table_forecast": "THU. 6A-6P"
         }
       },
       {
@@ -891,7 +891,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thu. Night",
-          "header_forecast": "THU. NIGHT 6P-6A"
+          "table_forecast": "THU. NIGHT 6P-6A"
         }
       },
       {
@@ -994,7 +994,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Friday",
-          "header_forecast": "FRI. 6A-6P"
+          "table_forecast": "FRI. 6A-6P"
         }
       }
     ],
@@ -1110,7 +1110,7 @@ export const DebugLiftData = [
           "short": "Mon",
           "short_upper": "MON",
           "text_forecast": "Tonight",
-          "header_forecast": "MON. NIGHT 6P-6A"
+          "table_forecast": "MON. NIGHT 6P-6A"
         }
       },
       {
@@ -1207,7 +1207,7 @@ export const DebugLiftData = [
           "short": "Mon",
           "short_upper": "MON",
           "text_forecast": "Tonight",
-          "header_forecast": "MON. NIGHT 6P-6A"
+          "table_forecast": "MON. NIGHT 6P-6A"
         }
       },
       {
@@ -1304,7 +1304,7 @@ export const DebugLiftData = [
           "short": "Mon",
           "short_upper": "MON",
           "text_forecast": "Mon. Night",
-          "header_forecast": "MON. NIGHT 6P-6A"
+          "table_forecast": "MON. NIGHT 6P-6A"
         }
       },
       {
@@ -1401,7 +1401,7 @@ export const DebugLiftData = [
           "short": "Mon",
           "short_upper": "MON",
           "text_forecast": "Mon. Night",
-          "header_forecast": "MON. NIGHT 6P-6A"
+          "table_forecast": "MON. NIGHT 6P-6A"
         }
       },
       {
@@ -1498,7 +1498,7 @@ export const DebugLiftData = [
           "short": "Mon",
           "short_upper": "MON",
           "text_forecast": "Mon. Night",
-          "header_forecast": "MON. NIGHT 6P-6A"
+          "table_forecast": "MON. NIGHT 6P-6A"
         }
       },
       {
@@ -1595,7 +1595,7 @@ export const DebugLiftData = [
           "short": "Mon",
           "short_upper": "MON",
           "text_forecast": "Mon. Night",
-          "header_forecast": "MON. NIGHT 6P-6A"
+          "table_forecast": "MON. NIGHT 6P-6A"
         }
       },
       {
@@ -1692,7 +1692,7 @@ export const DebugLiftData = [
           "short": "Mon",
           "short_upper": "MON",
           "text_forecast": "Mon. Night",
-          "header_forecast": "MON. NIGHT 6P-6A"
+          "table_forecast": "MON. NIGHT 6P-6A"
         }
       },
       {
@@ -1789,7 +1789,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tue. Night",
-          "header_forecast": "TUE. NIGHT 6P-6A"
+          "table_forecast": "TUE. NIGHT 6P-6A"
         }
       },
       {
@@ -1886,7 +1886,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tue. Night",
-          "header_forecast": "TUE. NIGHT 6P-6A"
+          "table_forecast": "TUE. NIGHT 6P-6A"
         }
       },
       {
@@ -1983,7 +1983,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tue. Night",
-          "header_forecast": "TUE. NIGHT 6P-6A"
+          "table_forecast": "TUE. NIGHT 6P-6A"
         }
       },
       {
@@ -2080,7 +2080,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tue. Night",
-          "header_forecast": "TUE. NIGHT 6P-6A"
+          "table_forecast": "TUE. NIGHT 6P-6A"
         }
       },
       {
@@ -2177,7 +2177,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tue. Night",
-          "header_forecast": "TUE. NIGHT 6P-6A"
+          "table_forecast": "TUE. NIGHT 6P-6A"
         }
       },
       {
@@ -2274,7 +2274,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tue. Night",
-          "header_forecast": "TUE. NIGHT 6P-6A"
+          "table_forecast": "TUE. NIGHT 6P-6A"
         }
       },
       {
@@ -2371,7 +2371,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tue. Night",
-          "header_forecast": "TUE. NIGHT 6P-6A"
+          "table_forecast": "TUE. NIGHT 6P-6A"
         }
       },
       {
@@ -2468,7 +2468,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tuesday",
-          "header_forecast": "TUE. 6A-6P"
+          "table_forecast": "TUE. 6A-6P"
         }
       },
       {
@@ -2565,7 +2565,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tuesday",
-          "header_forecast": "TUE. 6A-6P"
+          "table_forecast": "TUE. 6A-6P"
         }
       },
       {
@@ -2662,7 +2662,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tuesday",
-          "header_forecast": "TUE. 6A-6P"
+          "table_forecast": "TUE. 6A-6P"
         }
       },
       {
@@ -2759,7 +2759,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tuesday",
-          "header_forecast": "TUE. 6A-6P"
+          "table_forecast": "TUE. 6A-6P"
         }
       },
       {
@@ -2856,7 +2856,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tuesday",
-          "header_forecast": "TUE. 6A-6P"
+          "table_forecast": "TUE. 6A-6P"
         }
       },
       {
@@ -2953,7 +2953,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tuesday",
-          "header_forecast": "TUE. 6A-6P"
+          "table_forecast": "TUE. 6A-6P"
         }
       },
       {
@@ -3050,7 +3050,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tuesday",
-          "header_forecast": "TUE. 6A-6P"
+          "table_forecast": "TUE. 6A-6P"
         }
       },
       {
@@ -3147,7 +3147,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tuesday",
-          "header_forecast": "TUE. 6A-6P"
+          "table_forecast": "TUE. 6A-6P"
         }
       },
       {
@@ -3244,7 +3244,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tuesday",
-          "header_forecast": "TUE. 6A-6P"
+          "table_forecast": "TUE. 6A-6P"
         }
       },
       {
@@ -3341,7 +3341,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tuesday",
-          "header_forecast": "TUE. 6A-6P"
+          "table_forecast": "TUE. 6A-6P"
         }
       },
       {
@@ -3438,7 +3438,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tue. Night",
-          "header_forecast": "TUE. NIGHT 6P-6A"
+          "table_forecast": "TUE. NIGHT 6P-6A"
         }
       },
       {
@@ -3535,7 +3535,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tue. Night",
-          "header_forecast": "TUE. NIGHT 6P-6A"
+          "table_forecast": "TUE. NIGHT 6P-6A"
         }
       },
       {
@@ -3632,7 +3632,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tue. Night",
-          "header_forecast": "TUE. NIGHT 6P-6A"
+          "table_forecast": "TUE. NIGHT 6P-6A"
         }
       },
       {
@@ -3729,7 +3729,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tue. Night",
-          "header_forecast": "TUE. NIGHT 6P-6A"
+          "table_forecast": "TUE. NIGHT 6P-6A"
         }
       },
       {
@@ -3826,7 +3826,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tue. Night",
-          "header_forecast": "TUE. NIGHT 6P-6A"
+          "table_forecast": "TUE. NIGHT 6P-6A"
         }
       },
       {
@@ -3923,7 +3923,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tue. Night",
-          "header_forecast": "TUE. NIGHT 6P-6A"
+          "table_forecast": "TUE. NIGHT 6P-6A"
         }
       },
       {
@@ -4020,7 +4020,7 @@ export const DebugLiftData = [
           "short": "Tue",
           "short_upper": "TUE",
           "text_forecast": "Tue. Night",
-          "header_forecast": "TUE. NIGHT 6P-6A"
+          "table_forecast": "TUE. NIGHT 6P-6A"
         }
       },
       {
@@ -4117,7 +4117,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wed. Night",
-          "header_forecast": "WED. NIGHT 6P-6A"
+          "table_forecast": "WED. NIGHT 6P-6A"
         }
       },
       {
@@ -4214,7 +4214,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wed. Night",
-          "header_forecast": "WED. NIGHT 6P-6A"
+          "table_forecast": "WED. NIGHT 6P-6A"
         }
       },
       {
@@ -4311,7 +4311,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wed. Night",
-          "header_forecast": "WED. NIGHT 6P-6A"
+          "table_forecast": "WED. NIGHT 6P-6A"
         }
       },
       {
@@ -4408,7 +4408,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wed. Night",
-          "header_forecast": "WED. NIGHT 6P-6A"
+          "table_forecast": "WED. NIGHT 6P-6A"
         }
       },
       {
@@ -4505,7 +4505,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wed. Night",
-          "header_forecast": "WED. NIGHT 6P-6A"
+          "table_forecast": "WED. NIGHT 6P-6A"
         }
       },
       {
@@ -4602,7 +4602,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wed. Night",
-          "header_forecast": "WED. NIGHT 6P-6A"
+          "table_forecast": "WED. NIGHT 6P-6A"
         }
       },
       {
@@ -4699,7 +4699,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wed. Night",
-          "header_forecast": "WED. NIGHT 6P-6A"
+          "table_forecast": "WED. NIGHT 6P-6A"
         }
       },
       {
@@ -4796,7 +4796,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wednesday",
-          "header_forecast": "WED. 6A-6P"
+          "table_forecast": "WED. 6A-6P"
         }
       },
       {
@@ -4893,7 +4893,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wednesday",
-          "header_forecast": "WED. 6A-6P"
+          "table_forecast": "WED. 6A-6P"
         }
       },
       {
@@ -4990,7 +4990,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wednesday",
-          "header_forecast": "WED. 6A-6P"
+          "table_forecast": "WED. 6A-6P"
         }
       },
       {
@@ -5087,7 +5087,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wednesday",
-          "header_forecast": "WED. 6A-6P"
+          "table_forecast": "WED. 6A-6P"
         }
       },
       {
@@ -5184,7 +5184,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wednesday",
-          "header_forecast": "WED. 6A-6P"
+          "table_forecast": "WED. 6A-6P"
         }
       },
       {
@@ -5281,7 +5281,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wednesday",
-          "header_forecast": "WED. 6A-6P"
+          "table_forecast": "WED. 6A-6P"
         }
       },
       {
@@ -5378,7 +5378,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wednesday",
-          "header_forecast": "WED. 6A-6P"
+          "table_forecast": "WED. 6A-6P"
         }
       },
       {
@@ -5475,7 +5475,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wednesday",
-          "header_forecast": "WED. 6A-6P"
+          "table_forecast": "WED. 6A-6P"
         }
       },
       {
@@ -5572,7 +5572,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wednesday",
-          "header_forecast": "WED. 6A-6P"
+          "table_forecast": "WED. 6A-6P"
         }
       },
       {
@@ -5669,7 +5669,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wednesday",
-          "header_forecast": "WED. 6A-6P"
+          "table_forecast": "WED. 6A-6P"
         }
       },
       {
@@ -5766,7 +5766,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wed. Night",
-          "header_forecast": "WED. NIGHT 6P-6A"
+          "table_forecast": "WED. NIGHT 6P-6A"
         }
       },
       {
@@ -5863,7 +5863,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wed. Night",
-          "header_forecast": "WED. NIGHT 6P-6A"
+          "table_forecast": "WED. NIGHT 6P-6A"
         }
       },
       {
@@ -5960,7 +5960,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wed. Night",
-          "header_forecast": "WED. NIGHT 6P-6A"
+          "table_forecast": "WED. NIGHT 6P-6A"
         }
       },
       {
@@ -6057,7 +6057,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wed. Night",
-          "header_forecast": "WED. NIGHT 6P-6A"
+          "table_forecast": "WED. NIGHT 6P-6A"
         }
       },
       {
@@ -6154,7 +6154,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wed. Night",
-          "header_forecast": "WED. NIGHT 6P-6A"
+          "table_forecast": "WED. NIGHT 6P-6A"
         }
       },
       {
@@ -6251,7 +6251,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wed. Night",
-          "header_forecast": "WED. NIGHT 6P-6A"
+          "table_forecast": "WED. NIGHT 6P-6A"
         }
       },
       {
@@ -6348,7 +6348,7 @@ export const DebugLiftData = [
           "short": "Wed",
           "short_upper": "WED",
           "text_forecast": "Wed. Night",
-          "header_forecast": "WED. NIGHT 6P-6A"
+          "table_forecast": "WED. NIGHT 6P-6A"
         }
       },
       {
@@ -6445,7 +6445,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thu. Night",
-          "header_forecast": "THU. NIGHT 6P-6A"
+          "table_forecast": "THU. NIGHT 6P-6A"
         }
       },
       {
@@ -6542,7 +6542,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thu. Night",
-          "header_forecast": "THU. NIGHT 6P-6A"
+          "table_forecast": "THU. NIGHT 6P-6A"
         }
       },
       {
@@ -6639,7 +6639,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thu. Night",
-          "header_forecast": "THU. NIGHT 6P-6A"
+          "table_forecast": "THU. NIGHT 6P-6A"
         }
       },
       {
@@ -6736,7 +6736,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thu. Night",
-          "header_forecast": "THU. NIGHT 6P-6A"
+          "table_forecast": "THU. NIGHT 6P-6A"
         }
       },
       {
@@ -6833,7 +6833,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thu. Night",
-          "header_forecast": "THU. NIGHT 6P-6A"
+          "table_forecast": "THU. NIGHT 6P-6A"
         }
       },
       {
@@ -6930,7 +6930,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thu. Night",
-          "header_forecast": "THU. NIGHT 6P-6A"
+          "table_forecast": "THU. NIGHT 6P-6A"
         }
       },
       {
@@ -7027,7 +7027,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thu. Night",
-          "header_forecast": "THU. NIGHT 6P-6A"
+          "table_forecast": "THU. NIGHT 6P-6A"
         }
       },
       {
@@ -7124,7 +7124,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thursday",
-          "header_forecast": "THU. 6A-6P"
+          "table_forecast": "THU. 6A-6P"
         }
       },
       {
@@ -7221,7 +7221,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thursday",
-          "header_forecast": "THU. 6A-6P"
+          "table_forecast": "THU. 6A-6P"
         }
       },
       {
@@ -7318,7 +7318,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thursday",
-          "header_forecast": "THU. 6A-6P"
+          "table_forecast": "THU. 6A-6P"
         }
       },
       {
@@ -7421,7 +7421,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thursday",
-          "header_forecast": "THU. 6A-6P"
+          "table_forecast": "THU. 6A-6P"
         }
       },
       {
@@ -7524,7 +7524,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thursday",
-          "header_forecast": "THU. 6A-6P"
+          "table_forecast": "THU. 6A-6P"
         }
       },
       {
@@ -7627,7 +7627,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thursday",
-          "header_forecast": "THU. 6A-6P"
+          "table_forecast": "THU. 6A-6P"
         }
       },
       {
@@ -7730,7 +7730,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thursday",
-          "header_forecast": "THU. 6A-6P"
+          "table_forecast": "THU. 6A-6P"
         }
       },
       {
@@ -7833,7 +7833,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thursday",
-          "header_forecast": "THU. 6A-6P"
+          "table_forecast": "THU. 6A-6P"
         }
       },
       {
@@ -7936,7 +7936,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thursday",
-          "header_forecast": "THU. 6A-6P"
+          "table_forecast": "THU. 6A-6P"
         }
       },
       {
@@ -8039,7 +8039,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thursday",
-          "header_forecast": "THU. 6A-6P"
+          "table_forecast": "THU. 6A-6P"
         }
       },
       {
@@ -8142,7 +8142,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thu. Night",
-          "header_forecast": "THU. NIGHT 6P-6A"
+          "table_forecast": "THU. NIGHT 6P-6A"
         }
       },
       {
@@ -8245,7 +8245,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thu. Night",
-          "header_forecast": "THU. NIGHT 6P-6A"
+          "table_forecast": "THU. NIGHT 6P-6A"
         }
       },
       {
@@ -8348,7 +8348,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thu. Night",
-          "header_forecast": "THU. NIGHT 6P-6A"
+          "table_forecast": "THU. NIGHT 6P-6A"
         }
       },
       {
@@ -8451,7 +8451,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thu. Night",
-          "header_forecast": "THU. NIGHT 6P-6A"
+          "table_forecast": "THU. NIGHT 6P-6A"
         }
       },
       {
@@ -8554,7 +8554,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thu. Night",
-          "header_forecast": "THU. NIGHT 6P-6A"
+          "table_forecast": "THU. NIGHT 6P-6A"
         }
       },
       {
@@ -8657,7 +8657,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thu. Night",
-          "header_forecast": "THU. NIGHT 6P-6A"
+          "table_forecast": "THU. NIGHT 6P-6A"
         }
       },
       {
@@ -8760,7 +8760,7 @@ export const DebugLiftData = [
           "short": "Thu",
           "short_upper": "THU",
           "text_forecast": "Thu. Night",
-          "header_forecast": "THU. NIGHT 6P-6A"
+          "table_forecast": "THU. NIGHT 6P-6A"
         }
       },
       {
@@ -8863,7 +8863,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Fri. Night",
-          "header_forecast": "FRI. NIGHT 6P-6A"
+          "table_forecast": "FRI. NIGHT 6P-6A"
         }
       },
       {
@@ -8960,7 +8960,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Fri. Night",
-          "header_forecast": "FRI. NIGHT 6P-6A"
+          "table_forecast": "FRI. NIGHT 6P-6A"
         }
       },
       {
@@ -9057,7 +9057,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Fri. Night",
-          "header_forecast": "FRI. NIGHT 6P-6A"
+          "table_forecast": "FRI. NIGHT 6P-6A"
         }
       },
       {
@@ -9154,7 +9154,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Fri. Night",
-          "header_forecast": "FRI. NIGHT 6P-6A"
+          "table_forecast": "FRI. NIGHT 6P-6A"
         }
       },
       {
@@ -9251,7 +9251,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Fri. Night",
-          "header_forecast": "FRI. NIGHT 6P-6A"
+          "table_forecast": "FRI. NIGHT 6P-6A"
         }
       },
       {
@@ -9348,7 +9348,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Fri. Night",
-          "header_forecast": "FRI. NIGHT 6P-6A"
+          "table_forecast": "FRI. NIGHT 6P-6A"
         }
       },
       {
@@ -9445,7 +9445,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Fri. Night",
-          "header_forecast": "FRI. NIGHT 6P-6A"
+          "table_forecast": "FRI. NIGHT 6P-6A"
         }
       },
       {
@@ -9542,7 +9542,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Friday",
-          "header_forecast": "FRI. 6A-6P"
+          "table_forecast": "FRI. 6A-6P"
         }
       },
       {
@@ -9639,7 +9639,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Friday",
-          "header_forecast": "FRI. 6A-6P"
+          "table_forecast": "FRI. 6A-6P"
         }
       },
       {
@@ -9736,7 +9736,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Friday",
-          "header_forecast": "FRI. 6A-6P"
+          "table_forecast": "FRI. 6A-6P"
         }
       },
       {
@@ -9833,7 +9833,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Friday",
-          "header_forecast": "FRI. 6A-6P"
+          "table_forecast": "FRI. 6A-6P"
         }
       },
       {
@@ -9930,7 +9930,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Friday",
-          "header_forecast": "FRI. 6A-6P"
+          "table_forecast": "FRI. 6A-6P"
         }
       },
       {
@@ -10027,7 +10027,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Friday",
-          "header_forecast": "FRI. 6A-6P"
+          "table_forecast": "FRI. 6A-6P"
         }
       },
       {
@@ -10130,7 +10130,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Friday",
-          "header_forecast": "FRI. 6A-6P"
+          "table_forecast": "FRI. 6A-6P"
         }
       },
       {
@@ -10233,7 +10233,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Friday",
-          "header_forecast": "FRI. 6A-6P"
+          "table_forecast": "FRI. 6A-6P"
         }
       },
       {
@@ -10336,7 +10336,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Friday",
-          "header_forecast": "FRI. 6A-6P"
+          "table_forecast": "FRI. 6A-6P"
         }
       },
       {
@@ -10439,7 +10439,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Friday",
-          "header_forecast": "FRI. 6A-6P"
+          "table_forecast": "FRI. 6A-6P"
         }
       },
       {
@@ -10542,7 +10542,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Fri. Night",
-          "header_forecast": "FRI. NIGHT 6P-6A"
+          "table_forecast": "FRI. NIGHT 6P-6A"
         }
       },
       {
@@ -10645,7 +10645,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Fri. Night",
-          "header_forecast": "FRI. NIGHT 6P-6A"
+          "table_forecast": "FRI. NIGHT 6P-6A"
         }
       },
       {
@@ -10748,7 +10748,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Fri. Night",
-          "header_forecast": "FRI. NIGHT 6P-6A"
+          "table_forecast": "FRI. NIGHT 6P-6A"
         }
       },
       {
@@ -10851,7 +10851,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Fri. Night",
-          "header_forecast": "FRI. NIGHT 6P-6A"
+          "table_forecast": "FRI. NIGHT 6P-6A"
         }
       },
       {
@@ -10954,7 +10954,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Fri. Night",
-          "header_forecast": "FRI. NIGHT 6P-6A"
+          "table_forecast": "FRI. NIGHT 6P-6A"
         }
       },
       {
@@ -11057,7 +11057,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Fri. Night",
-          "header_forecast": "FRI. NIGHT 6P-6A"
+          "table_forecast": "FRI. NIGHT 6P-6A"
         }
       },
       {
@@ -11160,7 +11160,7 @@ export const DebugLiftData = [
           "short": "Fri",
           "short_upper": "FRI",
           "text_forecast": "Fri. Night",
-          "header_forecast": "FRI. NIGHT 6P-6A"
+          "table_forecast": "FRI. NIGHT 6P-6A"
         }
       },
       {
@@ -11263,7 +11263,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Sat. Night",
-          "header_forecast": "SAT. NIGHT 6P-6A"
+          "table_forecast": "SAT. NIGHT 6P-6A"
         }
       },
       {
@@ -11366,7 +11366,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Sat. Night",
-          "header_forecast": "SAT. NIGHT 6P-6A"
+          "table_forecast": "SAT. NIGHT 6P-6A"
         }
       },
       {
@@ -11469,7 +11469,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Sat. Night",
-          "header_forecast": "SAT. NIGHT 6P-6A"
+          "table_forecast": "SAT. NIGHT 6P-6A"
         }
       },
       {
@@ -11572,7 +11572,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Sat. Night",
-          "header_forecast": "SAT. NIGHT 6P-6A"
+          "table_forecast": "SAT. NIGHT 6P-6A"
         }
       },
       {
@@ -11675,7 +11675,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Sat. Night",
-          "header_forecast": "SAT. NIGHT 6P-6A"
+          "table_forecast": "SAT. NIGHT 6P-6A"
         }
       },
       {
@@ -11778,7 +11778,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Sat. Night",
-          "header_forecast": "SAT. NIGHT 6P-6A"
+          "table_forecast": "SAT. NIGHT 6P-6A"
         }
       },
       {
@@ -11881,7 +11881,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Sat. Night",
-          "header_forecast": "SAT. NIGHT 6P-6A"
+          "table_forecast": "SAT. NIGHT 6P-6A"
         }
       },
       {
@@ -11984,7 +11984,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Saturday",
-          "header_forecast": "SAT. 6A-6P"
+          "table_forecast": "SAT. 6A-6P"
         }
       },
       {
@@ -12087,7 +12087,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Saturday",
-          "header_forecast": "SAT. 6A-6P"
+          "table_forecast": "SAT. 6A-6P"
         }
       },
       {
@@ -12190,7 +12190,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Saturday",
-          "header_forecast": "SAT. 6A-6P"
+          "table_forecast": "SAT. 6A-6P"
         }
       },
       {
@@ -12293,7 +12293,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Saturday",
-          "header_forecast": "SAT. 6A-6P"
+          "table_forecast": "SAT. 6A-6P"
         }
       },
       {
@@ -12396,7 +12396,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Saturday",
-          "header_forecast": "SAT. 6A-6P"
+          "table_forecast": "SAT. 6A-6P"
         }
       },
       {
@@ -12499,7 +12499,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Saturday",
-          "header_forecast": "SAT. 6A-6P"
+          "table_forecast": "SAT. 6A-6P"
         }
       },
       {
@@ -12602,7 +12602,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Saturday",
-          "header_forecast": "SAT. 6A-6P"
+          "table_forecast": "SAT. 6A-6P"
         }
       },
       {
@@ -12705,7 +12705,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Saturday",
-          "header_forecast": "SAT. 6A-6P"
+          "table_forecast": "SAT. 6A-6P"
         }
       },
       {
@@ -12808,7 +12808,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Saturday",
-          "header_forecast": "SAT. 6A-6P"
+          "table_forecast": "SAT. 6A-6P"
         }
       },
       {
@@ -12911,7 +12911,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Saturday",
-          "header_forecast": "SAT. 6A-6P"
+          "table_forecast": "SAT. 6A-6P"
         }
       },
       {
@@ -13014,7 +13014,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Sat. Night",
-          "header_forecast": "SAT. NIGHT 6P-6A"
+          "table_forecast": "SAT. NIGHT 6P-6A"
         }
       },
       {
@@ -13117,7 +13117,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Sat. Night",
-          "header_forecast": "SAT. NIGHT 6P-6A"
+          "table_forecast": "SAT. NIGHT 6P-6A"
         }
       },
       {
@@ -13220,7 +13220,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Sat. Night",
-          "header_forecast": "SAT. NIGHT 6P-6A"
+          "table_forecast": "SAT. NIGHT 6P-6A"
         }
       },
       {
@@ -13323,7 +13323,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Sat. Night",
-          "header_forecast": "SAT. NIGHT 6P-6A"
+          "table_forecast": "SAT. NIGHT 6P-6A"
         }
       },
       {
@@ -13426,7 +13426,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Sat. Night",
-          "header_forecast": "SAT. NIGHT 6P-6A"
+          "table_forecast": "SAT. NIGHT 6P-6A"
         }
       },
       {
@@ -13529,7 +13529,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Sat. Night",
-          "header_forecast": "SAT. NIGHT 6P-6A"
+          "table_forecast": "SAT. NIGHT 6P-6A"
         }
       },
       {
@@ -13632,7 +13632,7 @@ export const DebugLiftData = [
           "short": "Sat",
           "short_upper": "SAT",
           "text_forecast": "Sat. Night",
-          "header_forecast": "SAT. NIGHT 6P-6A"
+          "table_forecast": "SAT. NIGHT 6P-6A"
         }
       },
       {
@@ -13735,7 +13735,7 @@ export const DebugLiftData = [
           "short": "Sun",
           "short_upper": "SUN",
           "text_forecast": "Sun. Night",
-          "header_forecast": "SUN. NIGHT 6P-6A"
+          "table_forecast": "SUN. NIGHT 6P-6A"
         }
       },
       {
@@ -13832,7 +13832,7 @@ export const DebugLiftData = [
           "short": "Sun",
           "short_upper": "SUN",
           "text_forecast": "Sun. Night",
-          "header_forecast": "SUN. NIGHT 6P-6A"
+          "table_forecast": "SUN. NIGHT 6P-6A"
         }
       },
       {
@@ -13929,7 +13929,7 @@ export const DebugLiftData = [
           "short": "Sun",
           "short_upper": "SUN",
           "text_forecast": "Sun. Night",
-          "header_forecast": "SUN. NIGHT 6P-6A"
+          "table_forecast": "SUN. NIGHT 6P-6A"
         }
       },
       {
@@ -14026,7 +14026,7 @@ export const DebugLiftData = [
           "short": "Sun",
           "short_upper": "SUN",
           "text_forecast": "Sun. Night",
-          "header_forecast": "SUN. NIGHT 6P-6A"
+          "table_forecast": "SUN. NIGHT 6P-6A"
         }
       },
       {
@@ -14123,7 +14123,7 @@ export const DebugLiftData = [
           "short": "Sun",
           "short_upper": "SUN",
           "text_forecast": "Sun. Night",
-          "header_forecast": "SUN. NIGHT 6P-6A"
+          "table_forecast": "SUN. NIGHT 6P-6A"
         }
       },
       {
@@ -14220,7 +14220,7 @@ export const DebugLiftData = [
           "short": "Sun",
           "short_upper": "SUN",
           "text_forecast": "Sun. Night",
-          "header_forecast": "SUN. NIGHT 6P-6A"
+          "table_forecast": "SUN. NIGHT 6P-6A"
         }
       },
       {
@@ -14317,7 +14317,7 @@ export const DebugLiftData = [
           "short": "Sun",
           "short_upper": "SUN",
           "text_forecast": "Sun. Night",
-          "header_forecast": "SUN. NIGHT 6P-6A"
+          "table_forecast": "SUN. NIGHT 6P-6A"
         }
       },
       {
@@ -14414,7 +14414,7 @@ export const DebugLiftData = [
           "short": "Sun",
           "short_upper": "SUN",
           "text_forecast": "Sunday",
-          "header_forecast": "SUN. 6A-6P"
+          "table_forecast": "SUN. 6A-6P"
         }
       },
       {
@@ -14511,7 +14511,7 @@ export const DebugLiftData = [
           "short": "Sun",
           "short_upper": "SUN",
           "text_forecast": "Sunday",
-          "header_forecast": "SUN. 6A-6P"
+          "table_forecast": "SUN. 6A-6P"
         }
       },
       {
@@ -14608,7 +14608,7 @@ export const DebugLiftData = [
           "short": "Sun",
           "short_upper": "SUN",
           "text_forecast": "Sunday",
-          "header_forecast": "SUN. 6A-6P"
+          "table_forecast": "SUN. 6A-6P"
         }
       },
       {
@@ -14705,7 +14705,7 @@ export const DebugLiftData = [
           "short": "Sun",
           "short_upper": "SUN",
           "text_forecast": "Sunday",
-          "header_forecast": "SUN. 6A-6P"
+          "table_forecast": "SUN. 6A-6P"
         }
       },
       {
@@ -14802,7 +14802,7 @@ export const DebugLiftData = [
           "short": "Sun",
           "short_upper": "SUN",
           "text_forecast": "Sunday",
-          "header_forecast": "SUN. 6A-6P"
+          "table_forecast": "SUN. 6A-6P"
         }
       },
       {
@@ -14899,7 +14899,7 @@ export const DebugLiftData = [
           "short": "Sun",
           "short_upper": "SUN",
           "text_forecast": "Sunday",
-          "header_forecast": "SUN. 6A-6P"
+          "table_forecast": "SUN. 6A-6P"
         }
       },
       {
@@ -14996,7 +14996,7 @@ export const DebugLiftData = [
           "short": "Sun",
           "short_upper": "SUN",
           "text_forecast": "Sunday",
-          "header_forecast": "SUN. 6A-6P"
+          "table_forecast": "SUN. 6A-6P"
         }
       },
       {
@@ -15093,7 +15093,7 @@ export const DebugLiftData = [
           "short": "Sun",
           "short_upper": "SUN",
           "text_forecast": "Sunday",
-          "header_forecast": "SUN. 6A-6P"
+          "table_forecast": "SUN. 6A-6P"
         }
       },
       {
@@ -15190,7 +15190,7 @@ export const DebugLiftData = [
           "short": "Sun",
           "short_upper": "SUN",
           "text_forecast": "Sunday",
-          "header_forecast": "SUN. 6A-6P"
+          "table_forecast": "SUN. 6A-6P"
         }
       },
       {
@@ -15287,7 +15287,7 @@ export const DebugLiftData = [
           "short": "Sun",
           "short_upper": "SUN",
           "text_forecast": "Sunday",
-          "header_forecast": "SUN. 6A-6P"
+          "table_forecast": "SUN. 6A-6P"
         }
       }
     ],

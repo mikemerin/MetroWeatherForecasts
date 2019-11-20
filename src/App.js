@@ -17,7 +17,7 @@ export default class App extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
-      debug: 3, // 0: no debug, 1: also console.log(debug renders), 2: also call only 1 LIFT instead of 6, 3: offline lift data
+      debug: 2, // 0: no debug, 1: also console.log(debug renders), 2: also call only 1 LIFT instead of 6, 3: offline lift data
       current: 0,
       season: season,
       units: this.get_units("ºF"),

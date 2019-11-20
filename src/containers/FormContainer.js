@@ -13,7 +13,7 @@ export const FormContainer = (props) => {
 
   if ( current < 6 ) {
     if ( data[current].loc !== undefined && data[current].loc.lat !== 0 ) { // todo: if lifts
-      return <LIFTs debug={ debug } data={ data[current] } forecast_days={ forecast_days } graph_data={ data[current + 6] } current={ current } season={ season } units={ units }/>
+      return <LIFTs debug={ debug } data={ data[current] } graph_data={ data[current + 6] } season={ season } units={ units }/>
     } else if (data[current].fail_data) {
       return <DataErrorMessage type='Lift' data={ data[current] } />;
     } else {
