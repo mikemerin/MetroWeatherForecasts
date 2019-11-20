@@ -71,7 +71,7 @@ export const LIFTs = (props) => {
 
     three_day_forecast_rows.forEach(row => {
       if (!row.season || row.season === season) {
-        var row_cells = [ <Table.Cell key={ row.header + " header" }>{ row.header }</Table.Cell> ]; //todo: key
+        var row_cells = [ <Table.Cell key={ row.header + " header" }>{ row.header }</Table.Cell> ];
         [0,1,2,3,4].forEach(period_index => {
           const period = periods[period_index];
           var text;
@@ -82,9 +82,9 @@ export const LIFTs = (props) => {
             case "blank":       text = "-";                                                                             break;
             default:            text = period[ row.name + (row.unit ? row.unit : "") ];                                 break;
           }
-          row_cells.push( <Table.Cell key={ period_index + ") " + row.header + " text" }>{ text }</Table.Cell> ); //todo: key
+          row_cells.push( <Table.Cell key={ period_index + ") " + row.header + " text" }>{ text }</Table.Cell> );
         })
-        three_day_forecast.push( <Table.Row key={ row.header }>{ row_cells }</Table.Row> ); //todo: key
+        three_day_forecast.push( <Table.Row key={ row.header }>{ row_cells }</Table.Row> );
       }
     })
 
@@ -92,7 +92,7 @@ export const LIFTs = (props) => {
 
     extended_forecast_rows.forEach(row => {
       if (!row.season || row.season === season) {
-        row_cells.push( <Table.Cell key={ row.header + " header" }>{ row.header }</Table.Cell> ); //todo: key
+        row_cells.push( <Table.Cell key={ row.header + " header" }>{ row.header }</Table.Cell> );
 
         var text;
         switch(row.type) {
@@ -100,10 +100,10 @@ export const LIFTs = (props) => {
           case "blank":       text = "-";                                                                                             break;
           default:            text = periods[0][ row.name + (row.unit ? row.unit : "") ];                                             break;
         }
-        row_cells.push( <Table.Cell key={ row.header + " text" } colSpan={2} >{ text }</Table.Cell> ) //todo: key
+        row_cells.push( <Table.Cell key={ row.header + " text" } colSpan={2} >{ text }</Table.Cell> )
 
         if (row.side === "R") {
-          extended_forecast.push( <Table.Row key={ row.header }>{ row_cells }</Table.Row> ); //todo: key
+          extended_forecast.push( <Table.Row key={ row.header }>{ row_cells }</Table.Row> );
           row_cells = [];
         }
       }

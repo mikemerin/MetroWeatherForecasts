@@ -121,7 +121,7 @@ export default class App extends Component {
 
   render() {
 
-    const { debug, login, data, forecast_days, current, season, tides, units } = this.state
+    const { debug, login, data, forecast_days, current, season, lifts, tides, units } = this.state
     // console.log(JSON.stringify(data, null, 2))
 
     if (debug) console.log("\n\n" + this.constructor.name + " rendering", this);
@@ -142,7 +142,7 @@ export default class App extends Component {
               </Grid.Row>
               <Grid.Row id="forms">
                 <FormContainer debug={ debug } data={ data } current={ current } season={ season }
-                  forecast_days={ forecast_days } tides={ tides } handleTides={ this.handleTides } units={ units }
+                  forecast_days={ forecast_days } lifts={ lifts } tides={ tides } handleTides={ this.handleTides } units={ units }
                 />
               </Grid.Row>
             </Grid.Column>
