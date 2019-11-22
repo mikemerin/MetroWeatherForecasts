@@ -6,7 +6,7 @@ import { ForecastAdapter } from './adapters';
 
 import { DebugLiftData } from './components/Common';
 import Greeting from './components/Greeting';
-import { Header, Info } from './components/Header';
+import { Header, InfoBox } from './components/Header';
 import FormContainer from './containers/FormContainer';
 
 var month = (new Date()).getMonth();
@@ -17,7 +17,7 @@ export default class App extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
-      debug: 2, // 0: no debug, 1: also console.log(debug renders), 2: also call only 1 LIFT instead of 6, 3: offline lift data
+      debug: 3, // 0: no debug, 1: also console.log(debug renders), 2: also call only 1 LIFT instead of 6, 3: offline lift data
       current: 0,
       season: season,
       units: this.get_units("ºF"),
@@ -36,7 +36,7 @@ export default class App extends Component {
     var calls = [], { lifts, tides } = this.state;
     if (!prevState.login && this.state.login) {
       if (this.state.debug === 3) {
-        this.setState({ data: DebugLiftData });
+        this.setState({ data: DebugLiftData, lifts: 1 });
       } else {
         var pages = (this.state.debug === 2 ? 1 : 6);
         for (let x = 0; x < pages; x++) {
@@ -102,11 +102,12 @@ export default class App extends Component {
   }
 
   get_units = (unit) => {
-    var temperature = "ºF", precip = "IN", speed = "MPH", distance = "MI";
+    var temperature = "ºF", precip = "IN", snow = "IN", speed = "MPH", distance = "MI";
 
     if (unit === "ºC") {
       temperature = "ºC";
       precip = "MM";
+      snow = "CM";
       speed = "KPH";
       distance = "KM";
     };
@@ -114,6 +115,7 @@ export default class App extends Component {
     return {
       temperature: temperature,
       precip: precip,
+      snow: snow,
       speed: speed,
       distance: distance
     };
@@ -135,7 +137,7 @@ export default class App extends Component {
             </Grid.Column>
             <Grid.Column width={14}>
               <Grid.Row>
-                <Info debug={ debug } data={ data[current] } current={ current }
+                <InfoBox debug={ debug } data={ data[current] } current={ current }
                   season={ season } handleSeasonChange={ this.handleSeasonChange }
                   units={ units } handleUnitChange={ this.handleUnitChange }
                 />

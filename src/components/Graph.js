@@ -3,8 +3,12 @@ import { Bar } from 'react-chartjs-2'
 import 'chartjs-plugin-datalabels'
 
 // takes all values in an array, returns summed consecutive values that are centered
+function data_line(array, n) {
+  return [...Array(array.length)].map(() => n);
+}
+
 function arraySums(array) {
-  var array2 = [...Array(array.length)].map(x => 0)
+  var array2 = data_line(array, 0);
   var index = 0, index2 = 0, amount = 0
 
   array.forEach((x,i) => {
@@ -18,9 +22,7 @@ function arraySums(array) {
     }
   })
 
-  if (amount !== 0) {
-    array2[ Math.floor((index+1+index2)/2) ] = amount
-  }
+  if (amount !== 0) array2[ Math.floor((index+1+index2)/2) ] = amount;
 
   return array2.map(x => x === 0 ? null : Math.round(x*100)/100 + '"' )
 
@@ -28,11 +30,20 @@ function arraySums(array) {
 
 export const Graph = (props) => {
 
-  const { units, graph_data, season } = props
+  const { graph_data, season, units } = props;
+  const { temperature } = units;
+  const FC = temperature[1];
 
-  var labels = [], precipIN = [], snowIN = [], tempF = [], freezing = [], feelslikeF = []
+  var datapoints = {
+    labels: [],
+    precip: [],
+    snow: [],
+    temps: [],
+    freezing: data_line(graph_data.periods, (FC === "F" ? 32 : 0)),
+    feelslike: []
+  }
 
-  const days_short = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const days_short = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   function to_i(t) {
     return parseInt(t, 10)
@@ -51,30 +62,29 @@ export const Graph = (props) => {
 
   if (graph_data.periods !== undefined) {
     graph_data.periods.forEach((x,i) => {
-      const dt = x.dateTimeISO
-      labels.push(
+      const dt = x.dateTimeISO;
+      datapoints.labels.push(
         ( to_i(dt.slice(11,13)) < 3 || i === 0 ? `${days_short[new Date(dt).getDay()]} ${to_i(dt.slice(5,7))}/${to_i(dt.slice(8,10))} - ` : "" ) + to12( to_i( dt.slice(11,13) ))
       )
-      precipIN.push( x.precipIN )
-      snowIN.push( x.snowIN )
-      tempF.push( x.tempF )
-      feelslikeF.push( x.feelslikeF )
-      freezing.push( 32 )
+      datapoints.precip.push( x["precip" + units.precip] );
+      datapoints.snow.push( x["snow" + units.snow] );
+      datapoints.temps.push( x["temp" + FC] );
+      datapoints.feelslike.push( x["feelslike" + FC] );
      })
   }
 
-  var snowSum = arraySums(snowIN)
-  var precipSum = arraySums(precipIN)
+  var snowSum = arraySums(datapoints.snow)
+  var precipSum = arraySums(datapoints.precip)
 
-  var minTemp = Math.min(...tempF)
-  var maxTemp = Math.max(...tempF)
-  var maxPrecip = Math.max(...precipIN)
+  var minTemp = Math.min(...datapoints.temps)
+  var maxTemp = Math.max(...datapoints.temps)
+  var maxPrecip = Math.max(...datapoints.precip)
 
   if (season === "winter") {
-    maxPrecip = Math.max(...precipIN, ...snowIN)
+    maxPrecip = Math.max(...datapoints.precip, ...datapoints.snow)
   } else {
-    minTemp = Math.min(...tempF, ...feelslikeF)
-    maxTemp = Math.max(...tempF, ...feelslikeF)
+    minTemp = Math.min(...datapoints.temps, ...datapoints.feelslike)
+    maxTemp = Math.max(...datapoints.temps, ...datapoints.feelslike)
   }
 
   var ss = season === "winter" ? .05 : .01
@@ -125,7 +135,18 @@ export const Graph = (props) => {
           beginAtZero: true,
           stepSize: ss,
           max: Math.ceil((maxPrecip+ss) * ss2) / ss2,
-          callback: (label, index, labels) => { return Math.round(label*100)/100 + (units.precip === "IN" ? '"' : "mm"); }
+          callback: (label, index, labels) => {
+            var depth = 100, label_unit ='"';
+            if (units.precip === "MM") {
+              if (season === "normal") {
+                label_unit = units.precip;
+              } else {
+                depth = 10
+                label_unit = units.snow;
+              }
+            }
+            return (Math.round(label * depth) / depth) + label_unit;
+          }
         }
       }, {
         id: 'Temps',
@@ -151,7 +172,7 @@ export const Graph = (props) => {
   }
 
     var precipData = {
-      label: 'Precip (in)',
+      label: `Precip (${units.precip})`,
       yAxisID: 'Precip',
       type: 'line',
       fill: true,
@@ -172,10 +193,10 @@ export const Graph = (props) => {
       pointHoverBorderWidth: 2,
       pointRadius: 2,
       pointHitRadius: 10,
-      data: precipIN
+      data: datapoints.precip
     }
     var snowData = {
-        label: 'Snow (in)',
+        label: `Snow (${units.snow})`,
         yAxisID: 'Precip',
         type: 'line',
         fill: true,
@@ -211,10 +232,10 @@ export const Graph = (props) => {
         pointRadius: 6,
         pointHitRadius: 10,
         pointStyle: 'star',
-        data: snowIN
+        data: datapoints.snow
       }
     var tempsData = {
-      label: 'Temps (' + units.temperature + ')',
+      label: `Temps (${units.temperature})`,
       yAxisID: 'Temps',
       type: 'line',
       fill: '+1',
@@ -237,7 +258,7 @@ export const Graph = (props) => {
       pointHoverBorderWidth: 2,
       pointRadius: 0,
       pointHitRadius: 10,
-      data: tempF
+      data: datapoints.temps
     }
 
     var freezingLineData = {
@@ -263,9 +284,9 @@ export const Graph = (props) => {
                     pointHoverBorderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 10,
-                    data: freezing
+                    data: datapoints.freezing
                   }
-    var feelsLikeFData = {
+    var feelslikeData = {
                     label: 'Feels Like (' + units.temperature + ')',
                     yAxisID: 'Temps',
                     type: 'line',
@@ -289,7 +310,7 @@ export const Graph = (props) => {
                     pointHoverBorderWidth: 2,
                     pointRadius: 0,
                     pointHitRadius: 10,
-                    data: feelslikeF
+                    data: datapoints.feelslike
                   }
     var insertData = null
 
@@ -297,12 +318,12 @@ export const Graph = (props) => {
    if (season === "winter") {
         insertData = [precipData, tempsData, freezingLineData, snowData]
     } else {
-      insertData = [precipData, tempsData, feelsLikeFData]
+      insertData = [precipData, tempsData, feelslikeData]
     }
 
 
    var data = {
-       labels: labels,
+       labels: datapoints.labels,
        datasets: insertData
      };
 

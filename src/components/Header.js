@@ -28,36 +28,33 @@ export const Header = (props) => {
 
 }
 
-export const Info = (props) => {
+export const InfoBox = (props) => {
 
   const { debug, data, current, season, handleSeasonChange, units, handleUnitChange } = props;
   if (debug) console.log("Info rendering", props);
 
   const option_buttons = () => {
-    const season_buttons = [{'value': 'normal', 'icon': 'sun'}, {'value': 'winter', 'icon': 'snowflake outline'}].map(button => {
-      const active = (season === button.value);
-      return <Button icon circular compact size='mini' active={active} basic={!active} color='blue' key={button.value} value={button.value} onClick={ handleSeasonChange } ><Icon name={button.icon} /></Button>;
-    })
 
-    const unit_buttons = ['ºF', 'ºC'].map(temp => {
-      const active = (units.temperature === temp);
-      return <Button icon circular compact size='mini' active={active} basic={!active} color='blue' key={temp} value={temp} onClick={ handleUnitChange }>{temp}</Button>;
-    })
+    var season_buttons = current === 6 ? "" : <Segment>{
+      [{'value': 'normal', 'icon': 'sun'}, {'value': 'winter', 'icon': 'snowflake outline'}].map(button => {
+        const active = (season === button.value);
+        return <Button key={button.value} icon circular compact size='mini' active={active} basic={!active} color='blue' value={button.value} onClick={ handleSeasonChange } ><Icon name={button.icon} /></Button>;
+      })
+    }</Segment>;
 
-    if (current === 6) {
-      return (
-        <Segment.Group horizontal>
-        <Segment>{ unit_buttons }</Segment>
-        </Segment.Group>
-      )
-    } else {
-      return (
-        <Segment.Group horizontal>
-        <Segment>{ season_buttons }</Segment>
-        <Segment>{ unit_buttons }</Segment>
-        </Segment.Group>
-      )
-    }
+    const unit_buttons = <Segment>{
+      ['ºF', 'ºC'].map(temp => {
+        const active = (units.temperature === temp);
+        return <Button key={temp} icon circular compact size='mini' active={active} basic={!active} color='blue' value={temp} onClick={ handleUnitChange }>{temp}</Button>;
+      })
+    }</Segment>;
+
+    return (
+      <Segment.Group horizontal>
+        { season_buttons }
+        { unit_buttons }
+      </Segment.Group>
+    )
   }
 
   const location = [
@@ -65,28 +62,25 @@ export const Info = (props) => {
         "White Plains NY", "Beacon NY", "Chester NY", "Easton CT",
         "TIDES - NYC Area",
         "Custom Location"
-      ]
+      ];
 
-  var lat = 0
-  var long = 0
-
-  if (data.loc !== undefined) {
-    lat = data.loc.lat
-    long = data.loc.long
-  }
-
-  lat = lat > 0 ? `${lat}ºN` : `${Math.abs(lat)}ºS`
-  long = long > 0 ? `${long}ºE` : `${Math.abs(long)}ºW`
-
-  var latlong = `Lat: ${ lat } - Long: ${ long }`
-
-  if ( current === 6 ) { latlong = "Various Locations" }
-  if ( current === 7 ) { latlong = "Custom Lat/Long" }
   var full_header;
-  if(current !== 7) {
-    full_header = location[current] + " - " + latlong;
+
+  if (current === 7) {
+    full_header = "Custom Location";
+  } else if (current === 6) {
+    full_header = "Various Locations";
   } else {
-    full_header = "Custom Location"
+    if (data.loc === undefined) {
+      full_header = location[current];
+    } else {
+      var { lat, long } = data.loc;
+      lat = lat > 0 ? `${lat}ºN` : `${Math.abs(lat)}ºS`;
+      long = long > 0 ? `${long}ºE` : `${Math.abs(long)}ºW`;
+
+      var latlong = `Lat: ${ lat } - Long: ${ long }`;
+      full_header = location[current] + " - " + latlong;
+    }
   }
 
   return (

@@ -7,7 +7,7 @@ export const LIFTs = (props) => {
 
   const { debug, data, graph_data, season, units } = props;
   const { periods } = data;
-  const { temperature, precip, speed, distance } = units;
+  const { temperature, precip, snow, speed, distance } = units;
   const FC = temperature[1];
 
   const get_top_text = () => {
@@ -34,7 +34,7 @@ export const LIFTs = (props) => {
   }
 
   const get_body = () => {
-    const first = (precip === "IN" ? "2'" : "5cm");
+    const first = (precip === "IN" ? "2" : "5") + snow;
     const day4 = periods[0].isDay ? 6 : 5;
     const day5 = day4 + 2;
     var three_day_forecast = [];
@@ -51,7 +51,7 @@ export const LIFTs = (props) => {
       { header: `PRECIP %`,                     name: "pop" },
       { header: `THUNDER %`,                                                                type: "blank",      season: "normal" },
       { header: `LIQUID (${precip})`,           name: "precip",               unit: precip },
-      { header: `SNOW (${precip})`,             name: "snow",                 unit: precip,                     season: "winter" },
+      { header: `SNOW (${snow})`,             name: "snow",                 unit: snow,                       season: "winter" },
       { header: `CHANGEOVER`,                                                               type: "blank",      season: "winter" },
       { header: `START`,                                                                    type: "blank" },
       { header: `STOP`,                                                                     type: "blank" },

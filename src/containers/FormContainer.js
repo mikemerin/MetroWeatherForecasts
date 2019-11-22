@@ -12,13 +12,14 @@ export const FormContainer = (props) => {
   const { debug, data, forecast_days, current, season, lifts, tides, handleTides, units } = props;
 
   var output = '';
+
   if ( current < 6 ) {
     switch(lifts) {
       case 0:
         output = <DataLoadingMessage type='Lift' />;
         break;
       case 1:
-        if ( data[current].loc !== undefined && data[current].loc.lat !== 0 ) { // todo: if lifts
+        if ( data[current].loc !== undefined && data[current].loc.lat !== 0 ) {
           output = <LIFTs debug={ debug } data={ data[current] } graph_data={ data[current + 6] } season={ season } units={ units }/>
         } else if (data[current].fail_data) {
           output = <DataErrorMessage type='Lift' data={ data[current] } />;
