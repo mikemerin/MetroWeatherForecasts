@@ -59,7 +59,7 @@ class Helpers extends Component {
   }
 
   add_day_data = (period, index) => {
-    const day_of_week = this.state.days[ new Date( period.dateTimeISO.slice(0,10) ).getDay() ];
+    const day_of_week = this.state.days[ new Date( period.dateTimeISO ).getDay() ];
     const short = day_of_week.slice(0,3);
     const short_upper = short.toUpperCase();
     var text_forecast = day_of_week;

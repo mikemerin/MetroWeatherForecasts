@@ -2,37 +2,38 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2'
 import 'chartjs-plugin-datalabels'
 
-// takes all values in an array, returns summed consecutive values that are centered
-function data_line(array, n) {
-  return [...Array(array.length)].map(() => n);
-}
-
-function arraySums(array) {
-  var array2 = data_line(array, 0);
-  var index = 0, index2 = 0, amount = 0
-
-  array.forEach((x,i) => {
-    if (x === 0) {
-      array2[ Math.floor((index+1+index2)/2) ] = amount
-      amount = 0
-      index = i
-    } else {
-      index2 = i
-      amount += x
-    }
-  })
-
-  if (amount !== 0) array2[ Math.floor((index+1+index2)/2) ] = amount;
-
-  return array2.map(x => x === 0 ? null : Math.round(x*100)/100 + '"' )
-
-}
-
 export const Graph = (props) => {
 
   const { graph_data, season, units } = props;
   const { temperature } = units;
   const FC = temperature[1];
+
+  const data_line = (array, n) => [...Array(array.length)].map(() => n);
+  const toAMPM = (hour) => (hour % 12 || 12) + " " + (hour >= 12 ? "PM" : "AM");
+
+
+  // takes all values in an array, returns summed consecutive values that are centered
+  //todo: refactor this
+  const display_centered_sums = (array) => {
+    var array2 = data_line(array, 0);
+    var index = 0, index2 = 0, amount = 0
+
+    array.forEach((x,i) => {
+      if (x === 0) {
+        array2[ Math.floor((index+1+index2)/2) ] = amount
+        amount = 0
+        index = i
+      } else {
+        index2 = i
+        amount += x
+      }
+    })
+
+    if (amount !== 0) array2[ Math.floor((index+1+index2)/2) ] = amount;
+
+    return array2.map(x => x === 0 ? null : Math.round(x*100)/100 + '"' )
+
+  }
 
   var datapoints = {
     labels: [],
@@ -43,38 +44,27 @@ export const Graph = (props) => {
     feelslike: []
   }
 
-  const days_short = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-  function to_i(t) {
-    return parseInt(t, 10)
-  }
-
-  function to12(time) {
-    if (time < 12) {
-        if (time === 0) { time = 12 }
-        return time + " AM"
-      }
-    else {
-      if (time > 12) { time -= 12 }
-      return time + " PM"
-    }
-  }
-
   if (graph_data.periods !== undefined) {
-    graph_data.periods.forEach((x,i) => {
-      const dt = x.dateTimeISO;
-      datapoints.labels.push(
-        ( to_i(dt.slice(11,13)) < 3 || i === 0 ? `${days_short[new Date(dt).getDay()]} ${to_i(dt.slice(5,7))}/${to_i(dt.slice(8,10))} - ` : "" ) + to12( to_i( dt.slice(11,13) ))
-      )
-      datapoints.precip.push( x["precip" + units.precip] );
-      datapoints.snow.push( x["snow" + units.snow] );
-      datapoints.temps.push( x["temp" + FC] );
-      datapoints.feelslike.push( x["feelslike" + FC] );
+    graph_data.periods.forEach((period,i) => {
+      const date = new Date(period.dateTimeISO);
+      const date_label = ( date.getHours() < 3 || i === 0 ? `${period.day.short} ${date.getMonth() + 1}/${date.getDate()}\t\t-\t` : "" );
+
+      datapoints.labels.push( date_label + toAMPM( date.getHours() ) );
+      datapoints.precip.push( period["precip" + units.precip] );
+      datapoints.snow.push( period["snow" + units.snow] );
+      datapoints.temps.push( period["temp" + FC] );
+      datapoints.feelslike.push( period["feelslike" + FC] );
      })
   }
 
-  var snowSum = arraySums(datapoints.snow)
-  var precipSum = arraySums(datapoints.precip)
+  var snow_sum = display_centered_sums(datapoints.snow)
+  var precip_sum = display_centered_sums(datapoints.precip)
+
+  var tick_limits = {};
+
+  ["snow", "precip"].forEach(type => {
+    tick_limits[type] = display_centered_sums( datapoints[type] );
+  })
 
   var minTemp = Math.min(...datapoints.temps)
   var maxTemp = Math.max(...datapoints.temps)
@@ -105,7 +95,7 @@ export const Graph = (props) => {
               align: 'start',
               anchor: 'start',
               formatter: function(value, context) {
-                return precipSum[context.dataIndex]
+                return precip_sum[context.dataIndex]
               }
             }
   }
@@ -212,7 +202,7 @@ export const Graph = (props) => {
           align: 'start',
           anchor: 'start',
           formatter: function(value, context) {
-            return snowSum[context.dataIndex]
+            return snow_sum[context.dataIndex]
           }
         },
        //  lineTension: 0,

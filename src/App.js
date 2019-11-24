@@ -4,7 +4,7 @@ import './App.css';
 
 import { ForecastAdapter } from './adapters';
 
-import { DebugLiftData } from './components/Common';
+import { DebugLiftData } from './components/DebugData';
 import Greeting from './components/Greeting';
 import { Header, InfoBox } from './components/Header';
 import FormContainer from './containers/FormContainer';
