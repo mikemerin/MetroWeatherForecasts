@@ -5,85 +5,94 @@ import 'chartjs-plugin-datalabels'
 export const Graph = (props) => {
 
   const { graph_data, season, units } = props;
-  const { temperature } = units;
+  const { temperature, precip } = units;
   const FC = temperature[1];
+  const labels = { // todo: pick up here
+    precip: (precip === "IN" ? '"' : "mm"),
+    snow: (precip === "IN" ? '"' : "cm"),
+    temps: temperature[1]
+  }
 
   const data_line = (array, n) => [...Array(array.length)].map(() => n);
   const toAMPM = (hour) => (hour % 12 || 12) + " " + (hour >= 12 ? "PM" : "AM");
 
-
-  // takes all values in an array, returns summed consecutive values that are centered
-  //todo: refactor this
-  const display_centered_sums = (array) => {
-    var array2 = data_line(array, 0);
-    var index = 0, index2 = 0, amount = 0
-
-    array.forEach((x,i) => {
-      if (x === 0) {
-        array2[ Math.floor((index+1+index2)/2) ] = amount
-        amount = 0
-        index = i
-      } else {
-        index2 = i
-        amount += x
-      }
-    })
-
-    if (amount !== 0) array2[ Math.floor((index+1+index2)/2) ] = amount;
-
-    return array2.map(x => x === 0 ? null : Math.round(x*100)/100 + '"' )
-
-  }
-
   var datapoints = {
-    labels: [],
     precip: [],
     snow: [],
     temps: [],
     freezing: data_line(graph_data.periods, (FC === "F" ? 32 : 0)),
-    feelslike: []
+    feelslike: [],
+    centered_sums: {},
+    limits: {
+      temps: {},
+      precip: {}
+    },
+    datasets: {},
+    data_labels: {}
   }
+
+  var final_data = {
+    labels: [],
+    datasets: []
+  };
 
   if (graph_data.periods !== undefined) {
     graph_data.periods.forEach((period,i) => {
       const date = new Date(period.dateTimeISO);
       const date_label = ( date.getHours() < 3 || i === 0 ? `${period.day.short} ${date.getMonth() + 1}/${date.getDate()}\t\t-\t` : "" );
 
-      datapoints.labels.push( date_label + toAMPM( date.getHours() ) );
+      final_data.labels.push( date_label + toAMPM( date.getHours() ) );
+
       datapoints.precip.push( period["precip" + units.precip] );
       datapoints.snow.push( period["snow" + units.snow] );
       datapoints.temps.push( period["temp" + FC] );
       datapoints.feelslike.push( period["feelslike" + FC] );
-     })
+    })
   }
 
-  var snow_sum = display_centered_sums(datapoints.snow)
-  var precip_sum = display_centered_sums(datapoints.precip)
+  const display_centered_sums = (array) => {
+    const set_centered_value = () => centered_sums[ Math.floor((left_side + right_side + 1) / 2) ] = display_value;
 
-  var tick_limits = {};
+    var centered_sums = data_line(array, 0);
+    var left_side = 0, right_side = 0, display_value = 0;
+
+    array.forEach((value, i) => {
+      if (value === 0) {
+        set_centered_value();
+        left_side = i;
+        display_value = 0;
+      } else {
+        right_side = i;
+        display_value += value;
+      }
+    })
+
+    if (display_value !== 0) set_centered_value();
+
+    const a2 = centered_sums.map(x => x === 0 ? null : Math.round(x * 100) / 100 + '"' ); // todo: metric pick up here 2
+    return a2;
+  }
 
   ["snow", "precip"].forEach(type => {
-    tick_limits[type] = display_centered_sums( datapoints[type] );
+    datapoints.centered_sums[type] = display_centered_sums( datapoints[type] );
   })
 
-  var minTemp = Math.min(...datapoints.temps)
-  var maxTemp = Math.max(...datapoints.temps)
-  var maxPrecip = Math.max(...datapoints.precip)
+  datapoints.limits["temps"].datapoints = datapoints.temps.concat( season === "winter" ? [] : datapoints.feelslike );
+  datapoints.limits["precip"].datapoints = datapoints.precip.concat( season === "winter" ? [] : datapoints.snow );
 
-  if (season === "winter") {
-    maxPrecip = Math.max(...datapoints.precip, ...datapoints.snow)
-  } else {
-    minTemp = Math.min(...datapoints.temps, ...datapoints.feelslike)
-    maxTemp = Math.max(...datapoints.temps, ...datapoints.feelslike)
-  }
+  ["temps", "precip"].forEach(type => {
+    ["min", "max"].forEach(minmax => {
+      datapoints.limits[type][minmax] = Math[minmax](...datapoints.limits[type].datapoints);
+    })
+  })
 
-  var ss = season === "winter" ? .05 : .01
-  var ss2 = 1 / ss
+  const step_size = ( season === "winter" ? .05 : .01 );
+  const max_tick = Math.ceil( (datapoints.limits.precip.max + step_size) / step_size ) * step_size;
 
-  var precipDatalabels = { display: false }
+  datapoints.data_labels["precip"] = { display: false }
 
   if (season === "normal") {
-    precipDatalabels = {
+    datapoints.data_labels["precip"] = {
               backgroundColor: function(context) {
     							return context.dataset.backgroundColor;
     					},
@@ -95,7 +104,7 @@ export const Graph = (props) => {
               align: 'start',
               anchor: 'start',
               formatter: function(value, context) {
-                return precip_sum[context.dataIndex]
+                return datapoints.centered_sums["precip"][context.dataIndex]
               }
             }
   }
@@ -123,8 +132,8 @@ export const Graph = (props) => {
         position: 'left',
         ticks: {
           beginAtZero: true,
-          stepSize: ss,
-          max: Math.ceil((maxPrecip+ss) * ss2) / ss2,
+          stepSize: step_size,
+          max: max_tick,
           callback: (label, index, labels) => {
             var depth = 100, label_unit ='"';
             if (units.precip === "MM") {
@@ -146,8 +155,8 @@ export const Graph = (props) => {
         ticks: {
           stepSize: 5,
           fontSize: 10,
-          min: Math.floor((minTemp-5)/5)*5,
-          max: Math.ceil((maxTemp+5)/5)*5,
+          min: Math.floor(( datapoints.limits.temps.min -5) / 5) * 5,
+          max: Math.ceil(( datapoints.limits.temps.max + 5) / 5) * 5,
           callback: (label, index, labels) => { return label + units.temperature; }
         },
         gridLines : {
@@ -161,30 +170,55 @@ export const Graph = (props) => {
     }
   }
 
-    var precipData = {
-      label: `Precip (${units.precip})`,
-      yAxisID: 'Precip',
-      type: 'line',
+
+//
+  const datapoint_formats = {
+    precip: {
       fill: true,
-      datalabels: precipDatalabels,
       lineTension: .3,
-      backgroundColor: 'rgba(0,0,100,.5)',
-      borderColor: 'rgba(0,0,100,.6)',
+      color: '0,0,100',
       borderCapStyle: 'butt',
+    },
+    snow: {
+
+    }
+  }
+
+  const final = (type) => {
+    const format = datapoint_formats[type];
+    const to_rgba = (opacity) => `rgba(${format.color},${opacity})`;
+    const ucfirst = type[0].toUpperCase() + type.slice(1);
+    const yAxisID = (type === "precip" || type === "snow" ? "Precip" : "Temps"); // todo: verify and update here
+    
+    return {
+      label: `${ucfirst} (${units[type]})`,
+      yAxisID: yAxisID,
+      type: 'line',
+      fill: format.fill,
+      datalabels: datapoints.data_labels[type],
+      backgroundColor: to_rgba(.5),
+      borderColor: to_rgba(.6),
+      borderCapStyle: format.borderCapStyle,
       borderDash: [],
       borderDashOffset: 0.0,
       borderJoinStyle: 'miter',
-      pointBorderColor: 'rgba(0,0,100,.6)',
-      pointBackgroundColor: 'rgba(0,0,100,.3)',
+      pointBorderColor: to_rgba(.6),
+      pointBackgroundColor: to_rgba(.3),
       pointBorderWidth: 1,
       pointHoverRadius: 5,
-      pointHoverBackgroundColor: 'rgba(0,0,100,.6)',
-      pointHoverBorderColor: 'rgba(0,0,100,.6)',
+      pointHoverBackgroundColor: to_rgba(.6),
+      pointHoverBorderColor: to_rgba(.6),
       pointHoverBorderWidth: 2,
       pointRadius: 2,
       pointHitRadius: 10,
-      data: datapoints.precip
+      data: datapoints[type]
     }
+  }
+
+  datapoints.datasets["precip"] = final( "precip" );
+
+
+
     var snowData = {
         label: `Snow (${units.snow})`,
         yAxisID: 'Precip',
@@ -202,7 +236,7 @@ export const Graph = (props) => {
           align: 'start',
           anchor: 'start',
           formatter: function(value, context) {
-            return snow_sum[context.dataIndex]
+            return datapoints.centered_sums["snow"][context.dataIndex]
           }
         },
        //  lineTension: 0,
@@ -224,6 +258,9 @@ export const Graph = (props) => {
         pointStyle: 'star',
         data: datapoints.snow
       }
+
+
+
     var tempsData = {
       label: `Temps (${units.temperature})`,
       yAxisID: 'Temps',
@@ -251,6 +288,9 @@ export const Graph = (props) => {
       data: datapoints.temps
     }
 
+
+
+
     var freezingLineData = {
                     label: 'Freezing Line (' + units.temperature + ')',
                     yAxisID: 'Temps',
@@ -276,6 +316,7 @@ export const Graph = (props) => {
                     pointHitRadius: 10,
                     data: datapoints.freezing
                   }
+
     var feelslikeData = {
                     label: 'Feels Like (' + units.temperature + ')',
                     yAxisID: 'Temps',
@@ -302,31 +343,13 @@ export const Graph = (props) => {
                     pointHitRadius: 10,
                     data: datapoints.feelslike
                   }
-    var insertData = null
 
+  final_data.datasets = [datapoints.datasets["precip"], tempsData].concat( season === "winter" ? [freezingLineData, snowData] : feelslikeData);
 
-   if (season === "winter") {
-        insertData = [precipData, tempsData, freezingLineData, snowData]
-    } else {
-      insertData = [precipData, tempsData, feelslikeData]
-    }
-
-
-   var data = {
-       labels: datapoints.labels,
-       datasets: insertData
-     };
-
-     if (graph_data.periods !== undefined) {
-       if (season === "winter") {
-         data.datasets.unshift()
-       }
-     }
-
-     return (
-       <div>
-         <Bar data={ data } height={ 150 } options={ options }/>
-       </div>
-     );
+  return (
+    <div>
+      <Bar data={ final_data } height={ 150 } options={ options } />
+    </div>
+  );
 
 }
