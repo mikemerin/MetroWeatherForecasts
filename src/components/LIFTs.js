@@ -51,7 +51,7 @@ export const LIFTs = (props) => {
       { header: `PRECIP %`,                     name: "pop" },
       { header: `THUNDER %`,                                                                type: "blank",      season: "normal" },
       { header: `LIQUID (${precip})`,           name: "precip",               unit: precip },
-      { header: `SNOW (${snow})`,             name: "snow",                 unit: snow,                       season: "winter" },
+      { header: `SNOW (${snow})`,               name: "snow",                 unit: snow,                       season: "winter" },
       { header: `CHANGEOVER`,                                                               type: "blank",      season: "winter" },
       { header: `START`,                                                                    type: "blank" },
       { header: `STOP`,                                                                     type: "blank" },
@@ -120,7 +120,7 @@ export const LIFTs = (props) => {
   }
 
 
-  if (debug) console.log("LIFTs rendering", props);
+  if (debug.render_logging) console.log("LIFTs rendering", props);
   return (
     <>
       <br />

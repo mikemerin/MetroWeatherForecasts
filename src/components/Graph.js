@@ -3,6 +3,10 @@ import { Bar } from 'react-chartjs-2'
 import 'chartjs-plugin-datalabels'
 
 export const Graph = (props) => {
+  // five lines are:
+  // always: precip, temps,
+  // summer only: feels_like
+  // winter only: snow, freezing_line
 
   const { graph_data, season, units } = props;
   const { temperature, precip } = units;
@@ -10,17 +14,18 @@ export const Graph = (props) => {
   const labels = { // todo: pick up here
     precip: (precip === "IN" ? '"' : "mm"),
     snow: (precip === "IN" ? '"' : "cm"),
-    temps: temperature[1]
+    freezing_line: temperature,
+    temps: temperature
   }
 
   const data_line = (array, n) => [...Array(array.length)].map(() => n);
   const toAMPM = (hour) => (hour % 12 || 12) + " " + (hour >= 12 ? "PM" : "AM");
 
   var datapoints = {
+    freezing_line: data_line(graph_data.periods, (FC === "F" ? 32 : 0)),
     precip: [],
     snow: [],
     temps: [],
-    freezing: data_line(graph_data.periods, (FC === "F" ? 32 : 0)),
     feelslike: [],
     centered_sums: {},
     limits: {
@@ -40,19 +45,22 @@ export const Graph = (props) => {
     graph_data.periods.forEach((period,i) => {
       const date = new Date(period.dateTimeISO);
       const date_label = ( date.getHours() < 3 || i === 0 ? `${period.day.short} ${date.getMonth() + 1}/${date.getDate()}\t\t-\t` : "" );
+      var period_precip = period["precip" + units.precip];
+      if (season === "winter" && precip !== "IN") period_precip *= .1;
 
       final_data.labels.push( date_label + toAMPM( date.getHours() ) );
 
-      datapoints.precip.push( period["precip" + units.precip] );
+      datapoints.precip.push( period_precip );
       datapoints.snow.push( period["snow" + units.snow] );
       datapoints.temps.push( period["temp" + FC] );
       datapoints.feelslike.push( period["feelslike" + FC] );
     })
   }
 
-  const display_centered_sums = (array) => {
+  const display_centered_sums = (type) => {
     const set_centered_value = () => centered_sums[ Math.floor((left_side + right_side + 1) / 2) ] = display_value;
 
+    const array = datapoints[type];
     var centered_sums = data_line(array, 0);
     var left_side = 0, right_side = 0, display_value = 0;
 
@@ -69,16 +77,15 @@ export const Graph = (props) => {
 
     if (display_value !== 0) set_centered_value();
 
-    const a2 = centered_sums.map(x => x === 0 ? null : Math.round(x * 100) / 100 + '"' ); // todo: metric pick up here 2
-    return a2;
+    return centered_sums.map(x => x === 0 ? null : Math.round(x * 100) / 100 + labels[type] );
   }
 
   ["snow", "precip"].forEach(type => {
-    datapoints.centered_sums[type] = display_centered_sums( datapoints[type] );
+    datapoints.centered_sums[type] = display_centered_sums( type );
   })
 
-  datapoints.limits["temps"].datapoints = datapoints.temps.concat( season === "winter" ? [] : datapoints.feelslike );
-  datapoints.limits["precip"].datapoints = datapoints.precip.concat( season === "winter" ? [] : datapoints.snow );
+  datapoints.limits.temps.datapoints = datapoints.temps.concat( season === "winter" ? [] : datapoints.feelslike );
+  datapoints.limits.precip.datapoints = datapoints.precip.concat( season === "winter" ? datapoints.snow : [] );
 
   ["temps", "precip"].forEach(type => {
     ["min", "max"].forEach(minmax => {
@@ -86,30 +93,15 @@ export const Graph = (props) => {
     })
   })
 
-  const step_size = ( season === "winter" ? .05 : .01 );
+  var step_size;
+  if (precip === "IN") {
+    step_size = ( season === "winter" ? .05 : .01 );
+  } else {
+    step_size = .1;
+  }
   const max_tick = Math.ceil( (datapoints.limits.precip.max + step_size) / step_size ) * step_size;
 
-  datapoints.data_labels["precip"] = { display: false }
-
-  if (season === "normal") {
-    datapoints.data_labels["precip"] = {
-              backgroundColor: function(context) {
-    							return context.dataset.backgroundColor;
-    					},
-    					borderRadius: 2,
-    					color: 'white',
-    					font: {
-    						weight: 'bold'
-    					},
-              align: 'start',
-              anchor: 'start',
-              formatter: function(value, context) {
-                return datapoints.centered_sums["precip"][context.dataIndex]
-              }
-            }
-  }
-
-  const options = {
+  const options = { // todo
     name: "Forecast",
     showTooltips: true,
     tooltips: {
@@ -155,7 +147,7 @@ export const Graph = (props) => {
         ticks: {
           stepSize: 5,
           fontSize: 10,
-          min: Math.floor(( datapoints.limits.temps.min -5) / 5) * 5,
+          min: Math.floor(( datapoints.limits.temps.min - 5) / 5) * 5,
           max: Math.ceil(( datapoints.limits.temps.max + 5) / 5) * 5,
           callback: (label, index, labels) => { return label + units.temperature; }
         },
@@ -170,17 +162,85 @@ export const Graph = (props) => {
     }
   }
 
-
-//
   const datapoint_formats = {
+    temps: {
+      color: '255,100,100',
+      fill: '+1',
+      lineTension: .4,
+      datalabels: {
+        all: {
+          display: false
+        }
+      },
+    },
     precip: {
-      fill: true,
-      lineTension: .3,
       color: '0,0,100',
-      borderCapStyle: 'butt',
+      fill: season === "normal",
+      lineTension: .3,
+      order: 3,
+      pointRadius: 2,
+      datalabels: {
+        normal: {
+          backgroundColor: function(context) { //todo: see if i can compact
+            return context.dataset.backgroundColor;
+          },
+          borderRadius: 2,
+          color: 'white',
+          font: {
+            weight: 'bold'
+          },
+          align: 'start',
+          anchor: 'start',
+          formatter: function(value, context) {
+            return datapoints.centered_sums["precip"][context.dataIndex]
+          }
+        },
+        winter: {
+          display: false
+        }
+      }
     },
     snow: {
-
+      color: '150,150,255',
+      fill: true,
+      order: 0,
+      pointRadius: 2,
+      pointStyle: 'star',
+      datalabels: {
+        winter: {
+          backgroundColor: function(context) {
+            return context.dataset.backgroundColor;
+          },
+          borderRadius: 2,
+          color: 'black',
+          font: {
+            weight: 'bold'
+          },
+          align: 'start',
+          anchor: 'start',
+          formatter: function(value, context) {
+            return datapoints.centered_sums["snow"][context.dataIndex]
+          }
+        }
+      }
+    },
+    freezing_line: {
+      borderDash: [12,12],
+      color: '200,200,255',
+      datalabels: {
+        all: {
+          display: false
+        }
+      }
+    },
+    feelslike: {
+      color: '255,0,0',
+      borderDash: [8,6],
+      datalabels: {
+        all: {
+          display: false
+        }
+      }
     }
   }
 
@@ -189,162 +249,46 @@ export const Graph = (props) => {
     const to_rgba = (opacity) => `rgba(${format.color},${opacity})`;
     const ucfirst = type[0].toUpperCase() + type.slice(1);
     const yAxisID = (type === "precip" || type === "snow" ? "Precip" : "Temps"); // todo: verify and update here
-    
+    const datalabels = format.datalabels.all || format.datalabels[season];
+
     return {
-      label: `${ucfirst} (${units[type]})`,
+      label: `${ucfirst} (${labels[type]})`,
       yAxisID: yAxisID,
       type: 'line',
-      fill: format.fill,
-      datalabels: datapoints.data_labels[type],
-      backgroundColor: to_rgba(.5),
-      borderColor: to_rgba(.6),
-      borderCapStyle: format.borderCapStyle,
-      borderDash: [],
+      fill: format.fill || false,
+      datalabels: datalabels,
+      backgroundColor: to_rgba(.2),
+      borderColor: to_rgba(.4),
+      borderCapStyle: 'butt',
+      borderDash: format.borderDash || [],
       borderDashOffset: 0.0,
-      borderJoinStyle: 'miter',
-      pointBorderColor: to_rgba(.6),
+      borderJoinStyle: 'round',
+      lineTension: format.lineTension || 0,
+      order: format.order || 0,
       pointBackgroundColor: to_rgba(.3),
-      pointBorderWidth: 1,
+      pointBorderWidth: 0,
       pointHoverRadius: 5,
-      pointHoverBackgroundColor: to_rgba(.6),
-      pointHoverBorderColor: to_rgba(.6),
+      pointHoverBackgroundColor: to_rgba(1),
+      pointHoverBorderColor: to_rgba(1),
       pointHoverBorderWidth: 2,
-      pointRadius: 2,
       pointHitRadius: 10,
+      pointRadius: format.pointRadius || 0,
+      pointStyle: format.pointStyle || 'circle',
+      stepped: format.stepped || false,
       data: datapoints[type]
     }
   }
 
-  datapoints.datasets["precip"] = final( "precip" );
+  // todo: refactor all with component-level iteration
+  ["temps", "precip", "snow", "freezing_line", "feelslike"].forEach(type => {
+    datapoints.datasets[type] = final( type );
+  })
 
-
-
-    var snowData = {
-        label: `Snow (${units.snow})`,
-        yAxisID: 'Precip',
-        type: 'line',
-        fill: true,
-        datalabels: {
-          backgroundColor: function(context) {
-							return context.dataset.backgroundColor;
-					},
-					borderRadius: 2,
-					color: 'black',
-					font: {
-						weight: 'bold'
-					},
-          align: 'start',
-          anchor: 'start',
-          formatter: function(value, context) {
-            return datapoints.centered_sums["snow"][context.dataIndex]
-          }
-        },
-       //  lineTension: 0,
-        backgroundColor: 'rgba(150,150,255,.2)',
-        borderColor: 'rgba(150,150,255,.3)',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointBorderColor: 'rgba(150,150,255,.9)',
-        pointBackgroundColor: '#aaa',
-        pointBorderWidth: 1,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: 'rgba(150,150,255,.3)',
-        pointHoverBorderColor: 'rgba(150,150,255,.3)',
-        pointHoverBorderWidth: 2,
-        pointRadius: 6,
-        pointHitRadius: 10,
-        pointStyle: 'star',
-        data: datapoints.snow
-      }
-
-
-
-    var tempsData = {
-      label: `Temps (${units.temperature})`,
-      yAxisID: 'Temps',
-      type: 'line',
-      fill: '+1',
-      lineTension: .4,
-      datalabels: {
-          display: false
-      },
-      backgroundColor: 'rgba(255,100,100,0.15)',
-      borderColor: 'rgba(255,100,100,.8)',
-      borderCapStyle: 'butt',
-      borderDash: [],
-      borderDashOffset: 0.0,
-      borderJoinStyle: 'miter',
-      pointBorderColor: 'rgba(255,100,100,.8)',
-      pointBackgroundColor: '#fff',
-      pointBorderWidth: 1,
-      pointHoverRadius: 5,
-      pointHoverBackgroundColor: 'rgba(255,100,100,1)',
-      pointHoverBorderColor: 'rgba(255,100,100,1)',
-      pointHoverBorderWidth: 2,
-      pointRadius: 0,
-      pointHitRadius: 10,
-      data: datapoints.temps
-    }
-
-
-
-
-    var freezingLineData = {
-                    label: 'Freezing Line (' + units.temperature + ')',
-                    yAxisID: 'Temps',
-                    type: 'line',
-                    fill: false,
-                    datalabels: {
-                        display: false
-                    },
-                    backgroundColor: 'rgba(100,100,255,0.15)',
-                    borderColor: 'rgba(150,150,200,.4)',
-                    borderCapStyle: 'butt',
-                    borderDash: [10,7],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBorderColor: 'rgba(150,150,200,0)',
-                    pointBackgroundColor: '#fff',
-                    pointBorderWidth: 0,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: 'rgba(150,150,200,1)',
-                    pointHoverBorderColor: 'rgba(150,150,200,1)',
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 0,
-                    pointHitRadius: 10,
-                    data: datapoints.freezing
-                  }
-
-    var feelslikeData = {
-                    label: 'Feels Like (' + units.temperature + ')',
-                    yAxisID: 'Temps',
-                    type: 'line',
-                    fill: false,
-                    datalabels: {
-                        display: false
-                    },
-                    backgroundColor: 'rgba(255,0,0,0)',
-                    borderColor: 'rgba(255,0,0,.5)',
-                    borderCapStyle: 'butt',
-                    borderDash: [8,6],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    borderWidth: 1,
-                    pointBorderColor: 'rgba(255,0,0,.8)',
-                    pointBackgroundColor: '#fff',
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: 'rgba(255,0,0,1)',
-                    pointHoverBorderColor: 'rgba(255,0,0,1)',
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 0,
-                    pointHitRadius: 10,
-                    data: datapoints.feelslike
-                  }
-
-  final_data.datasets = [datapoints.datasets["precip"], tempsData].concat( season === "winter" ? [freezingLineData, snowData] : feelslikeData);
+  if (season === "winter") {
+    final_data.datasets = [ datapoints.datasets["snow"], datapoints.datasets["precip"], datapoints.datasets["temps"], datapoints.datasets["freezing_line"] ];
+  } else {
+    final_data.datasets = [ datapoints.datasets["precip"], datapoints.datasets["temps"], datapoints.datasets["feelslike"] ];
+  }
 
   return (
     <div>

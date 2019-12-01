@@ -80,8 +80,6 @@ class Helpers extends Component {
       text_forecast: text_forecast,
       table_forecast: table_forecast
     }
-
-    console.log(day_data);
     return day_data;
   }
 

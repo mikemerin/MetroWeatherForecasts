@@ -24,6 +24,7 @@ export const FormContainer = (props) => {
         } else if (data[current].fail_data) {
           output = <DataErrorMessage type='Lift' data={ data[current] } />;
         } else if (debug === 2 || debug === 3) {
+        // } else if (debug.debug_lift || debug.limit_calls) {
           output = <DataLoadingMessage type='Lift' debug={ debug } />;
         }
         break;

@@ -4,7 +4,7 @@ import { Menu, Button, Icon, Segment } from 'semantic-ui-react'
 export const Header = (props) => {
 
   const { debug, current, handlePageChange } = props;
-  if (debug) console.log("Header rendering", props);
+  if (debug.render_logging) console.log("Header rendering", props);
 
   var lift_buttons = ['LIFT', 'LI', 'M2', 'M3', 'M4', 'M5'].map((page, i) => {
     return <Button compact key={i} size='mini' active={current === i} color='blue' onClick={ handlePageChange } >{page}</Button>;
@@ -31,7 +31,7 @@ export const Header = (props) => {
 export const InfoBox = (props) => {
 
   const { debug, data, current, season, handleSeasonChange, units, handleUnitChange } = props;
-  if (debug) console.log("Info rendering", props);
+  if (debug.render_logging) console.log("Info rendering", props);
 
   const option_buttons = () => {
 
