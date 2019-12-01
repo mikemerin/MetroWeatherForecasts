@@ -17,12 +17,12 @@ export default class App extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
-      debug: 2, // 0: no debug, 1: also console.log(debug renders), 2: also call only 1 LIFT instead of 6, 3: offline lift data
-      // debug: {
-      //   render_logging: true,
-      //   debug_lift: true, //todo: make nested Lift vs Full
-      //   limit_calls: true
-      // },
+      debug: {
+        p: false,
+        render_logging: false,
+        lift: false, //todo: make nested Lift vs Full
+        limit_calls: false
+      },
       current: 0,
       season: season,
       units: this.get_units("ºF"),
@@ -40,12 +40,10 @@ export default class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     var calls = [], { lifts, tides } = this.state;
     if (!prevState.login && this.state.login) {
-      // if (this.state.debug) {
-      if (this.state.debug.debug_lift) {
+      if (this.state.debug.lift) {
         this.setState({ data: DebugLiftData, lifts: 1 });
       } else {
-        // var pages = (this.state.debug.limit_calls ? 1 : 6);
-        var pages = (this.state.debug >= 2 ? 1 : 6);
+        var pages = (this.state.debug.limit_calls ? 1 : 6);
         for (let x = 0; x < pages; x++) {
           calls.push(x, x+6);
         }
@@ -65,7 +63,6 @@ export default class App extends Component {
   update_data(calls, lifts, tides) {
     ForecastAdapter.all(calls).then(all_called_data => {
       var current_data = this.state.data;
-      console.log(current_data)
       all_called_data.forEach((data, i) => {
         current_data[calls[i]] = data;
       })
@@ -133,8 +130,7 @@ export default class App extends Component {
     const { debug, login, data, forecast_days, current, season, lifts, tides, units } = this.state
     // console.log(JSON.stringify(data, null, 2))
 
-    if (debug) console.log("\n\n" + this.constructor.name + " rendering", this);
-    // if (debug.render_logging) console.log("\n\n" + this.constructor.name + " rendering", this);
+    if (debug.render_logging) console.log("\n\n" + this.constructor.name + " rendering", this);
 
     if (login) {
       return (
@@ -163,7 +159,7 @@ export default class App extends Component {
       )
     } else {
       return (
-        <Greeting hl={ this.hl } p={ this.state.debug } />
+        <Greeting hl={ this.hl } p={ debug } />
       )
     }
 

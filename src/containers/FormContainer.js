@@ -16,15 +16,15 @@ export const FormContainer = (props) => {
   if ( current < 6 ) {
     switch(lifts) {
       case 0:
-        output = <DataLoadingMessage type='Lift' />;
+        output = <DataLoadingMessage type='Lift' debug={ debug }/>;
         break;
       case 1:
         if ( data[current].loc !== undefined && data[current].loc.lat !== 0 ) {
           output = <LIFTs debug={ debug } data={ data[current] } graph_data={ data[current + 6] } season={ season } units={ units }/>
         } else if (data[current].fail_data) {
           output = <DataErrorMessage type='Lift' data={ data[current] } />;
-        } else if (debug === 2 || debug === 3) {
-        // } else if (debug.debug_lift || debug.limit_calls) {
+        // } else if (debug === 2 || debug === 3) {
+        } else if (debug.debug_lift || debug.limit_calls) {
           output = <DataLoadingMessage type='Lift' debug={ debug } />;
         }
         break;
@@ -36,7 +36,7 @@ export const FormContainer = (props) => {
         output = <center><br /><Button onClick={ handleTides }>Click to load tide data</Button></center>;
         break;
       case 1:
-        output = <DataLoadingMessage type='Tide' />;
+        output = <DataLoadingMessage type='Tide' debug={ debug }/>;
         break;
       case 2:
         output = <TIDES debug={ debug } data={ data.slice(12) } current={ current } units={ units } />;

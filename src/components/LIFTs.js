@@ -121,6 +121,7 @@ export const LIFTs = (props) => {
 
 
   if (debug.render_logging) console.log("LIFTs rendering", props);
+  
   return (
     <>
       <br />

@@ -25,8 +25,8 @@ export const Scrambler = (v) => {
 export const DataLoadingMessage = (props) => {
   const { debug, type } = props; //todo: stopwatch, and <Progress value='' total='' progress='ratio' />
   var text;
-  if (debug) {
-    text = [ <h1 key="loading debug">Debug (state {debug}) is active for {type}</h1> ];
+  if (debug.lift || debug.limit_calls) {
+    text = [ <h1 key="loading debug">Debug (temp lift data: {debug.lift ? "true" : "false"}, limit calls: {debug.limit_calls ? "true" : "false"}) is active for {type}</h1> ];
   } else {
     text = [
       <h1 key="loading 1">{type} data is loading or is currently offline.</h1>,

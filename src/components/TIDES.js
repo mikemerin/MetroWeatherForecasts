@@ -108,7 +108,7 @@ export class TIDES extends Component {
   }
 
   render() {
-    if (this.props.debug) console.log(this.constructor.name + " rendering", this);
+    if (this.props.debug.render_logging) console.log(this.constructor.name + " rendering", this);
 
     return (
       <div>
@@ -122,16 +122,3 @@ export class TIDES extends Component {
   }
 
 }
-
-
-  // var cell_types = [
-  //   { "name": "type", "addon": "" },
-  //   { "name": "heightFT", "addon": "'"} //todo: units here as , both FT/M and (this.props.units ? "m" : "'")
-  // ];
-
-  // cell_types[0]["addon"] = (no_data ? "" : " " + day_info["time"]); // don't like the folllowing lines, need to refactor with below text line and/or cell_types above
-  // cell_types.forEach(cell_type => {
-  //   const key = (station.fail_data ? day_index : day["date"]) + "_" + cell_type["name"];
-  //   const text = (no_data ? "-" : day_info[cell_type["name"]] + cell_type["addon"]);
-  //   station_row.push( <Table.Cell error={ station.fail_data } key={key}><h4>{ text }</h4></Table.Cell> );
-  // })
