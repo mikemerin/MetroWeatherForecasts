@@ -1,11 +1,12 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
 import { Graph } from './Graph';
+import { Hourly } from './Hourly';
 import { WeatherTypes as weather_types } from './Common';
 
 export const LIFTs = (props) => {
 
-  const { debug, data, graph_data, season, units } = props;
+  const { debug, data, datatype, graph_data, season, units } = props;
   const { periods } = data;
   const { temperature, precip, snow, speed, distance } = units;
   const FC = temperature[1];
@@ -121,14 +122,29 @@ export const LIFTs = (props) => {
 
 
   if (debug.render_logging) console.log("LIFTs rendering", props);
-  
-  return (
-    <>
+
+  if (datatype === "table") {
+    return (
+      <>
+        <br />
+        { get_top_text() }
+        { get_table_header() }
+        { get_body() }
+      </>
+    )
+  } else if (datatype === "graph"){
+    return (
+      <>
+        <br />
+        <Graph graph_data={ graph_data } season={ season } units={ units } />
+      </>
+    )
+  } else {
+    return (
+      <>
       <br />
-      { get_top_text() }
-      { get_table_header() }
-      { get_body() }
-      <Graph graph_data={ graph_data } season={ season } units={ units }/>
-    </>
-  )
+        <Hourly graph_data={ graph_data } season={ season } units={ units } />
+      </>
+    )
+  }
 }

@@ -24,6 +24,7 @@ export default class App extends Component {
         limit_calls: false
       },
       current: 0,
+      datatype: "table",
       season: season,
       units: this.get_units("ºF"),
       data: [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ],
@@ -99,6 +100,11 @@ export default class App extends Component {
     this.setState({ season: result.value });
   }
 
+  handleDatatypeChange = (event, result) => {
+    event.preventDefault();
+    this.setState({ datatype: result.value });
+  }
+
   handleUnitChange = (event, result) => {
     event.preventDefault();
     const units = this.get_units(result.value);
@@ -127,7 +133,7 @@ export default class App extends Component {
 
   render() {
 
-    const { debug, login, data, forecast_days, current, season, lifts, tides, units } = this.state
+    const { debug, login, data, datatype, forecast_days, current, season, lifts, tides, units } = this.state;
     // console.log(JSON.stringify(data, null, 2))
 
     if (debug.render_logging) console.log("\n\n" + this.constructor.name + " rendering", this);
@@ -143,11 +149,12 @@ export default class App extends Component {
               <Grid.Row>
                 <InfoBox debug={ debug } data={ data[current] } current={ current }
                   season={ season } handleSeasonChange={ this.handleSeasonChange }
+                  datatype={ datatype } handleDatatypeChange={ this.handleDatatypeChange }
                   units={ units } handleUnitChange={ this.handleUnitChange }
                 />
               </Grid.Row>
               <Grid.Row id="forms">
-                <FormContainer debug={ debug } data={ data } current={ current } season={ season }
+                <FormContainer debug={ debug } data={ data } current={ current } season={ season } datatype={ datatype }
                   forecast_days={ forecast_days } lifts={ lifts } tides={ tides } handleTides={ this.handleTides } units={ units }
                 />
               </Grid.Row>

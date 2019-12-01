@@ -4,6 +4,8 @@ import React, { Component } from 'react'
 import { Button, Checkbox, Form } from 'semantic-ui-react'
 import { ForecastAdapter } from '../adapters'
 
+//todo: refactor this, it's awful
+
 export class CUSTOM extends Component {
 
   constructor() {
@@ -163,8 +165,7 @@ export class CUSTOM extends Component {
 
   render() {
 
-    if (this.props.debug) console.log("\n\n" + this.constructor.name + " rendering", this);
-    // if (this.props.debug.render_logging) console.log("\n\n" + this.constructor.name + " rendering", this);
+    if (this.props.debug.render_logging) console.log("\n\n" + this.constructor.name + " rendering", this);
 
     var shortcut_buttons = Object.keys(this.state.shortcuts).map(shortcut => {
       return <Button key={ "button_" + shortcut } color='blue' inverted onClick={ this.handleShortcut } >{ shortcut }</Button>

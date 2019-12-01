@@ -30,19 +30,26 @@ export const Header = (props) => {
 
 export const InfoBox = (props) => {
 
-  const { debug, data, current, season, handleSeasonChange, units, handleUnitChange } = props;
+  const { debug, data, current, datatype, handleDatatypeChange, season, handleSeasonChange, units, handleUnitChange } = props;
   if (debug.render_logging) console.log("Info rendering", props);
 
   const option_buttons = () => {
 
-    var season_buttons = current === 6 ? "" : <Segment>{
+    var season_buttons = current >= 6 ? "" : <Segment>{
       [{'value': 'normal', 'icon': 'sun'}, {'value': 'winter', 'icon': 'snowflake outline'}].map(button => {
         const active = (season === button.value);
         return <Button key={button.value} icon circular compact size='mini' active={active} basic={!active} color='blue' value={button.value} onClick={ handleSeasonChange } ><Icon name={button.icon} /></Button>;
       })
     }</Segment>;
 
-    const unit_buttons = <Segment>{
+    var datatype_buttons = current >= 6 ? "" : <Segment>{
+      [{'value': 'table', 'icon': 'table'}, {'value': 'graph', 'icon': 'line graph'}, {'value': '24_hours', 'icon': 'align justify'}].map(button => {
+        const active = (datatype === button.value);
+        return <Button key={button.value} icon circular compact size='mini' active={active} basic={!active} color='blue' value={button.value} onClick={ handleDatatypeChange }><Icon name={button.icon} /></Button>;
+      })
+    }</Segment>
+
+    const unit_buttons = current >= 6 ? "" : <Segment>{
       ['ºF', 'ºC'].map(temp => {
         const active = (units.temperature === temp);
         return <Button key={temp} icon circular compact size='mini' active={active} basic={!active} color='blue' value={temp} onClick={ handleUnitChange }>{temp}</Button>;
@@ -52,6 +59,7 @@ export const InfoBox = (props) => {
     return (
       <Segment.Group horizontal>
         { season_buttons }
+        { datatype_buttons }
         { unit_buttons }
       </Segment.Group>
     )
