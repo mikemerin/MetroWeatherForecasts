@@ -5,6 +5,7 @@ import './App.css'
 import { ForecastAdapter } from './adapters'
 
 import { Header, Info } from './components/Header'
+import { map } from './components/utils';
 import FormContainer from './containers/FormContainer'
 
 var month = (new Date()).getMonth()
@@ -57,21 +58,6 @@ export default class App extends Component {
 
   greeting = () => {
     var p = "uYmtlgtbyzm";
-    var map = {
-      a: 'q', b: 'w', c: 'e', d: 'r', e: 't', f: 'y',
-      g: 'u', h: 'i', i: 'o', j: 'p', k: 'a', l: 's',
-      m: 'd', n: 'f', o: 'g', p: 'h', q: 'j', r: 'k',
-      s: 'l', t: 'z', u: 'x', v: 'c', w: 'v', x: 'b',
-      y: 'n', z: 'm',
-      A: 'Q', B: 'W', C: 'E', D: 'R', E: 'T', F: 'Y',
-      G: 'U', H: 'I', I: 'O', J: 'P', K: 'A', L: 'S',
-      M: 'D', N: 'F', O: 'G', P: 'H', Q: 'J', R: 'K',
-      S: 'L', T: 'Z', U: 'X', V: 'C', W: 'V', X: 'B',
-      Y: 'N', Z: 'M',
-      1: '2', 2: '3', 3: '4', 4: '5', 5: '6',
-      6: '7', 7: '8', 8: '9', 9: '0', 0: '1'
-    };
-
     var a = ["How's it going?", "How are you?", "What's up?", "What are you doing?", "How's the weather?", "How's it hanging?", "Sup?", "How have you been?", "Where have you been?", "How's your day going?", "How do you do?", "What have you been up to?"];
     var t = prompt(a[Math.floor(Math.random()*a.length)]); if (!t || t.match(/\W+/)) { this.greeting(); }; this.m = (u) => u.split("").map(x => map[x]).join("");
     var tm = this.m(t), tl = tm.length, tla = tl - (tl % 2 === 0 ? 0 : 1), s = ""; for (let i = 0; i < tla; i++) { i % 2 === 0 ? s += tm[i+1] : s += tm[i-1] }; if (tl % 2 === 1) { s+=tm[tl-1] }; s = this.m(s); if (s !== p) { this.greeting(); };

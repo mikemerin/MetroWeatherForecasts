@@ -1,8 +1,14 @@
+import { scramble } from '../components/utils';
+
 import { Tempdata, Temptidedata } from './Tempdata'
 
-const id_secret = "?client_id=8XdPaXwzYWIbDTrF8iCL3&client_secret=ncTOr4kcLcjhRKVOeGRW2tecqJPTWRkCHLqErUli"
+const clientId = scramble('fdvKZBX0NHL7VKkGpmjkB');
+const clientSecret = scramble('aJU0gyOqLq5PsTRbW5faBZ9AjDWiLe54z8KJGrDD');
+const U = scramble('vrpmrspq');
 
-const URL = "https://api.aerisapi.com/"
+const id_secret = `?client_id=${clientId}&client_secret=${clientSecret}`;
+
+const URL = `https://api.${U}.com/`;
 
 const forecast_parameters = "&from=today&to=+5days&filter=daynight&limit=9"
 const graph_parameters = "&from=-3hours&filter=3hr&limit=48"
