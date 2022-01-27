@@ -27,7 +27,6 @@ function arraySums(array) {
 }
 
 export const Graph = (props) => {
-  debugger
   const { graph_data, season } = props
 
   var labels = [], precipIN = [], snowIN = [], tempF = [], freezing = [], feelslikeF = []
