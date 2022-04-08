@@ -5,7 +5,7 @@ import { Tempdata, Temptidedata } from './Tempdata'
 const clientId = scramble('RJWjhotWcxtQa9ingaV7a');
 const clientSecret = scramble('f0P104NJyWS3sRI3c4EYVpsSbvalCNOcFGqAYf7h');
 const U = scramble('vrpmrspq');
-
+Noc
 const id_secret = `?client_id=${clientId}&client_secret=${clientSecret}`;
 
 const URL = `https://api.${U}.com/`;
