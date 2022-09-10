@@ -2,8 +2,10 @@ import { scramble } from '../components/utils';
 
 import { Tempdata, Temptidedata } from './Tempdata'
 
-const clientId = scramble('2COwU9hcogOstY6KHH2lt');
-const clientSecret = scramble('sR8o1oo4YIOcSxUdxboYBKfmN97qLTJITeBor1qq');
+const shift = str => str.slice(1) + str.slice(0,1);
+
+const clientId = shift('ApEn7NuN8lrRyV3UvCdce');
+const clientSecret = shift('eas9okcjQBdbfdw7z0ImECNVIej4cC4jXKgnElqg');
 const U = scramble('vrpmrspq');
 
 const id_secret = `?client_id=${clientId}&client_secret=${clientSecret}`;
