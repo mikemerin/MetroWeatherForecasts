@@ -35,7 +35,7 @@ export default class App extends Component {
           this.setState({ data: current_data })
         })
       }
-      for (let x = 6; x < 8; x++) {
+      for (let x = 7; x < 9; x++) {
         ForecastAdapter.all(x).then(data => {
           const response = data.response[0]
           var current_data = this.state.data
@@ -45,7 +45,7 @@ export default class App extends Component {
       }
     } else {
       this.greeting();
-      for (let x = 0; x < 21; x++) {
+      for (let x = 0; x < 23; x++) {
         ForecastAdapter.all(x).then(data => {
           const response = data.response[0]
           var current_data = this.state.data
@@ -65,7 +65,7 @@ export default class App extends Component {
 
   handlePageChange = (event, result) => {
     event.preventDefault()
-    const current = {"LIFT": 0, "LI": 1, "M2": 2, "M3": 3, "M4": 4, "M5": 5, "TIDES": 6, "CUSTOM": 7}
+    const current = {"LIFT": 0, "LI": 1, "M2": 2, "M3": 3, "M4": 4, "M5": 5, "NH": 6, "TIDES": 7, "CUSTOM": 8}
     this.setState({ current: current[result.children] })
   }
 

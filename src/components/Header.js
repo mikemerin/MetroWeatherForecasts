@@ -5,7 +5,7 @@ export const Header = (props) => {
 
   const { current, season, handlePageChange, handleSeasonChange } = props
 
-  var lift_buttons = ['LIFT', 'LI', 'M2', 'M3', 'M4', 'M5'].map((page, i) => {
+  var lift_buttons = ['LIFT', 'LI', 'M2', 'M3', 'M4', 'M5', 'NH'].map((page, i) => {
     return <Button compact key={i} size='mini' active={current === i} color='blue' onClick={ handlePageChange } >{page}</Button>;
   });
 
@@ -36,7 +36,7 @@ export const Info = (props) => {
 
   const location = [
         "NYC", "Islip NY",
-        "White Plains NY", "Beacon NY", "Chester NY", "Easton CT",
+        "White Plains NY", "Beacon NY", "Chester NY", "Easton CT", "Keene, NH",
         "TIDES - NYC Area",
         "Custom Location"
       ]
@@ -54,10 +54,10 @@ export const Info = (props) => {
 
   var latlong = `Lat: ${ lat } - Long: ${ long }`
 
-  if ( current === 6 ) { latlong = "Various Locations" }
-  if ( current === 7 ) { latlong = "Custom Lat/Long" }
+  if ( current === 7 ) { latlong = "Various Locations" }
+  if ( current === 8 ) { latlong = "Custom Lat/Long" }
   var full_header;
-  if(current !== 7) {
+  if(current !== 8) {
     full_header = location[current] + " - " + latlong;
   } else {
     full_header = "Custom Location"
