@@ -4,8 +4,8 @@ import { Tempdata, Temptidedata } from './Tempdata'
 
 const shift = str => str.slice(1) + str.slice(0,1);
 
-const clientId = shift('kxbi1TTAz5076OvLMcggU');
-const clientSecret = shift('rPfPJZoCNCQzkwRpU0NXLX1GZqLdJ6xiNsEaZALj');
+const clientId = shift('TMN9okeS2GkNnXWIpmceo');
+const clientSecret = shift('2YhvHAeCpGODWFmXtPRmZHm2ZeR9o2IhhXJN8Uoy');
 const U = scramble('vrpmrspq');
 
 const id_secret = `?client_id=${clientId}&client_secret=${clientSecret}`;
@@ -14,7 +14,7 @@ const URL = `https://api.${U}.com/`;
 
 const forecast_parameters = "&from=today&to=+5days&filter=daynight&limit=9"
 const graph_parameters = "&from=-3hours&filter=3hr&limit=48"
-const tide_parameters = "&from=sunday&to=+7days&filter=highlow"
+const tide_parameters = "&from=sunday&to=+14days&filter=highlow"
 
 const LIFT_URL   = URL + "forecasts/40.78,-73.88" + id_secret + forecast_parameters
 const LILIFT_URL = URL + "forecasts/40.79,-73.10" + id_secret + forecast_parameters
