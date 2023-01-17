@@ -8,30 +8,87 @@ export const LIFTs = (props) => {
   const { data, season, graph_data } = props
 
   const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-  const d = new Date()
 
-  var d_1 = d.getDay()
-  var d_2 = d_1 + 1
-  var d_3 = d_2 + 1
-  var d_4 = d_3 + 1
-  var d_5 = d_4 + 1
+  const header = (tomorrow) => {
+    let d = new Date()
+    if (tomorrow) {
+      d.setDate(d.getDate() + 1);
+    }
 
-  if ( data.loc !== undefined ) {
-    if (d_2 > 6) { d_2 -= 7 }
-    if (d_3 > 6) { d_3 -= 7 }
-    if (d_4 > 6) { d_4 -= 7 }
-    if (d_5 > 6) { d_5 -= 7 }
+    const dayOffset = tomorrow ? 2 : 0;
+
+    let d_1 = d.getDay()
+    let d_2 = d_1 + 1
+    let d_3 = d_2 + 1
+    let d_4 = d_3 + 1
+    let d_5 = d_4 + 1
+  
+    if ( data.loc !== undefined ) {
+      if (d_2 > 6) { d_2 -= 7 }
+      if (d_3 > 6) { d_3 -= 7 }
+      if (d_4 > 6) { d_4 -= 7 }
+      if (d_5 > 6) { d_5 -= 7 }
+    }
+
+    return (
+      <>
+        <h4>For {tomorrow ? 'Tomorrow' : 'Today'} ({d.toDateString()})</h4>
+        Today: { data.periods[0 + dayOffset].weather }<br />
+        Tonight: { data.periods[1 + dayOffset].weather }<br />
+        { weekdays[d_2] }: { data.periods[2 + dayOffset].weather }<br />
+        { weekdays[d_2].slice(0,3) }. Night: { data.periods[3 + dayOffset].weather }<br />
+        { weekdays[d_3] }: { data.periods[4 + dayOffset].weather }<br />
+        { weekdays[d_4] }: { data.periods[6 + dayOffset].weather }<br />
+        { weekdays[d_5] }: { data.periods[8 + dayOffset].weather }
+        <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
+
+          <Table.Header>
+            <Table.Row>
+              <Table.Cell><h4>Copy below</h4></Table.Cell>
+              <Table.Cell><h4>{weekdays[d_1].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.Cell>
+              <Table.Cell><h4>{weekdays[d_1].toUpperCase().slice(0,3)}. NIGHT 6P-6A</h4></Table.Cell>
+              <Table.Cell><h4>{weekdays[d_2].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.Cell>
+              <Table.Cell><h4>{weekdays[d_2].toUpperCase().slice(0,3)}. NIGHT 6P-6A</h4></Table.Cell>
+              <Table.Cell><h4>{weekdays[d_3].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.Cell>
+            </Table.Row>
+          </Table.Header>
+
+        </Table>
+      </>
+    )
   }
 
-  function body(season) {
+  const body = (season, tomorrow) => {
+    
+    // repeated code, extract
+    let d = new Date()
+    if (tomorrow) {
+      d.setDate(d.getDate() + 1);
+    }
 
-    const day1 = data.periods[0]
-    const night1 = data.periods[1]
-    const day2 = data.periods[2]
-    const night2 = data.periods[3]
-    const day3 = data.periods[4]
-    const day4 = data.periods[6]
-    const day5 = data.periods[8]
+    const dayOffset = tomorrow ? 2 : 0;
+
+    let d_1 = d.getDay()
+    let d_2 = d_1 + 1
+    let d_3 = d_2 + 1
+    let d_4 = d_3 + 1
+    let d_5 = d_4 + 1
+  
+    if ( data.loc !== undefined ) {
+      if (d_2 > 6) { d_2 -= 7 }
+      if (d_3 > 6) { d_3 -= 7 }
+      if (d_4 > 6) { d_4 -= 7 }
+      if (d_5 > 6) { d_5 -= 7 }
+    }
+    // end repeated code
+
+    const day1 = data.periods[0 + dayOffset]
+    const night1 = data.periods[1 + dayOffset]
+    const day2 = data.periods[2 + dayOffset]
+    const night2 = data.periods[3 + dayOffset]
+    const day3 = data.periods[4 + dayOffset]
+    const day4 = data.periods[6 + dayOffset]
+    const day5 = data.periods[8 + dayOffset]
 
     const three_day = [day1, night1, day2, night2, day3]
 
@@ -182,32 +239,18 @@ export const LIFTs = (props) => {
       return (
         <div>
           <br />
-          Today: { data.periods[0].weather }<br />
-          Tonight: { data.periods[1].weather }<br />
-          { weekdays[d_2] }: { data.periods[2].weather }<br />
-          { weekdays[d_2].slice(0,3) }. Night: { data.periods[3].weather }<br />
-          { weekdays[d_3] }: { data.periods[4].weather }<br />
-          { weekdays[d_4] }: { data.periods[6].weather }<br />
-          { weekdays[d_5] }: { data.periods[8].weather }
-          <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
-
-            <Table.Header>
-              <Table.Row>
-                <Table.Cell><h4>Copy below</h4></Table.Cell>
-                <Table.Cell><h4>{weekdays[d_1].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.Cell>
-                <Table.Cell><h4>{weekdays[d_1].toUpperCase().slice(0,3)}. NIGHT 6P-6A</h4></Table.Cell>
-                <Table.Cell><h4>{weekdays[d_2].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.Cell>
-                <Table.Cell><h4>{weekdays[d_2].toUpperCase().slice(0,3)}. NIGHT 6P-6A</h4></Table.Cell>
-                <Table.Cell><h4>{weekdays[d_3].toUpperCase().slice(0,3)}. 6A-6P</h4></Table.Cell>
-              </Table.Row>
-            </Table.Header>
-
-          </Table>
+          {/* Today */}
+          { header() }
           <br />
           <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
-
             { body(season) }
-
+          </Table>
+          {/* Tomorrow */}
+          <br />
+          { header(true) }
+          <br />
+          <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >
+            { body(season, true) }
           </Table>
           <Graph graph_data={ graph_data } season={ season }/>
         </div>

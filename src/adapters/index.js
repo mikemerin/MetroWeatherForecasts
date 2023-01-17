@@ -12,7 +12,7 @@ const id_secret = `?client_id=${clientId}&client_secret=${clientSecret}`;
 
 const URL = `https://api.${U}.com/`;
 
-const forecast_parameters = "&from=today&to=+5days&filter=daynight&limit=9"
+const forecast_parameters = "&from=today&to=+8days&filter=daynight&limit=11"
 const graph_parameters = "&from=-3hours&filter=3hr&limit=48"
 const tide_parameters = "&from=sunday&to=+14days&filter=highlow"
 

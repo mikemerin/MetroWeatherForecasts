@@ -191,7 +191,7 @@ export const TIDES = (props) => {
 
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell colspan={2}><h4>Location</h4></Table.HeaderCell>
+              <Table.HeaderCell colSpan={2}><h4>Location</h4></Table.HeaderCell>
               <Table.HeaderCell><h4>Sun</h4></Table.HeaderCell>
               <Table.HeaderCell><h4>{dates[0]}</h4></Table.HeaderCell>
               <Table.HeaderCell><h4>Mon</h4></Table.HeaderCell>
@@ -218,7 +218,7 @@ export const TIDES = (props) => {
 
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell colspan={2}><h4>Location</h4></Table.HeaderCell>
+              <Table.HeaderCell colSpan={2}><h4>Location</h4></Table.HeaderCell>
               <Table.HeaderCell><h4>Sun</h4></Table.HeaderCell>
               <Table.HeaderCell><h4>{dates2[0]}</h4></Table.HeaderCell>
               <Table.HeaderCell><h4>Mon</h4></Table.HeaderCell>
