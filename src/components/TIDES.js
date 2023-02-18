@@ -95,14 +95,17 @@ export const TIDES = (props) => {
   function location_bot(x, secondTable) {
 
     const station_days = (secondTable ? stations2 : stations)[x]
-
+    console.log("🚀 ~ file: TIDES.js:98 ~ location_bot ~ station_days", station_days)
+    
     const rows_13 = [1, 2, 3].map((row, i) => {
-
+      
       var this_row = station_days.map(day => day[row])
+      console.log("🚀 ~ file: TIDES.js:103 ~ constrows_13=[1,2,3].map ~ this_row", this_row)
 
       return (
         <Table.Row key={i}>
           { this_row.map((cell, j) => {
+            if (cell) console.log('secondTable', secondTable, 'row', row, 'j', j, 'cell', cell)
             if (row === 3 && cell === undefined) {
               return (
                   [
@@ -110,7 +113,7 @@ export const TIDES = (props) => {
                   <Table.Cell key={`${j} ft`}>-</Table.Cell>
                   ]
               )
-            } else {
+            } else if (cell !== undefined) {
               return (
                   [
                   <Table.Cell key={`${j} tt`}>{ `${cell.type.toUpperCase()} ${cell.dateTimeISO.slice(11,16)}` }</Table.Cell>,
@@ -129,8 +132,7 @@ export const TIDES = (props) => {
 
   }
 
-  function body(secondTable) {
-
+  const body = (secondTable) => {
     return (
       secondTable
        ? (
@@ -209,7 +211,7 @@ export const TIDES = (props) => {
             </Table.Row>
           </Table.Header>
 
-          { body() }
+          { body(true) /* somehow this is reversed */ }
 
         </Table>
         <br />
@@ -236,7 +238,7 @@ export const TIDES = (props) => {
             </Table.Row>
           </Table.Header>
 
-          { body(true) }
+          { body() /* somehow this is reversed */ }
 
         </Table>
       </div>
