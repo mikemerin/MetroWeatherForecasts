@@ -4,8 +4,8 @@ import { Tempdata, Temptidedata } from './Tempdata'
 
 const shift = str => str.slice(1) + str.slice(0,1);
 
-const clientId = shift('zFAJB3YT0dJINk6UG9H6O');
-const clientSecret = shift('sVog5ZBfrAaZ6nEWnFnYmah9sgauOYc2QiMuBZNt');
+const clientId = shift('Rm1ZcpfKYWe3oP02U8sJd');
+const clientSecret = shift('Y0OuZGk8D58yIS9rSvGXT3os0avRUuGpM9KNCeQU');
 const U = scramble('vrpmrspq');
 
 const id_secret = `?client_id=${clientId}&client_secret=${clientSecret}`;
