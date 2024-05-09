@@ -26,6 +26,8 @@ export default class App extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
+      error: '',
+
       clientId: '',
       clientSecret: '',
       current: 0,
@@ -49,41 +51,56 @@ export default class App extends Component {
       setTimeout(() => {
         this.setState({ fetching: false })
       }, 1000);
+
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     if (this.state.clientId && this.state.clientSecret) {
       if (!this.state.forecastAdapter) {
         const forecastAdapter = new ForecastAdapter(this.state.clientId, this.state.clientSecret);
         this.setState({ forecastAdapter });
       } else {
-        if (!Object.keys(this.state.data[0]).length) {
+        if (!prevState.forecastAdapter && !Object.keys(this.state.data[0]).length) {
           if (this.state.debug) {
             // for debugging main or LIFT pages, does 4 calls instead of 21
             for (let x = 0; x < 2; x++) {
-              this.state.forecastAdapter.all(x).then(data => {
-                const response = data.response[0]
-                var current_data = this.state.data
-                current_data[x] = response
-                this.setState({ data: current_data })
-              })
+              if (data.error) {
+                this.setState({ error: data.error });
+              } else {
+                this.state.forecastAdapter.all(x).then(data => {
+                  const response = data.response[0]
+                  var current_data = this.state.data
+                  current_data[x] = response
+                  this.setState({ data: current_data })
+                })
+              }
             }
             for (let x = 7; x < 9; x++) {
-              this.state.forecastAdapter.all(x).then(data => {
-                const response = data.response[0]
-                var current_data = this.state.data
-                current_data[x] = response
-                this.setState({ data: current_data })
-              })
+              if (data.error) {
+                this.setState({ error: data.error });
+              } else {
+                this.state.forecastAdapter.all(x).then(data => {
+                  const response = data.response[0]
+                  var current_data = this.state.data
+                  current_data[x] = response
+                  this.setState({ data: current_data })
+                })
+              }
             }
           } else {
             for (let x = 0; x < 23; x++) {
               this.state.forecastAdapter.all(x).then(data => {
-                const response = data.response[0]
-                var current_data = this.state.data
-                current_data[x] = response
-                this.setState({ data: current_data })
+                console.log('data', data)
+                if (data.error) {
+                  console.log("setting error")
+                  this.setState({ error: data.error });
+                } else {
+                  const response = data.response[0]
+                  var current_data = this.state.data
+                  current_data[x] = response
+                  this.setState({ data: current_data })
+                }
               })
             }
           }
@@ -129,6 +146,8 @@ export default class App extends Component {
         noData && (
           <div style={{ color: 'red' }}>
             <br /><br />
+            {this.error}
+            <br /><br />
             No data is curenlty available.
             <br />
             This user/pass may have expired.
@@ -172,17 +191,30 @@ export default class App extends Component {
     );
   };
 
-  render() {
-    const { data, clientId, clientSecret, fetching, forecastAdapter } = this.state;
+  renderError = (error) => (
+    <div style={{ color: 'red' }}>
+      <br /><br />
+      <h1>{error}</h1>
+      <br />
+      Please wait 24 hours for this to reset,
+      <br />
+      Or if data is needed immediately, please obtain a new user/pass.
+    </div>
+  );
 
+  render() {
+    const { data, error, clientId, clientSecret, fetching, forecastAdapter } = this.state;
+    
     return (
-      fetching
-        ? <>Fetching data, please wait...</>
-        : (!clientId || !clientSecret)
-          ? this.renderForm()
-          : (Object.keys(data[0]).length)
-            ? this.renderGrid()
-            : this.renderForm(true)
+      error
+        ? this.renderError(error)
+        : fetching
+          ? <>Fetching data, please wait...</>
+          : (!clientId || !clientSecret)
+            ? this.renderForm()
+            : (Object.keys(data[0]).length)
+              ? this.renderGrid()
+              : this.renderForm(true)
     );
   }
 }

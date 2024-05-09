@@ -58,9 +58,11 @@ export class ForecastAdapter {
   }
 
   all(n) {
-    console.log('this.lifts', this.lifts[n], this.lifts)
     return fetch(this.lifts[n])
       .then(res => {
+        if (res.status === 429) {
+          return { error: 'Error 429: "Maximum number of daily accesses reached."'};
+        };
         if (res.ok) { return res.json() }
         else { throw new Error('Something went wrong') }
       }).catch((error) => {
@@ -73,6 +75,9 @@ export class ForecastAdapter {
     var custom_url = URL + "forecasts/" + loc + generateIdSecretQuery(this.clientId, this.clientSecret, forecast_parameters);
     return fetch(custom_url)
       .then(res => {
+        if (res.status === 429) {
+          return { error: 'Error 429: "Maximum number of daily accesses reached."'};
+        };
         if (res.ok) { return res.json() }
         else { throw new Error('Something went wrong') }
       }).catch((error) => {
