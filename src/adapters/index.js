@@ -10,40 +10,50 @@ const tide_parameters = "&from=sunday&to=+14days&filter=highlow"
 
 const generateIdSecretQuery = (clientId, clientSecret, parameters) => `?client_id=${clientId}&client_secret=${clientSecret}${parameters || ''}`;
 
-const generateLiftURLs = (clientId, clientSecret) => {
+const locMap = {
+  LIFT: '40.78,-73.88',
+  LILIFT: '40.79,-73.10',
+  MNR2: '41.06,-73.70',
+  MNR3: '41.50,-74.10',
+  MNR4: '41.51,-74.27',
+  MNR5: '41.16,-73.13',
+  KNH: '42.93,-72.28',
+}
 
-  const LIFT_URL = URL + "forecasts/40.78,-73.88" + generateIdSecretQuery(clientId, clientSecret, forecast_parameters);
-  const LILIFT_URL = URL + "forecasts/40.79,-73.10" + generateIdSecretQuery(clientId, clientSecret, forecast_parameters);
-  const MNR2_URL = URL + "forecasts/41.06,-73.70" + generateIdSecretQuery(clientId, clientSecret, forecast_parameters);
-  const MNR3_URL = URL + "forecasts/41.50,-74.10" + generateIdSecretQuery(clientId, clientSecret, forecast_parameters);
-  const MNR4_URL = URL + "forecasts/41.51,-74.27" + generateIdSecretQuery(clientId, clientSecret, forecast_parameters);
-  const MNR5_URL = URL + "forecasts/41.16,-73.13" + generateIdSecretQuery(clientId, clientSecret, forecast_parameters);
-  const KNH_URL = URL + "forecasts/42.93,-72.28" + generateIdSecretQuery(clientId, clientSecret, forecast_parameters);
+export const URLmap = [
+  { name: 'LIFT',           type: 'forecast',       loc: `forecasts/${locMap.LIFT}` },
+  { name: 'LILIFT',         type: 'forecast',       loc: `forecasts/${locMap.LILIFT}` },
+  { name: 'MNR2',           type: 'forecast',       loc: `forecasts/${locMap.MNR2}` },
+  { name: 'MNR3',           type: 'forecast',       loc: `forecasts/${locMap.MNR3}` },
+  { name: 'MNR4',           type: 'forecast',       loc: `forecasts/${locMap.MNR4}` },
+  { name: 'MNR5',           type: 'forecast',       loc: `forecasts/${locMap.MNR5}` },
+  { name: 'KNH',            type: 'forecast',       loc: `forecasts/${locMap.KNH}` },
+  { name: 'LIFT',           type: 'graph',          loc: `forecasts/${locMap.LIFT}` },
+  { name: 'LILIFT',         type: 'graph',          loc: `forecasts/${locMap.LILIFT}` },
+  { name: 'MNR2',           type: 'graph',          loc: `forecasts/${locMap.MNR2}` },
+  { name: 'MNR3',           type: 'graph',          loc: `forecasts/${locMap.MNR3}` },
+  { name: 'MNR4',           type: 'graph',          loc: `forecasts/${locMap.MNR4}` },
+  { name: 'MNR5',           type: 'graph',          loc: `forecasts/${locMap.MNR5}` },
+  { name: 'KNH',            type: 'graph',          loc: `forecasts/${locMap.KNH}` },
+  { name: 'Flushing',       type: 'tide',           loc: "tides/flushing+bay,ny" },
+  { name: 'Mill Rock',      type: 'tide',           loc: "tides/mill+rock,ny" },
+  { name: 'Queensboro',     type: 'tide',           loc: "tides/queensboro+bridge,ny" },
+  { name: 'Gowanus Canal',  type: 'tide',           loc: "tides/gowanus+canal,ny" },
+  { name: 'Battery',        type: 'tide',           loc: "tides/the+battery,ny" },
+  { name: 'Great Kills',    type: 'tide',           loc: "tides/great+kills,ny" },
+  { name: 'Fort Wadsworth', type: 'tide',           loc: "tides/fort+wadsworth,ny" },
+  { name: 'Coney Island',   type: 'tide',           loc: "tides/brighton+beach,ny" },
+  { name: 'Rockaway',       type: 'tide',           loc: "tides/rockaway,ny" },
+];
 
-  const LIFT_GRAPH = URL + "forecasts/40.78,-73.88" + generateIdSecretQuery(clientId, clientSecret, graph_parameters);
-  const LILIFT_GRAPH = URL + "forecasts/40.79,-73.10" + generateIdSecretQuery(clientId, clientSecret, graph_parameters);
-  const MNR2_GRAPH = URL + "forecasts/41.06,-73.70" + generateIdSecretQuery(clientId, clientSecret, graph_parameters);
-  const MNR3_GRAPH = URL + "forecasts/41.50,-74.10" + generateIdSecretQuery(clientId, clientSecret, graph_parameters);
-  const MNR4_GRAPH = URL + "forecasts/41.51,-74.27" + generateIdSecretQuery(clientId, clientSecret, graph_parameters);
-  const MNR5_GRAPH = URL + "forecasts/41.16,-73.13" + generateIdSecretQuery(clientId, clientSecret, graph_parameters);
-  const KNH_GRAPH = URL + "forecasts/42.93,-72.28" + generateIdSecretQuery(clientId, clientSecret, graph_parameters);
-
-  const TIDES1_URL = URL + "tides/flushing+bay,ny" + generateIdSecretQuery(clientId, clientSecret, tide_parameters);
-  const TIDES2_URL = URL + "tides/mill+rock,ny" + generateIdSecretQuery(clientId, clientSecret, tide_parameters);
-  const TIDES3_URL = URL + "tides/queensboro+bridge,ny" + generateIdSecretQuery(clientId, clientSecret, tide_parameters);
-  const TIDES4_URL = URL + "tides/gowanus+canal,ny" + generateIdSecretQuery(clientId, clientSecret, tide_parameters);
-  const TIDES5_URL = URL + "tides/the+battery,ny" + generateIdSecretQuery(clientId, clientSecret, tide_parameters);
-  const TIDES6_URL = URL + "tides/great+kills,ny" + generateIdSecretQuery(clientId, clientSecret, tide_parameters);
-  const TIDES7_URL = URL + "tides/fort+wadsworth,ny" + generateIdSecretQuery(clientId, clientSecret, tide_parameters);
-  const TIDES8_URL = URL + "tides/coney,ny" + generateIdSecretQuery(clientId, clientSecret, tide_parameters);
-  const TIDES9_URL = URL + "tides/rockaway,ny" + generateIdSecretQuery(clientId, clientSecret, tide_parameters);
-
-  return [
-    LIFT_URL, LILIFT_URL, MNR2_URL, MNR3_URL, MNR4_URL, MNR5_URL, KNH_URL,
-    LIFT_GRAPH, LILIFT_GRAPH, MNR2_GRAPH, MNR3_GRAPH, MNR4_GRAPH, MNR5_GRAPH, KNH_GRAPH,
-    TIDES1_URL, TIDES2_URL, TIDES3_URL, TIDES4_URL, TIDES5_URL, TIDES6_URL, TIDES7_URL, TIDES8_URL, TIDES9_URL
-  ];
-};
+const generateLiftURLs = (clientId, clientSecret) =>
+  URLmap.map(({ loc, type }) => {
+    const parameters =
+      type === 'forecast' ? forecast_parameters
+      : type === 'graph' ? graph_parameters
+        : tide_parameters;
+    return `${URL}${loc}${generateIdSecretQuery(clientId, clientSecret, parameters)}`;
+  });
 
 // const shift = str => str.slice(1) + str.slice(0,1);
 // const clientId = shift('YXhtJlvX4EdRgoMLE6JkT');

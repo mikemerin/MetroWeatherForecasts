@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Grid } from 'semantic-ui-react'
 import './App.css'
 
-import { ForecastAdapter } from './adapters'
+import { ForecastAdapter, URLmap } from './adapters'
 
 import { Header, Info } from './components/Header'
 import FormContainer from './containers/FormContainer'
@@ -31,7 +31,7 @@ export default class App extends Component {
       clientId: '',
       clientSecret: '',
       current: 0,
-      data: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+      data: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
       debug: false,
       fetching: false,
       forecastAdapter: undefined,
@@ -94,7 +94,12 @@ export default class App extends Component {
                 console.log('data', data)
                 if (data.error) {
                   console.log("setting error")
-                  this.setState({ error: data.error });
+                  this.setState({ error: {
+                    name: URLmap[x].name,
+                    type: URLmap[x].type,
+                    data,
+                    data: data.error,
+                  } });
                 } else {
                   const response = data.response[0]
                   var current_data = this.state.data
@@ -194,7 +199,7 @@ export default class App extends Component {
   renderError = (error) => (
     <div style={{ color: 'red' }}>
       <br /><br />
-      <h1>{error}</h1>
+      <h1>{JSON.stringify(error)}</h1>
       <br />
       Please wait 24 hours for this to reset,
       <br />
