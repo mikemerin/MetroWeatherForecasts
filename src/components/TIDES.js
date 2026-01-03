@@ -10,6 +10,19 @@ export const TIDES = (props) => {
   var dates = ["", "", "", "", "", "", "", "" ]
   var dates2 = ["", "", "", "", "", "", "", "" ]
 
+  let warnings = [];
+  const warnedSet = new Set();
+
+  const names = [ "1. College Point (Flushing Bay)",
+                  "2. 91st East River (Horns)",
+                  "3. 59th St. (Queensboro)",
+                  "4. Gowanus Canal",
+                  "5. The Battery",
+                  "6. Great Kills",
+                  "7. Lower Hudson Bay",
+                  "8. Coney Island",
+                  "9. Rockaway" ]
+
   // date
   // data[n].periods[0].dateTimeISO.slice(0,10)
   // time
@@ -21,8 +34,11 @@ export const TIDES = (props) => {
     var days2 = undefined
 
     // if that specific location returns no data
-    if ( data[n] === undefined )
-      { data[n] = Temptidedata.response[0] }
+    let noData = false;
+    if (!data[n] || !data[n].periods || !data[n].periods.length) {
+      data[n] = Temptidedata.response[0]
+      noData = true
+    }
 
     var station_periods = data[n].periods
 
@@ -55,34 +71,38 @@ export const TIDES = (props) => {
       }
     })
 
+    // if this station had no real data, record a warning (but only once)
+    if (noData && names[n] && !warnedSet.has(names[n])) {
+      warnings.push(names[n])
+      warnedSet.add(names[n])
+    }
+
     return { days, days2 }
   }
 
   const stations = [0,1,2,3,4,5,6,7,8].map(x => periods_to_days(x).days )
   const stations2 = [0,1,2,3,4,5,6,7,8].map(x => periods_to_days(x).days2 )
 
+  function renderPeriodPair(period, keyPrefix) {
+    if (!period) {
+      return [
+        <Table.Cell key={`${keyPrefix} tt`}>-</Table.Cell>,
+        <Table.Cell key={`${keyPrefix} ft`}>-</Table.Cell>
+      ]
+    }
+    const t = (period.type || '').toUpperCase()
+    const time = period.dateTimeISO ? period.dateTimeISO.slice(11,16) : '-'
+    const height = period.heightFT != null ? `${period.heightFT}’` : '-'
+    return [
+      <Table.Cell key={`${keyPrefix} tt`}>{ `${t} ${time}` }</Table.Cell>,
+      <Table.Cell key={`${keyPrefix} ft`}>{ height }</Table.Cell>
+    ]
+  }
+
   function location_top(x, secondTable) {
+    const station_days = (secondTable ? stations2 : stations)[x] || [[],[],[],[],[],[],[]]
 
-    const names = [ "1. College Point (Flushing Bay)",
-                    "2. 91st East River (Horns)",
-                    "3. 59th St. (Queensboro)",
-                    "4. Gowanus Canal",
-                    "5. The Battery",
-                    "6. Great Kills",
-                    "7. Lower Hudson Bay",
-                    "8. Coney Island",
-                    "9. Rockaway" ]
-
-    const station_days = (secondTable ? stations2 : stations)[x]
-
-    const row_0 = station_days.map((day,i) => {
-      return (
-        [
-        <Table.Cell key={`${i} tt`}>{ `${day[0].type.toUpperCase()} ${day[0].dateTimeISO.slice(11,16)}` }</Table.Cell>,
-        <Table.Cell key={`${i} h`}>{ `${day[0].heightFT}’` }</Table.Cell>
-        ]
-      )
-    })
+    const row_0 = station_days.map((day,i) => renderPeriodPair(day && day[0], `${i}`))
 
     return (
       <Table.Row>
@@ -93,39 +113,15 @@ export const TIDES = (props) => {
   }
 
   function location_bot(x, secondTable) {
+    const station_days = (secondTable ? stations2 : stations)[x] || [[],[],[],[],[],[],[]]
 
-    const station_days = (secondTable ? stations2 : stations)[x]
-    console.log("🚀 ~ file: TIDES.js:98 ~ location_bot ~ station_days", station_days)
-    
     const rows_13 = [1, 2, 3].map((row, i) => {
-      
-      var this_row = station_days.map(day => day[row])
-      console.log("🚀 ~ file: TIDES.js:103 ~ constrows_13=[1,2,3].map ~ this_row", this_row)
-
+      const this_row = station_days.map(day => day ? day[row] : undefined)
       return (
         <Table.Row key={i}>
-          { this_row.map((cell, j) => {
-            if (cell) console.log('secondTable', secondTable, 'row', row, 'j', j, 'cell', cell)
-            if (row === 3 && cell === undefined) {
-              return (
-                  [
-                  <Table.Cell key={`${j} tt`}>-</Table.Cell>,
-                  <Table.Cell key={`${j} ft`}>-</Table.Cell>
-                  ]
-              )
-            } else if (cell !== undefined) {
-              return (
-                  [
-                  <Table.Cell key={`${j} tt`}>{ `${cell.type.toUpperCase()} ${cell.dateTimeISO.slice(11,16)}` }</Table.Cell>,
-                  <Table.Cell key={`${j} ft`}>{ `${cell.heightFT}’` }</Table.Cell>
-                  ]
-              )
-            }
-          })
-          }
-      </Table.Row>
+          { this_row.map((cell, j) => renderPeriodPair(cell, `${j}-${row}`)) }
+        </Table.Row>
       )
-
     })
 
     return rows_13
@@ -187,6 +183,7 @@ export const TIDES = (props) => {
 
     return (
       <div>
+        {!!warnings.length && <div className="ui warning message">Warning: the following location have no data: {warnings.join(', ')}</div>}
         <br />
         <h5>This Week</h5>        
         <Table celled color="blue" structured striped fixed compact="very" size="small" textAlign="center" >

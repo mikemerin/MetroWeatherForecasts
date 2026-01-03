@@ -21,29 +21,29 @@ const locMap = {
 }
 
 export const URLmap = [
-  { name: 'LIFT',           type: 'forecast',       loc: `forecasts/${locMap.LIFT}` },
-  { name: 'LILIFT',         type: 'forecast',       loc: `forecasts/${locMap.LILIFT}` },
-  { name: 'MNR2',           type: 'forecast',       loc: `forecasts/${locMap.MNR2}` },
-  { name: 'MNR3',           type: 'forecast',       loc: `forecasts/${locMap.MNR3}` },
-  { name: 'MNR4',           type: 'forecast',       loc: `forecasts/${locMap.MNR4}` },
-  { name: 'MNR5',           type: 'forecast',       loc: `forecasts/${locMap.MNR5}` },
-  { name: 'KNH',            type: 'forecast',       loc: `forecasts/${locMap.KNH}` },
-  { name: 'LIFT',           type: 'graph',          loc: `forecasts/${locMap.LIFT}` },
-  { name: 'LILIFT',         type: 'graph',          loc: `forecasts/${locMap.LILIFT}` },
-  { name: 'MNR2',           type: 'graph',          loc: `forecasts/${locMap.MNR2}` },
-  { name: 'MNR3',           type: 'graph',          loc: `forecasts/${locMap.MNR3}` },
-  { name: 'MNR4',           type: 'graph',          loc: `forecasts/${locMap.MNR4}` },
-  { name: 'MNR5',           type: 'graph',          loc: `forecasts/${locMap.MNR5}` },
-  { name: 'KNH',            type: 'graph',          loc: `forecasts/${locMap.KNH}` },
-  { name: 'Flushing',       type: 'tide',           loc: "tides/flushing+bay,ny" },
-  { name: 'Mill Rock',      type: 'tide',           loc: "tides/mill+rock,ny" },
-  { name: 'Queensboro',     type: 'tide',           loc: "tides/queensboro+bridge,ny" },
-  { name: 'Gowanus Canal',  type: 'tide',           loc: "tides/gowanus+canal,ny" },
-  { name: 'Battery',        type: 'tide',           loc: "tides/the+battery,ny" },
-  { name: 'Great Kills',    type: 'tide',           loc: "tides/great+kills,ny" },
-  { name: 'Fort Wadsworth', type: 'tide',           loc: "tides/fort+wadsworth,ny" },
-  { name: 'Coney Island',   type: 'tide',           loc: "tides/brighton+beach,ny" },
-  { name: 'Rockaway',       type: 'tide',           loc: "tides/rockaway,ny" },
+  { name: 'LIFT',             type: 'forecast',       loc: `forecasts/${locMap.LIFT}` },
+  { name: 'LILIFT',           type: 'forecast',       loc: `forecasts/${locMap.LILIFT}` },
+  { name: 'MNR2',             type: 'forecast',       loc: `forecasts/${locMap.MNR2}` },
+  { name: 'MNR3',             type: 'forecast',       loc: `forecasts/${locMap.MNR3}` },
+  { name: 'MNR4',             type: 'forecast',       loc: `forecasts/${locMap.MNR4}` },
+  { name: 'MNR5',             type: 'forecast',       loc: `forecasts/${locMap.MNR5}` },
+  { name: 'KNH',              type: 'forecast',       loc: `forecasts/${locMap.KNH}` },
+  { name: 'LIFT',             type: 'graph',          loc: `forecasts/${locMap.LIFT}` },
+  { name: 'LILIFT',           type: 'graph',          loc: `forecasts/${locMap.LILIFT}` },
+  { name: 'MNR2',             type: 'graph',          loc: `forecasts/${locMap.MNR2}` },
+  { name: 'MNR3',             type: 'graph',          loc: `forecasts/${locMap.MNR3}` },
+  { name: 'MNR4',             type: 'graph',          loc: `forecasts/${locMap.MNR4}` },
+  { name: 'MNR5',             type: 'graph',          loc: `forecasts/${locMap.MNR5}` },
+  { name: 'KNH',              type: 'graph',          loc: `forecasts/${locMap.KNH}` },
+  { name: 'Flushing',         type: 'tide',           loc: "tides/flushing+bay,ny" },
+  { name: 'Mill Rock',        type: 'tide',           loc: "tides/mill+rock,ny" },
+  { name: 'Queensboro',       type: 'tide',           loc: "tides/queensboro+bridge,ny" },
+  { name: 'Gowanus Canal',    type: 'tide',           loc: "tides/gowanus+canal,ny" },
+  { name: 'Battery',          type: 'tide',           loc: "tides/the+battery,ny" },
+  { name: 'Great Kills',      type: 'tide',           loc: "tides/great+kills,ny" },
+  { name: 'Lower Hudson Bay', type: 'tide',           loc: "tides/10305" },
+  { name: 'Coney Island',     type: 'tide',           loc: "tides/brighton+beach,ny" },
+  { name: 'Rockaway',         type: 'tide',           loc: "tides/rockaway,ny" },
 ];
 
 const generateLiftURLs = (clientId, clientSecret) =>
@@ -68,16 +68,25 @@ export class ForecastAdapter {
   }
 
   all(n) {
+    const isTide = n > 12;
     return fetch(this.lifts[n])
       .then(res => {
         if (res.status === 429) {
           return { error: 'Error 429: "Maximum number of daily accesses reached."'};
-        };
-        if (res.ok) { return res.json() }
-        else { throw new Error('Something went wrong') }
-      }).catch((error) => {
-        // alert("Sorry something went wrong and no run data was found.\n\nPlease try again shortly.\n\nIf this problem persists please contact Mike Merin.")
-        return n > 12 ? Temptidedata : Tempdata
+        }
+        if (!res.ok) { throw new Error('Something went wrong') }
+        return res.json();
+      })
+      .then(data => {
+        // Treat API-level errors or empty response arrays as "no data" fallbacks
+        if (!data || data.error || (Array.isArray(data.response) && data.response.length === 0)) {
+          return isTide ? Temptidedata : Tempdata;
+        }
+        return data;
+      })
+      .catch((error) => {
+        // On network / parse errors return a fallback so a single failure doesn't break the site
+        return isTide ? Temptidedata : Tempdata;
       })
   }
 
@@ -87,12 +96,18 @@ export class ForecastAdapter {
       .then(res => {
         if (res.status === 429) {
           return { error: 'Error 429: "Maximum number of daily accesses reached."'};
-        };
-        if (res.ok) { return res.json() }
-        else { throw new Error('Something went wrong') }
-      }).catch((error) => {
-        // alert("Sorry something went wrong and no run data was found.\n\nPlease try again shortly.\n\nIf this problem persists please contact Mike Merin.")
-        // return n > 12 ? Temptidedata : Tempdata
+        }
+        if (!res.ok) { throw new Error('Something went wrong') }
+        return res.json();
+      })
+      .then(data => {
+        if (!data || data.error || (Array.isArray(data.response) && data.response.length === 0)) {
+          return Tempdata;
+        }
+        return data;
+      })
+      .catch((error) => {
+        return Tempdata;
       })
   }
 }
