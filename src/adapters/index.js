@@ -2,8 +2,8 @@ import { scramble } from '../components/utils';
 
 import { Tempdata, Temptidedata } from './Tempdata'
 
-const U = scramble('vrpmrspq');
-const URL = `https://api.${U}.com/`;
+const U = scramble('rzrcr.pqg.vxcrvjm');
+const URL = `https://${U}.com/`;
 const forecast_parameters = "&from=today&to=+8days&filter=daynight&limit=11"
 const graph_parameters = "&from=-3hours&filter=3hr&limit=48"
 const tide_parameters = "&from=sunday&to=+14days&filter=highlow"
