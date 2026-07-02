@@ -10,6 +10,30 @@ const forecast_parameters = "&from=today&to=+8days&filter=daynight&limit=11"
 const graph_parameters = "&from=-3hours&filter=3hr&limit=48"
 const tide_parameters = "&from=sunday&to=+14days&filter=highlow"
 
+// Logging DB endpoint (set REACT_APP_LOG_DB_URL in environment), defaulting to example Heroku app
+const LOG_DB_URL = (typeof process !== 'undefined' && process.env && process.env.REACT_APP_LOG_DB_URL)
+  ? process.env.REACT_APP_LOG_DB_URL
+  : 'https://metroweatherforecastsdb.herokuapp.com/logs';
+
+function logApiCall(url) {
+  try {
+    const payload = {
+      timestamp: new Date().toISOString(),
+      url,
+      userAgent: (typeof navigator !== 'undefined' && navigator.userAgent) ? navigator.userAgent : null,
+      referrer: (typeof document !== 'undefined' && document.referrer) ? document.referrer : null
+    };
+    // Fire-and-forget; do not block main flow. Ignore errors.
+    fetch(LOG_DB_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(() => {});
+  } catch (e) {
+    // ignore
+  }
+}
+
 const generateIdSecretQuery = (clientId, clientSecret, parameters) => `?client_id=${clientId}&client_secret=${clientSecret}${parameters || ''}`;
 
 const locMap = {
@@ -71,6 +95,7 @@ export class ForecastAdapter {
 
   all(n) {
     const isTide = n > 12;
+    try { logApiCall(this.lifts[n]); } catch(e){}
     return fetch(this.lifts[n])
       .then(res => {
         if (res.status === 429) {
@@ -94,6 +119,7 @@ export class ForecastAdapter {
 
   custom(loc) {
     var custom_url = URL + "forecasts/" + loc + generateIdSecretQuery(this.clientId, this.clientSecret, forecast_parameters);
+    try { logApiCall(custom_url); } catch(e){}
     return fetch(custom_url)
       .then(res => {
         if (res.status === 429) {
@@ -116,4 +142,3 @@ export class ForecastAdapter {
 
 
 
-// return lifts.map(lift => fetch(lift).then( res => res.json() ) )
