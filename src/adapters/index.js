@@ -10,10 +10,10 @@ const forecast_parameters = "&from=today&to=+8days&filter=daynight&limit=11"
 const graph_parameters = "&from=-3hours&filter=3hr&limit=48"
 const tide_parameters = "&from=sunday&to=+14days&filter=highlow"
 
-// Logging DB endpoint (set REACT_APP_LOG_DB_URL in environment), defaulting to example Heroku app
+// Logging DB endpoint (set REACT_APP_LOG_DB_URL in environment), defaulting to the confirmed Heroku app
 const LOG_DB_URL = (typeof process !== 'undefined' && process.env && process.env.REACT_APP_LOG_DB_URL)
   ? process.env.REACT_APP_LOG_DB_URL
-  : 'https://metroweatherforecastsdb.herokuapp.com/logs';
+  : 'https://metroweatherforecastsdb-2b19ec79c116.herokuapp.com/logs';
 
 function logApiCall(url) {
   try {
